@@ -30,16 +30,26 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 	const authorData = await getAuthorData(iconsData[icon].update.author.id)
 	const authorName = authorData.name || authorData.login
 	const updateDate = new Date(iconsData[icon].update.timestamp)
+	const totalIcons = Object.keys(iconsData).length
 
 	console.debug(`Generated metadata for ${icon} by ${authorName} (${authorData.html_url}) updated at ${updateDate.toLocaleString()}`)
 
 	const iconImageUrl = `${BASE_URL}/png/${icon}.png`
 	const pageUrl = `${BASE_URL}/icons/${icon}`
+	const formattedIconName = icon.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 
 	return {
-		title: `${icon} icon · Dashboard Icons`,
-		description: `Download and use the ${icon} icon from Dashboard Icons for your applications`,
-		keywords: [`${icon} icon`, "dashboard icon", "free icon", "open source icon", "application icon"],
+		title: `${formattedIconName} Icon | Dashboard Icons`,
+		description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+		keywords: [
+			`${formattedIconName} icon`,
+			"dashboard icon",
+			"service icon",
+			"application icon",
+			"tool icon",
+			"web dashboard",
+			"app directory",
+		],
 		authors: [
 			{
 				name: "homarr",
@@ -51,8 +61,8 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 			},
 		],
 		openGraph: {
-			title: `${icon} icon · Dashboard Icons`,
-			description: `Download and use the ${icon} icon from Dashboard Icons for your applications`,
+			title: `${formattedIconName} Icon | Dashboard Icons`,
+			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 			type: "article",
 			url: pageUrl,
 			images: [
@@ -60,7 +70,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 					url: iconImageUrl,
 					width: 512,
 					height: 512,
-					alt: `${icon} icon`,
+					alt: `${formattedIconName} Icon`,
 					type: "image/png",
 				},
 				...previousImages,
@@ -71,10 +81,10 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 		},
 		twitter: {
 			card: "summary_large_image",
-			title: `${icon} icon · Dashboard Icons`,
-			description: `Download and use the ${icon} icon from Dashboard Icons for your applications`,
+			title: `${formattedIconName} Icon | Dashboard Icons`,
+			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 			images: [iconImageUrl],
-			creator: "@ajnavocado",
+			creator: "@homarr_app",
 		},
 		alternates: {
 			canonical: pageUrl,
