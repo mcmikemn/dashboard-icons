@@ -1,7 +1,12 @@
 {
   "base": "png",
-  "aliases": [],
-  "categories": [],
+  "aliases": [
+    "lobe-ai",
+    "chatgpt-ui"
+  ],
+  "categories": [
+    "AI-&-LLM-Platforms"
+  ],
   "update": {
     "timestamp": "2025-01-07T17:54:03Z",
     "author": {
