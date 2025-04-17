@@ -71,11 +71,6 @@ export async function generateMetadata(): Promise<Metadata> {
 			statusBarStyle: "default",
 			capable: true,
 		},
-		alternates: {
-			types: {
-				"application/rss+xml": "https://dashboardicons.com/rss.xml",
-			},
-		},
 		icons: {
 			icon: [
 				{ url: "/favicon.ico", sizes: "any" },
