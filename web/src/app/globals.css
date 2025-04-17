@@ -64,7 +64,7 @@
 }
 
 :root {
-	--radius: 0.3rem;
+	--radius: 0.75rem;
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.141 0.005 285.823);
 	--card: oklch(1 0 0);
@@ -138,5 +138,23 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+	}
+}
+
+@layer utilities {
+	.hover-lift {
+		@apply transition-transform duration-300 hover:-translate-y-1;
+	}
+
+	.soft-shadow {
+		@apply shadow-[0_8px_30px_rgba(0,0,0,0.06)];
+	}
+
+	.card-hover {
+		@apply transition-all duration-300 hover:shadow-md;
+	}
+
+	.glass-effect {
+		@apply backdrop-blur-sm;
 	}
 }

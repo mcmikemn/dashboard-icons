@@ -83,10 +83,10 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 				>
 					<Link
 						href="/icons"
-						className="text-rose-500 dark:text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 font-medium inline-flex items-center py-2 px-4 rounded-full border border-rose-200 dark:border-rose-800/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all duration-200 group"
+						className="text-rose-500 dark:text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 font-medium inline-flex items-center py-2 px-4 rounded-full border border-rose-200 dark:border-rose-800/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all duration-200 group hover-lift soft-shadow"
 					>
 						View all icons
-						<ArrowRight className="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" />
+						<ArrowRight className="w-4 h-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" />
 					</Link>
 				</motion.div>
 			</div>
@@ -131,36 +131,36 @@ function RecentIconCard({ name, data, getIconVariant }: {
 			exit="exit"
 			variants={variants}
 			className="will-change-transform"
-						>
-							<Link
-								prefetch={false}
-								href={`/icons/${name}`}
-								className="group flex flex-col items-center p-3 sm:p-4 rounded-lg border border-border bg-background/95 dark:bg-background/80 hover:border-rose-500 hover:bg-rose-500/10 dark:hover:bg-rose-900/30 dark:hover:border-rose-500 transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/5 relative overflow-hidden"
-							>
-								<div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+		>
+			<Link
+				prefetch={false}
+				href={`/icons/${name}`}
+				className="group flex flex-col items-center p-3 sm:p-4 rounded-xl border border-border bg-background/95 dark:bg-background/80 hover:border-rose-500 hover:bg-rose-500/10 dark:hover:bg-rose-900/30 dark:hover:border-rose-500 transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/5 relative overflow-hidden hover-lift"
+			>
+				<div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-								<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
-									<Image
-										src={`${BASE_URL}/${data.base}/${getIconVariant(name, data)}.${data.base}`}
-										alt={`${name} icon`}
-										fill
-										className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
-									/>
-								</div>
-								<span className="text-xs sm:text-sm text-center truncate w-full capitalize group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-200 font-medium">
-									{name.replace(/-/g, " ")}
-								</span>
-								<div className="flex items-center justify-center mt-2 w-full">
-									<span className="text-[10px] sm:text-xs text-muted-foreground flex items-center whitespace-nowrap group-hover:text-rose-500/70 transition-colors duration-200">
-										<Clock className="w-3 h-3 mr-1 shrink-0" />
-										{formatIconDate(data.update.timestamp)}
-									</span>
-								</div>
+				<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
+					<Image
+						src={`${BASE_URL}/${data.base}/${getIconVariant(name, data)}.${data.base}`}
+						alt={`${name} icon`}
+						fill
+						className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
+					/>
+				</div>
+				<span className="text-xs sm:text-sm text-center truncate w-full capitalize group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-200 font-medium">
+					{name.replace(/-/g, " ")}
+				</span>
+				<div className="flex items-center justify-center mt-2 w-full">
+					<span className="text-[10px] sm:text-xs text-muted-foreground flex items-center whitespace-nowrap group-hover:text-rose-500/70 transition-colors duration-200">
+						<Clock className="w-3 h-3 mr-1.5 shrink-0" />
+						{formatIconDate(data.update.timestamp)}
+					</span>
+				</div>
 
-								<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-									<ExternalLink className="w-3 h-3 text-rose-500" />
-								</div>
-							</Link>
-						</motion.div>
+				<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+					<ExternalLink className="w-3 h-3 text-rose-500" />
+				</div>
+			</Link>
+		</motion.div>
 	);
 }

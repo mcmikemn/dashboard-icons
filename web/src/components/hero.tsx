@@ -16,7 +16,7 @@ interface IconCardProps {
 
 function IconCard({ name, imageUrl }: IconCardProps) {
 	return (
-		<Card className="p-4 hover:shadow-md transition-shadow duration-300 flex flex-col items-center gap-2 cursor-pointer group">
+		<Card className="p-4 flex flex-col items-center gap-2 cursor-pointer group hover-lift card-hover">
 			<div className="w-16 h-16 flex items-center justify-center">
 				<img src={imageUrl} alt={name} className="max-w-full max-h-full" />
 			</div>
@@ -202,7 +202,7 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 					<Link prefetch href="https://github.com/homarr-labs" target="_blank" rel="noopener noreferrer" className="mx-auto">
 						<motion.div variants={fadeUpVariants} custom={0} initial="hidden" animate="visible" whileHover="hover">
 							<motion.div
-								className="overflow-hidden rounded-md relative"
+								className="overflow-hidden rounded-xl relative"
 								variants={{
 									hover: {
 										scale: 1.05,
@@ -232,7 +232,7 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 										},
 									}}
 								/>
-								<Card className="p-2 flex flex-row items-center gap-2 border-rose-200 dark:border-rose-900/30 shadow-sm bg-background z-10 relative">
+								<Card className="p-2 flex flex-row items-center gap-2 border-rose-200 dark:border-rose-900/30 shadow-sm bg-background/80 z-10 relative glass-effect">
 									<motion.div
 										variants={{
 											hover: {
@@ -303,11 +303,11 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 								name="q"
 								type="search"
 								placeholder={`Search ${totalIcons} icons...`}
-								className="pl-10 h-10 md:h-12 rounded-lg border-muted-foreground/20 focus:border-rose-500 focus:ring-rose-500/20 transition-all"
+								className="pl-10 h-10 md:h-12 rounded-lg border-muted-foreground/20 focus:border-rose-500 focus:ring-rose-500/20 transition-all bg-background/95 dark:bg-background/90 backdrop-blur-sm text-sm md:text-base"
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 							/>
-							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-muted-foreground group-focus-within:text-rose-500 transition-colors" />
+							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-muted-foreground group-focus-within:text-rose-500 transition-all duration-300" />
 							<motion.span
 								className="absolute inset-0 -z-10 rounded-lg bg-rose-500/5 opacity-0 transition-opacity group-hover:opacity-100"
 								initial={{ scale: 0.95 }}
@@ -323,7 +323,7 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 							</Button>
 							<Button
 								variant="outline"
-								className="h-9 md:h-10 px-4 gap-2 border-rose-200 dark:border-rose-900/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:border-rose-300 dark:hover:border-rose-800"
+								className="h-9 md:h-10 px-4 gap-2 border-rose-200 dark:border-rose-900/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:border-rose-300 dark:hover:border-rose-800 bg-background/95 dark:bg-background/90 backdrop-blur-sm"
 								asChild
 							>
 								<Link

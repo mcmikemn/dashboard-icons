@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { REPO_PATH } from "@/constants"
 import { DialogDescription } from "@radix-ui/react-dialog"
 import { ExternalLink, PlusCircle } from "lucide-react"
@@ -68,14 +69,23 @@ export function IconSubmissionForm() {
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>
-				<Button
-					variant="outline"
-					className="hidden md:inline-flex cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 hover:border-rose-500 dark:hover:border-rose-500 transition-colors duration-200"
-				>
-					<PlusCircle className="h-4 w-4" /> Suggest new icon
-				</Button>
-			</DialogTrigger>
+			<TooltipProvider>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<DialogTrigger asChild>
+							<Button
+								variant="outline"
+								className="hidden md:inline-flex cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 hover:border-rose-500 dark:hover:border-rose-500 transition-all duration-300"
+							>
+								<PlusCircle className="h-4 w-4 transition-all duration-300" /> Suggest new icon
+							</Button>
+						</DialogTrigger>
+					</TooltipTrigger>
+					<TooltipContent>
+						<p>Suggest a new icon</p>
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
 			<DialogContent className="md:max-w-4xl backdrop-blur-2xl">
 				<DialogHeader>
 					<DialogTitle>Suggest a new icon</DialogTitle>
