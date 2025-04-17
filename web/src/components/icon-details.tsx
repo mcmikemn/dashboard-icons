@@ -29,7 +29,6 @@ import {
 	PaletteIcon,
 	Sun,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState } from "react";
@@ -190,22 +189,22 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 	) => {
 		const variantName =
 			theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName;
-		const url = `${BASE_URL}/${format}/${variantName}.${format}`;
+		const imageUrl = `${BASE_URL}/${format}/${variantName}.${format}`;
 		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`;
 		const variantKey = `${format}-${theme || "default"}`;
 		const isCopied = copiedVariants[variantKey] || false;
 
 		return (
 			<TooltipProvider key={variantKey} delayDuration={500}>
-				<MagicCard>
-					<div className="flex flex-col items-center rounded-lg p-4 border border-border shadow-sm hover:shadow-md transition-all">
+				<MagicCard className="rounded-md">
+					<div className="flex flex-col items-center p-4 transition-all">
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<motion.div
 									className="relative w-28 h-28 mb-3 cursor-pointer rounded-xl overflow-hidden group"
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
-									onClick={(e) => handleCopy(url, variantKey, e)}
+									onClick={(e) => handleCopy(imageUrl, variantKey, e)}
 								>
 									<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl z-10 transition-colors" />
 
@@ -232,7 +231,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 									</motion.div>
 
 									<Image
-										src={url}
+										src={imageUrl}
 										alt={`${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
 										fill
 										className="object-contain p-4"
@@ -254,7 +253,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 										size="icon"
 										className="h-8 w-8 rounded-lg cursor-pointer"
 										onClick={(e) =>
-											handleDownload(e, url, `${iconName}.${format}`)
+											handleDownload(e, imageUrl, `${iconName}.${format}`)
 										}
 									>
 										<Download className="w-4 h-4" />
@@ -271,7 +270,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 										variant="outline"
 										size="icon"
 										className="h-8 w-8 rounded-lg cursor-pointer"
-										onClick={(e) => handleCopy(url, `btn-${variantKey}`, e)}
+										onClick={(e) => handleCopy(imageUrl, `btn-${variantKey}`, e)}
 									>
 										{copiedVariants[`btn-${variantKey}`] ? (
 											<Check className="w-4 h-4 text-green-500" />
@@ -318,7 +317,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 				{/* Left Column: Icon Info and Author */}
 				<div className="lg:col-span-1">
-					<Card className="h-full backdrop-blur-sm  border shadow-lg">
+					<Card className="h-full backdrop-blur-sm bg-card/50 border shadow-lg">
 						<CardHeader className="pb-4">
 							<div className="flex flex-col items-center">
 								<div className="relative w-32 h-32  rounded-xl overflow-hidden border flex items-center justify-center p-3 ">
@@ -386,7 +385,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 												<Link
 													key={category}
 													href={`/icons?category=${encodeURIComponent(category)}`}
-													className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold hover:bg-rose-500/10 hover:border-rose-500/30 transition-colors cursor-pointer"
+													className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold0/10  transition-colors cursor-pointer"
 												>
 													{category
 														.split("-")
@@ -410,7 +409,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 											{iconData.aliases.map((alias) => (
 												<span
 													key={alias}
-													className="inline-flex items-center rounded-full bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 px-2.5 py-1 text-xs text-rose-700 dark:text-rose-300"
+													className="inline-flex items-center rounded-full bg-rose-50 dark:bg-rose-950/20 border   px-2.5 py-1 text-xs text-rose-700 dark:text-rose-300"
 													title={`This icon can also be found by searching for "${alias}"`}
 												>
 													{alias}
@@ -430,7 +429,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Middle Column: Icon variants */}
 				<div className="lg:col-span-2">
-					<Card className="h-full backdrop-blur-sm bg-card shadow-lg">
+					<Card className="h-full backdrop-blur-sm bg-card/50 shadow-lg">
 						<CardHeader>
 							<CardTitle>Icon variants</CardTitle>
 							<CardDescription>
@@ -476,7 +475,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Right Column: Technical details */}
 				<div className="lg:col-span-1">
-					<Card className="h-full backdrop-blur-sm  border shadow-lg">
+					<Card className="h-full backdrop-blur-sm bg-card/50 border shadow-lg">
 						<CardHeader>
 							<CardTitle>Technical details</CardTitle>
 						</CardHeader>

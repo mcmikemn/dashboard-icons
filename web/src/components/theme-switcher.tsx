@@ -19,12 +19,12 @@ export function ThemeSwitcher() {
 					<TooltipTrigger asChild>
 						<DropdownMenuTrigger asChild>
 							<Button
-								className="rounded-md cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 transition-colors duration-200 group"
+								className="rounded-md cursor-pointer0/10 dark:hover:bg-rose-900/30 transition-colors duration-200 group"
 								variant="ghost"
 								size="icon"
 							>
-								<Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 group-hover:text-rose-500" />
-								<Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 group-hover:text-rose-500" />
+								<Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 group-hover:" />
+								<Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 group-hover:" />
 								<span className="sr-only">Toggle theme</span>
 							</Button>
 						</DropdownMenuTrigger>

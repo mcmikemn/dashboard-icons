@@ -58,7 +58,7 @@
 
 	--animate-marquee: marquee var(--duration) infinite linear;
 	--animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-}
+	--animate-aurora: aurora 8s ease-in-out infinite alternate;
 
 	@keyframes accordion-down {
 		from {
@@ -68,7 +68,7 @@
 			height: var(--radix-accordion-content-height);
 		}
 	}
-	
+
 	@keyframes accordion-up {
 		from {
 			height: var(--radix-accordion-content-height);
@@ -77,23 +77,55 @@
 			height: 0;
 		}
 	}
-	
-	
+
 	@keyframes marquee {
 	from {
 		transform: translateX(0);}
 	to {
-		transform: translateX(calc(-100% - var(--gap)));}}
+		transform: translateX(calc(-100% - var(--gap)));}
+	}
+
 	@keyframes marquee-vertical {
 	from {
 		transform: translateY(0);}
 	to {
-		transform: translateY(calc(-100% - var(--gap)));}}
+		transform: translateY(calc(-100% - var(--gap)));}
+	}
 
+	@keyframes aurora {
+    0% {
+      background-position: 0% 50%;
+      transform: rotate(-5deg) scale(0.9);
+    }
+    25% {
+      background-position: 50% 100%;
+      transform: rotate(5deg) scale(1.1);
+    }
+    50% {
+      background-position: 100% 50%;
+      transform: rotate(-3deg) scale(0.95);
+    }
+    75% {
+      background-position: 50% 0%;
+      transform: rotate(3deg) scale(1.05);
+    }
+    100% {
+      background-position: 0% 50%;
+      transform: rotate(-5deg) scale(0.9);
+    }
+  }
 
+	--animate-shiny-text: shiny-text 8s infinite
+
+;
+  @keyframes shiny-text {
+  0%, 90%, 100% {
+    background-position: calc(-100% - var(--shiny-width)) 0;}
+  30%, 60% {
+    background-position: calc(100% + var(--shiny-width)) 0;}}}
 
 :root {
-	--radius: 0.75rem;
+	--radius: 0.4rem;
 
   --background: oklch(0.99 0 0);
   --foreground: oklch(0.32 0 0);
@@ -107,14 +139,14 @@
   --secondary-foreground: oklch(0.45 0.03 256.80);
   --muted: oklch(0.98 0.00 247.84);
   --muted-foreground: oklch(0.55 0.02 264.36);
-  --accent: oklch(0.74 0.09 251.62);
-  --accent-foreground: oklch(0.38 0.14 265.52);
+	--accent: oklch(0.967 0.001 286.375);
+	--accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.64 0.21 25.33);
   --destructive-foreground: oklch(1.00 0 0);
   --border: oklch(0.90 0.01 247.88);
 
 	--input: oklch(0.92 0.004 286.32);
-	--ring: oklch(0.637 0.237 25.331);
+
 	--chart-1: oklch(0.646 0.222 41.116);
 	--chart-2: oklch(0.6 0.118 184.704);
 	--chart-3: oklch(0.398 0.07 227.392);
@@ -140,13 +172,13 @@
 }
 
 .dark {
-  --background: oklch(0.26 0.03 262.67);
+  --background: oklch(.141 .005 285.823);
   --foreground: oklch(0.92 0 0);
   --card: oklch(0.31 0.03 268.64);
   --card-foreground: oklch(0.92 0 0);
   --popover: oklch(0.29 0.02 268.40);
   --popover-foreground: oklch(0.92 0 0);
-  --primary: oklch(0.64 0.17 36.44);
+  --primary: oklch(0.67 0.20 23.80);
   --primary-foreground: oklch(1.00 0 0);
   --secondary: oklch(0.31 0.03 266.71);
   --secondary-foreground: oklch(0.92 0 0);

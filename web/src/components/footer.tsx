@@ -35,7 +35,7 @@ export function Footer() {
 	};
 
 	return (
-		<footer className="border-t py-4 bg-background relative overflow-hidden">
+		<footer className="border-t py-4  relative overflow-hidden">
 			<div className="absolute inset-0 bg-gradient-to-r from-rose-500/[0.03] via-transparent to-rose-500/[0.03]" />
 
 			<div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -55,13 +55,13 @@ export function Footer() {
 						<div className="flex flex-col gap-2">
 							<Link
 								href="/"
-								className="text-sm text-muted-foreground hover:text-rose-500 transition-colors duration-200 flex items-center w-fit"
+								className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center w-fit"
 							>
 								<span>Home</span>
 							</Link>
 							<Link
 								href="/icons"
-								className="text-sm text-muted-foreground hover:text-rose-500 transition-colors duration-200 flex items-center w-fit"
+								className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center w-fit"
 							>
 								<span>Icons</span>
 							</Link>
@@ -69,10 +69,10 @@ export function Footer() {
 								href={REPO_PATH}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-sm text-muted-foreground hover:text-rose-500 transition-colors duration-200 flex items-center gap-1.5 w-fit group"
+								className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center gap-1.5 w-fit group"
 							>
 								<span>GitHub</span>
-								<Github className="h-3.5 w-3.5 group-hover:text-rose-500 transition-colors duration-200 flex-shrink-0 self-center" />
+								<Github className="h-3.5 w-3.5 group-hover: transition-colors duration-200 flex-shrink-0 self-center" />
 							</Link>
 						</div>
 					</div>
@@ -85,7 +85,7 @@ export function Footer() {
 						transition={{ duration: 0.5, delay: 0.2 }}
 					>
 						<h3 className="font-bold text-lg text-foreground/90">Community</h3>
-						<div className="text-sm text-muted-foreground flex flex-wrap items-center gap-1.5 leading-relaxed">
+						<div className="text-sm flex flex-wrap items-center gap-1.5 leading-relaxed">
 							Made with{" "}
 							<div className="relative inline-block">
 								<motion.div
@@ -105,7 +105,7 @@ export function Footer() {
 										}}
 									>
 										<Heart
-											className="h-3.5 w-3.5 text-rose-500 flex-shrink-0 hover:scale-125 transition-all duration-200"
+											className="h-3.5 w-3.5  flex-shrink-0 hover:scale-125 transition-all duration-200"
 											fill={isHeartFilled ? "#f43f5e" : "none"}
 											strokeWidth={isHeartFilled ? 1.5 : 2}
 										/>
@@ -133,7 +133,7 @@ export function Footer() {
 												className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
 											>
 												<Heart
-													className={`h-2 w-2 ${i < 3 ? "text-rose-300" : i < 6 ? "text-rose-400" : "text-rose-500"}`}
+													className={`h-2 w-2 ${i < 3 ? "text-rose-300" : i < 6 ? "text-rose-400" : ""}`}
 												/>
 											</motion.div>
 										))}
@@ -183,7 +183,7 @@ export function Footer() {
 												className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
 											>
 												<Heart
-													className="h-2 w-2 text-rose-500"
+													className="h-2 w-2 "
 													fill="#f43f5e"
 												/>
 											</motion.div>
@@ -197,7 +197,7 @@ export function Footer() {
 							href="https://github.com/homarr-labs"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-sm text-rose-500 hover:text-rose-600 transition-colors duration-200 flex items-center gap-1.5 w-fit mt-1 group"
+							className="text-sm   transition-colors duration-200 flex items-center gap-1.5 w-fit mt-1 group"
 						>
 							<span>Contribute to this project</span>
 							<ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />

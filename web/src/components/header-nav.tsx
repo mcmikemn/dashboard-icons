@@ -13,7 +13,7 @@ export function HeaderNav() {
 			<Link
 				href="/"
 				className={cn(
-					"text-sm font-medium transition-colors hover:text-rose-600 dark:hover:text-rose-400 cursor-pointer",
+					"text-sm font-medium transition-colors  dark:hover:text-rose-400 cursor-pointer",
 					pathname === "/" && "text-primary font-semibold",
 				)}
 			>
@@ -23,7 +23,7 @@ export function HeaderNav() {
 				prefetch
 				href="/icons"
 				className={cn(
-					"text-sm font-medium transition-colors hover:text-rose-600 dark:hover:text-rose-400 cursor-pointer",
+					"text-sm font-medium transition-colors  dark:hover:text-rose-400 cursor-pointer",
 					isIconsActive && "text-primary font-semibold",
 				)}
 			>

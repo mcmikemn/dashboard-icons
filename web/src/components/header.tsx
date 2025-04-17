@@ -6,13 +6,12 @@ import { REPO_PATH } from "@/constants";
 import { getIconsArray } from "@/lib/api";
 import type { IconWithName } from "@/types/icons";
 import { motion } from "framer-motion";
-import { Github, Menu, Search } from "lucide-react";
+import { Github, Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CommandMenu } from "./command-menu";
 import { HeaderNav } from "./header-nav";
 import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import {
 	Tooltip,
 	TooltipContent,
@@ -47,7 +46,7 @@ export function Header() {
 
 	return (
 		<motion.header
-			className="border-b sticky top-0 z-50 bg-background/95 backdrop-blur-md border-border/50"
+			className="border-b sticky top-0 z-50  backdrop-blur-md border-border/50"
 			initial={{ y: -20, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
 			transition={{ duration: 0.3, ease: "easeOut" }}
@@ -58,7 +57,7 @@ export function Header() {
 						href="/"
 						className="text-lg md:text-xl font-bold group hidden md:block"
 					>
-						<span className="transition-colors duration-300 group-hover:text-rose-500">
+						<span className="transition-colors duration-300 group-hover:">
 							Dashboard Icons
 						</span>
 					</Link>
@@ -71,7 +70,7 @@ export function Header() {
 					<div className="hidden md:block">
 						<Button
 							variant="outline"
-							className="gap-2 cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 hover:border-rose-500 dark:hover:border-rose-500 transition-all duration-300"
+							className="gap-2 cursor-pointer0/10 dark:hover:bg-rose-900/30   transition-all duration-300"
 							onClick={openCommandMenu}
 						>
 							<Search className="h-4 w-4 transition-all duration-300" />
@@ -87,7 +86,7 @@ export function Header() {
 						<Button
 							variant="ghost"
 							size="icon"
-							className="rounded-lg cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 transition-all duration-300 focus:ring-2 focus:ring-rose-500/20"
+							className="rounded-lg cursor-pointer0/10 dark:hover:bg-rose-900/30 transition-all duration-300 focus:ring-2 focus:ring-rose-500/20"
 							onClick={openCommandMenu}
 						>
 							<Search className="h-5 w-5 transition-all duration-300" />
@@ -103,11 +102,11 @@ export function Header() {
 									<Button
 										variant="ghost"
 										size="icon"
-										className="rounded-lg cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 transition-all duration-300 focus:ring-2 focus:ring-rose-500/20"
+										className="rounded-lg cursor-pointer0/10 dark:hover:bg-rose-900/30 transition-all duration-300 focus:ring-2 focus:ring-rose-500/20"
 										asChild
 									>
 										<Link href={REPO_PATH} target="_blank" className="group">
-											<Github className="h-5 w-5 group-hover:text-rose-500 transition-all duration-300" />
+											<Github className="h-5 w-5 group-hover: transition-all duration-300" />
 											<span className="sr-only">View on GitHub</span>
 										</Link>
 									</Button>

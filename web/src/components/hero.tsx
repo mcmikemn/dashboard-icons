@@ -1,17 +1,20 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { motion, useAnimation, useInView } from "framer-motion"
-import { Github, Heart, Search, Sparkles } from "lucide-react"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { motion, useAnimation, useInView } from "framer-motion";
+import { Github, Heart, Search } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { AnimatedShinyText } from "./magicui/animated-shiny-text";
+import { AuroraText } from "./magicui/aurora-text";
+import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
 
 interface IconCardProps {
-	name: string
-	imageUrl: string
+	name: string;
+	imageUrl: string;
 }
 
 function IconCard({ name, imageUrl }: IconCardProps) {
@@ -20,9 +23,11 @@ function IconCard({ name, imageUrl }: IconCardProps) {
 			<div className="w-16 h-16 flex items-center justify-center">
 				<img src={imageUrl} alt={name} className="max-w-full max-h-full" />
 			</div>
-			<p className="text-sm text-center text-muted-foreground group-hover:text-foreground transition-colors">{name}</p>
+			<p className="text-sm text-center text-muted-foreground group-hover:text-foreground transition-colors">
+				{name}
+			</p>
 		</Card>
-	)
+	);
 }
 
 function ElegantShape({
@@ -35,28 +40,28 @@ function ElegantShape({
 	mobileWidth,
 	mobileHeight,
 }: {
-	className?: string
-	delay?: number
-	width?: number
-	height?: number
-	rotate?: number
-	gradient?: string
-	mobileWidth?: number
-	mobileHeight?: number
+	className?: string;
+	delay?: number;
+	width?: number;
+	height?: number;
+	rotate?: number;
+	gradient?: string;
+	mobileWidth?: number;
+	mobileHeight?: number;
 }) {
-	const controls = useAnimation()
-	const [isMobile, setIsMobile] = useState(false)
-	const ref = useRef(null)
-	const isInView = useInView(ref, { once: true, amount: 0.1 })
+	const controls = useAnimation();
+	const [isMobile, setIsMobile] = useState(false);
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, amount: 0.1 });
 
 	useEffect(() => {
 		const checkMobile = () => {
-			setIsMobile(window.innerWidth < 768)
-		}
-		checkMobile()
-		window.addEventListener("resize", checkMobile)
-		return () => window.removeEventListener("resize", checkMobile)
-	}, [])
+			setIsMobile(window.innerWidth < 768);
+		};
+		checkMobile();
+		window.addEventListener("resize", checkMobile);
+		return () => window.removeEventListener("resize", checkMobile);
+	}, []);
 
 	useEffect(() => {
 		if (isInView) {
@@ -73,9 +78,9 @@ function ElegantShape({
 					ease: [0.23, 0.86, 0.39, 0.96],
 					opacity: { duration: 1.2 },
 				},
-			})
+			});
 		}
-	}, [controls, delay, isInView, rotate])
+	}, [controls, delay, isInView, rotate]);
 
 	return (
 		<motion.div
@@ -117,27 +122,14 @@ function ElegantShape({
 				/>
 			</motion.div>
 		</motion.div>
-	)
+	);
 }
 
 export function HeroSection({ totalIcons }: { totalIcons: number }) {
-	const [searchQuery, setSearchQuery] = useState("")
-
-	const fadeUpVariants = {
-		hidden: { opacity: 0, y: 30 },
-		visible: (i: number) => ({
-			opacity: 1,
-			y: 0,
-			transition: {
-				duration: 1,
-				delay: 0.5 + i * 0.2,
-				ease: [0.25, 0.4, 0.25, 1],
-			},
-		}),
-	}
+	const [searchQuery, setSearchQuery] = useState("");
 
 	return (
-		<div className="relative pt-20 md:pt-40 pb-10 md:pb-20 w-full flex items-center justify-center overflow-hidden bg-background">
+		<div className="relative my-20 w-full flex items-center justify-center overflow-hidden">
 			<div className="absolute inset-0 bg-gradient-to-br from-rose-500/[0.1] via-transparent to-rose-500/[0.1] blur-3xl" />
 
 			<div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -199,101 +191,61 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 
 			<div className="relative z-10 container mx-auto px-4 md:px-6">
 				<div className="max-w-4xl mx-auto text-center flex flex-col gap-4">
-					<Link prefetch href="https://github.com/homarr-labs" target="_blank" rel="noopener noreferrer" className="mx-auto">
-						<motion.div variants={fadeUpVariants} custom={0} initial="hidden" animate="visible" whileHover="hover">
-							<motion.div
-								className="overflow-hidden rounded-xl relative"
-								variants={{
-									hover: {
-										scale: 1.05,
-										boxShadow: "0 10px 20px rgba(244, 63, 94, 0.15)",
-									},
-								}}
-								transition={{
-									type: "spring",
-									stiffness: 400,
-									damping: 17,
-								}}
-							>
-								<motion.div
-									className="absolute inset-0 bg-gradient-to-r from-rose-500/10 via-fuchsia-500/10 to-rose-500/10 opacity-0 z-0"
-									variants={{
-										hover: {
-											opacity: 1,
-											backgroundPosition: ["0% 0%", "100% 100%"],
-										},
-									}}
-									transition={{
-										duration: 1.5,
-										ease: "easeInOut",
-										backgroundPosition: {
-											repeat: Number.POSITIVE_INFINITY,
-											duration: 3,
-										},
-									}}
-								/>
-								<Card className="p-2 px-4 flex flex-row items-center gap-2 border-2 border-rose-200 dark:border-rose-900/30 z-10 relative glass-effect">
-										<Heart color="red" fill="red" className="h-4 w-4 motion-safe:motion-preset-pulse-sm" />
-									<span className="text-sm text-foreground/70 tracking-wide">Made with love by Homarr Labs</span>
-								</Card>
-							</motion.div>
-						</motion.div>
+					<Link
+						prefetch
+						href="https://github.com/homarr-labs"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="mx-auto"
+					>
+						<Card className="group p-2 px-4 flex flex-row items-center gap-2 border-2  z-10 relative glass-effect motion-safe:motion-preset-slide-up motion-duration-1500 hover:scale-105 transition-all duration-300">
+							<Heart
+								// Filled when hovered
+								className="h-4 w-4 text-primary group-hover:fill-primary transition-all duration-300"
+							/>
+							<span className="text-sm text-foreground/70 tracking-wide">
+								Made with love by Homarr Labs
+							</span>
+						</Card>
 					</Link>
 
-					<motion.div custom={1} variants={fadeUpVariants} initial="hidden" animate="visible">
-						<h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight">
-							<span className="text-foreground relative inline-block">
-								Your definitive source for
-								<motion.span
-									className="absolute -right-4 sm:-right-6 md:-right-8 -top-3 sm:-top-4 md:-top-6 text-rose-500"
-									animate={{ rotate: [0, 15, 0] }}
-									transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-								>
-									<Sparkles className="h-4 w-4 sm:h-5 sm:w-5 md:h-8 md:w-8" />
-								</motion.span>
-							</span>
-							<br />
-							<motion.span
-								className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 via-fuchsia-500 to-rose-500 bg-[length:200%] relative inline-block"
-								animate={{
-									backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-									textShadow: ["0 0 10px rgba(244,63,94,0.3)", "0 0 20px rgba(244,63,94,0.5)", "0 0 10px rgba(244,63,94,0.3)"],
-								}}
-								transition={{
-									duration: 8,
-									repeat: Number.POSITIVE_INFINITY,
-									ease: "easeInOut",
-								}}
-							>
-								dashboard icons.
-							</motion.span>
-						</h1>
-					</motion.div>
+					<h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight motion-safe:motion-preset-slide-up motion-duration-1500">
+						Your definitive source for
+						<br />
+						<AuroraText colors={["#FA5352", "#FA5352", "orange"]}>
+							dashboard icons
+						</AuroraText>
+					</h1>
 
-					<motion.div custom={2} variants={fadeUpVariants} initial="hidden" animate="visible">
+					<motion.div
+						custom={2}
+						className="motion-safe:motion-preset-slide-up motion-duration-1500"
+					>
 						<p className="text-sm sm:text-base md:text-xl text-muted-foreground mb-6 md:mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
-							A collection of <span className="font-medium text-rose-500">{totalIcons}</span> curated icons for services, applications and
-							tools, designed specifically for dashboards and app directories.
+							A collection of <span className="font-medium ">{totalIcons}</span>{" "}
+							curated icons for services, applications and tools, designed
+							specifically for dashboards and app directories.
 						</p>
 					</motion.div>
 
 					<motion.div
 						custom={3}
-						variants={fadeUpVariants}
-						initial="hidden"
-						animate="visible"
-						className="flex flex-col items-center gap-4 md:gap-6 mb-8 md:mb-12"
+						className="flex flex-col items-center gap-4 md:gap-6 mb-8 md:mb-12 motion-safe:motion-preset-slide-up motion-duration-1500"
 					>
-						<form action="/icons" method="GET" className="relative w-full max-w-md group">
+						<form
+							action="/icons"
+							method="GET"
+							className="relative w-full max-w-md group"
+						>
 							<Input
 								name="q"
 								type="search"
 								placeholder={`Find any of ${totalIcons} icons by name or category...`}
-								className="pl-10 h-10 md:h-12 rounded-lg border-muted-foreground/20 focus:border-rose-500 focus:ring-rose-500/20 transition-all bg-background/95 dark:bg-background/90 backdrop-blur-sm text-sm md:text-base"
+								className="pl-10 h-10 md:h-12 rounded-lg border-muted-foreground/20  focus:ring-rose-500/20 transition-all   backdrop-blur-sm text-sm md:text-base"
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 							/>
-							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-muted-foreground group-focus-within:text-rose-500 transition-all duration-300" />
+							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-muted-foreground group-focus-within: transition-all duration-300" />
 							<motion.span
 								className="absolute inset-0 -z-10 rounded-lg bg-rose-500/5 opacity-0 transition-opacity group-hover:opacity-100"
 								initial={{ scale: 0.95 }}
@@ -302,14 +254,12 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 							/>
 						</form>
 						<div className="flex gap-3 md:gap-4 flex-wrap justify-center">
-							<Button variant="default" className="h-9 md:h-10 px-4 gap-2 bg-rose-500 hover:bg-rose-600 text-white" asChild>
-								<Link href="/icons" className="flex items-center text-sm md:text-base">
-									Explore all icons
-								</Link>
-							</Button>
+							<Link href="/icons">
+								<InteractiveHoverButton className="rounded-md">Explore icons</InteractiveHoverButton>
+							</Link>
 							<Button
 								variant="outline"
-								className="h-9 md:h-10 px-4 gap-2 border-rose-200 dark:border-rose-900/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:border-rose-300 dark:hover:border-rose-800 bg-background/95 dark:bg-background/90 backdrop-blur-sm"
+								className="h-9 md:h-10 px-4 gap-2 backdrop-blur-sm"
 								asChild
 							>
 								<Link
@@ -329,5 +279,5 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 
 			<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80 pointer-events-none" />
 		</div>
-	)
+	);
 }

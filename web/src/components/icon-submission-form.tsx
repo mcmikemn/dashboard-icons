@@ -49,11 +49,11 @@ export function IconSubmissionContent({ onClose }: { onClose?: () => void }) {
 						<Button
 							key={template.id}
 							variant="outline"
-							className="w-full flex flex-col items-start gap-1 h-auto p-4 text-left cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 hover:border-rose-500 dark:hover:border-rose-500 transition-all duration-300"
+							className="w-full flex flex-col items-start gap-1 h-auto p-4 text-left cursor-pointer0/10 dark:hover:bg-rose-900/30   transition-all duration-300"
 						>
 							<div className="flex w-full items-center justify-between">
-								<span className="font-medium group-hover:text-rose-500 transition-all duration-300">{template.name}</span>
-								<ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-rose-500 transition-all duration-300" />
+								<span className="font-medium group-hover: transition-all duration-300">{template.name}</span>
+								<ExternalLink className="h-4 w-4 text-muted-foreground group-hover: transition-all duration-300" />
 							</div>
 							<span className="text-xs text-muted-foreground">{template.description}</span>
 						</Button>
@@ -71,7 +71,7 @@ export function IconSubmissionForm() {
 			<DialogTrigger asChild>
 				<Button
 					variant="outline"
-					className="hidden md:inline-flex cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 hover:border-rose-500 dark:hover:border-rose-500 transition-all duration-300"
+					className="hidden md:inline-flex cursor-pointer0/10 dark:hover:bg-rose-900/30   transition-all duration-300"
 				>
 					<PlusCircle className="h-4 w-4 transition-all duration-300" /> Contribute new icon
 				</Button>

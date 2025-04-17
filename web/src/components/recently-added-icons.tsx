@@ -26,7 +26,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 	const secondRow = icons.slice(Math.ceil(icons.length / 2));
 
 	return (
-		<div className="relative isolate overflow-hidden py-16 md:py-24">
+		<div className="relative isolate overflow-hidden my-8">
 			{/* Background glow */}
 			<div
 				className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -34,17 +34,17 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 			/>
 
 			<div className="mx-auto px-6 lg:px-8">
-				<div className="mx-auto max-w-2xl text-center mb-12">
-					<h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-rose-500">
+				<div className="mx-auto max-w-2xl text-center my-4">
+					<h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-rose-500  motion-safe:motion-preset-fade-lg motion-duration-2000">
 						Recently Added Icons
 					</h2>
-					<p className="mt-3 text-lg text-muted-foreground">
-						Check out the latest additions to our collection.
-					</p>
 				</div>
 
 				<div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-					<Marquee pauseOnHover className="[--duration:30s] [--gap:1em]">
+					<Marquee
+						pauseOnHover
+						className="[--duration:60s] [--gap:1em] motion-safe:motion-preset-slide-left-sm motion-duration-1000"
+					>
 						{firstRow.map(({ name, data }) => (
 							<RecentIconCard key={name} name={name} data={data} />
 						))}
@@ -52,7 +52,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 					<Marquee
 						reverse
 						pauseOnHover
-						className="[--duration:30s] [--gap:1rem] mt-6"
+						className="[--duration:60s] [--gap:1rem] motion-safe:motion-preset-slide-right-sm motion-duration-1000"
 					>
 						{secondRow.map(({ name, data }) => (
 							<RecentIconCard key={name} name={name} data={data} />
@@ -65,7 +65,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 				<div className="mt-12 text-center">
 					<Link
 						href="/icons"
-						className="text-rose-500 dark:text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 font-medium inline-flex items-center py-2 px-4 rounded-full border border-rose-200 dark:border-rose-800/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all duration-200 group hover-lift soft-shadow"
+						className="font-medium inline-flex items-center py-2 px-4 rounded-full border  transition-all duration-200 group hover-lift soft-shadow"
 					>
 						View complete collection
 						<ArrowRight className="w-4 h-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" />
@@ -89,7 +89,7 @@ function RecentIconCard({
 			prefetch={false}
 			href={`/icons/${name}`}
 			className={cn(
-				"flex flex-col items-center p-3 sm:p-4 rounded-xl border border-border bg-background/95 dark:bg-background/80",
+				"flex flex-col items-center p-3 sm:p-4 rounded-xl border border-border",
 				"transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/5 relative overflow-hidden hover-lift",
 				"w-36 mx-2",
 			)}
@@ -104,18 +104,18 @@ function RecentIconCard({
 					className="object-contain p-1 hover:scale-110 transition-transform duration-300"
 				/>
 			</div>
-			<span className="text-xs sm:text-sm text-center truncate w-full capitalize hover:text-rose-600 dark:hover:text-rose-400 transition-colors duration-200 font-medium">
+			<span className="text-xs sm:text-sm text-center truncate w-full capitalize  dark:hover:text-rose-400 transition-colors duration-200 font-medium">
 				{name.replace(/-/g, " ")}
 			</span>
 			<div className="flex items-center justify-center mt-2 w-full">
-				<span className="text-[10px] sm:text-xs text-muted-foreground flex items-center whitespace-nowrap hover:text-rose-500/70 transition-colors duration-200">
+				<span className="text-[10px] sm:text-xs text-muted-foreground flex items-center whitespace-nowrap hover:/70 transition-colors duration-200">
 					<Clock className="w-3 h-3 mr-1.5 shrink-0" />
 					{formatIconDate(data.update.timestamp)}
 				</span>
 			</div>
 
 			<div className="absolute top-2 right-2 opacity-0 hover:opacity-100 transition-opacity duration-200">
-				<ExternalLink className="w-3 h-3 text-rose-500" />
+				<ExternalLink className="w-3 h-3 " />
 			</div>
 		</Link>
 	);
