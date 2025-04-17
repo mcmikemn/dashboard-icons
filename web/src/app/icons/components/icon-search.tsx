@@ -399,11 +399,8 @@ export function IconSearch({ icons }: IconSearchProps) {
 							<span>{getSortLabel(sortOption)}</span>
 						</div>
 					</div>
-					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-2">
-						{filteredIcons.map(({ name, data }) => (
-							<IconCard key={name} name={name} data={data} matchedAlias={matchedAliases[name] || null} />
-						))}
-					</div>
+
+					<IconsGrid filteredIcons={filteredIcons} matchedAliases={matchedAliases} />
 				</>
 			)}
 		</>
@@ -419,7 +416,6 @@ function IconCard({
 	data: Icon
 	matchedAlias?: string | null
 }) {
-
 	return (
 		<MagicCard className="rounded-md shadow-md">
 			<Link prefetch={false} href={`/icons/${name}`} className="group flex flex-col items-center p-3 sm:p-4 cursor-pointer">
@@ -438,5 +434,23 @@ function IconCard({
 				{matchedAlias && <span className="text-[10px] text-center truncate w-full mt-1">Alias: {matchedAlias}</span>}
 			</Link>
 		</MagicCard>
+	)
+}
+
+interface IconsGridProps {
+	filteredIcons: { name: string; data: Icon }[]
+	matchedAliases: Record<string, string>
+}
+
+function IconsGrid({ filteredIcons, matchedAliases }: IconsGridProps) {
+	return (
+		<>
+			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-2">
+				{filteredIcons.slice(0, 120).map(({ name, data }) => (
+					<IconCard key={name} name={name} data={data} matchedAlias={matchedAliases[name] || null} />
+				))}
+			</div>
+			{filteredIcons.length > 120 && <p className="text-sm text-muted-foreground">And {filteredIcons.length - 120} more...</p>}
+		</>
 	)
 }
