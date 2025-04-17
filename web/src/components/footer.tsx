@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { REPO_PATH } from "@/constants"
-import { motion } from "framer-motion"
-import { ExternalLink, Github, Heart } from "lucide-react"
-import Link from "next/link"
-import { useState } from "react"
+import { REPO_PATH } from "@/constants";
+import { motion } from "framer-motion";
+import { ExternalLink, Github, Heart } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 // Pre-define unique IDs for animations to avoid using array indices as keys
 const HOVER_HEART_IDS = [
@@ -16,44 +16,41 @@ const HOVER_HEART_IDS = [
 	"hover-heart-6",
 	"hover-heart-7",
 	"hover-heart-8",
-]
-const BURST_HEART_IDS = ["burst-heart-1", "burst-heart-2", "burst-heart-3", "burst-heart-4", "burst-heart-5"]
+];
+const BURST_HEART_IDS = [
+	"burst-heart-1",
+	"burst-heart-2",
+	"burst-heart-3",
+	"burst-heart-4",
+	"burst-heart-5",
+];
 
 export function Footer() {
-	const [isHeartHovered, setIsHeartHovered] = useState(false)
-	const [isHeartFilled, setIsHeartFilled] = useState(false)
+	const [isHeartHovered, setIsHeartHovered] = useState(false);
+	const [isHeartFilled, setIsHeartFilled] = useState(false);
 
 	// Toggle heart fill state and add extra mini hearts on click
 	const handleHeartClick = () => {
-		setIsHeartFilled(!isHeartFilled)
-	}
+		setIsHeartFilled(!isHeartFilled);
+	};
 
 	return (
-		<footer className="border-t py-12 bg-background relative overflow-hidden">
+		<footer className="border-t py-4 bg-background relative overflow-hidden">
 			<div className="absolute inset-0 bg-gradient-to-r from-rose-500/[0.03] via-transparent to-rose-500/[0.03]" />
 
 			<div className="container mx-auto px-4 md:px-6 relative z-10">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-					<motion.div
-						className="flex flex-col gap-3"
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ duration: 0.5 }}
-					>
-						<h3 className="font-bold text-lg text-foreground/90">Dashboard Icons</h3>
+					<div className="flex flex-col gap-3">
+						<h3 className="font-bold text-lg text-foreground/90">
+							Dashboard Icons
+						</h3>
 						<p className="text-sm text-muted-foreground leading-relaxed">
-							A collection of curated icons for services, applications and tools, designed specifically for dashboards and app directories.
+							A collection of curated icons for services, applications and
+							tools, designed specifically for dashboards and app directories.
 						</p>
-					</motion.div>
+					</div>
 
-					<motion.div
-						className="flex flex-col gap-3"
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ duration: 0.5, delay: 0.1 }}
-					>
+					<div className="flex flex-col gap-3">
 						<h3 className="font-bold text-lg text-foreground/90">Links</h3>
 						<div className="flex flex-col gap-2">
 							<Link
@@ -78,7 +75,7 @@ export function Footer() {
 								<Github className="h-3.5 w-3.5 group-hover:text-rose-500 transition-colors duration-200 flex-shrink-0 self-center" />
 							</Link>
 						</div>
-					</motion.div>
+					</div>
 
 					<motion.div
 						className="flex flex-col gap-3"
@@ -135,7 +132,9 @@ export function Footer() {
 												}}
 												className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
 											>
-												<Heart className={`h-2 w-2 ${i < 3 ? "text-rose-300" : i < 6 ? "text-rose-400" : "text-rose-500"}`} />
+												<Heart
+													className={`h-2 w-2 ${i < 3 ? "text-rose-300" : i < 6 ? "text-rose-400" : "text-rose-500"}`}
+												/>
 											</motion.div>
 										))}
 
@@ -183,7 +182,10 @@ export function Footer() {
 												}}
 												className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
 											>
-												<Heart className="h-2 w-2 text-rose-500" fill="#f43f5e" />
+												<Heart
+													className="h-2 w-2 text-rose-500"
+													fill="#f43f5e"
+												/>
 											</motion.div>
 										))}
 									</>
@@ -203,16 +205,10 @@ export function Footer() {
 					</motion.div>
 				</div>
 
-				<motion.div
-					className="mt-10 pt-6 border-t text-center text-sm text-muted-foreground/80"
-					initial={{ opacity: 0 }}
-					whileInView={{ opacity: 1 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.5, delay: 0.3 }}
-				>
+				<div className="mt-4 text-center text-sm text-muted-foreground/80">
 					<p>© {new Date().getFullYear()} Homarr Labs. All rights reserved.</p>
-				</motion.div>
+				</div>
 			</div>
 		</footer>
-	)
+	);
 }
