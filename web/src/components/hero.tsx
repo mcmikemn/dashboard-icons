@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { motion, useAnimation } from "framer-motion"
+import { motion, useAnimation, useInView } from "framer-motion"
 import { Circle, Github, Heart, Search, Sparkles } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 interface IconCardProps {
 	name: string
@@ -46,6 +46,8 @@ function ElegantShape({
 }) {
 	const controls = useAnimation()
 	const [isMobile, setIsMobile] = useState(false)
+	const ref = useRef(null)
+	const isInView = useInView(ref, { once: true, amount: 0.1 })
 
 	useEffect(() => {
 		const checkMobile = () => {
@@ -56,40 +58,51 @@ function ElegantShape({
 		return () => window.removeEventListener("resize", checkMobile)
 	}, [])
 
+	useEffect(() => {
+		if (isInView) {
+			controls.start({
+				opacity: 1,
+				y: 0,
+				rotate: rotate,
+				transition: {
+					type: "spring",
+					stiffness: 50,
+					damping: 20,
+					duration: 1.8,
+					delay,
+					ease: [0.23, 0.86, 0.39, 0.96],
+					opacity: { duration: 1.2 },
+				}
+			})
+		}
+	}, [controls, delay, isInView, rotate])
+
 	return (
 		<motion.div
+			ref={ref}
 			initial={{
 				opacity: 0,
 				y: -150,
 				rotate: rotate - 15,
 			}}
-			animate={{
-				opacity: 1,
-				y: 0,
-				rotate: rotate,
-			}}
-			transition={{
-				duration: 2.4,
-				delay,
-				ease: [0.23, 0.86, 0.39, 0.96],
-				opacity: { duration: 1.2 },
-			}}
-			className={cn("absolute", className)}
+			animate={controls}
+			className={cn("absolute will-change-transform", className)}
 		>
 			<motion.div
 				animate={{
 					y: [0, 15, 0],
 				}}
 				transition={{
-					duration: 12,
+					duration: 8 + Math.random() * 4, // Random duration between 8-12s for varied movement
 					repeat: Number.POSITIVE_INFINITY,
 					ease: "easeInOut",
+					repeatType: "reverse",
 				}}
 				style={{
 					width: isMobile && mobileWidth ? mobileWidth : width,
 					height: isMobile && mobileHeight ? mobileHeight : height,
 				}}
-				className="relative"
+				className="relative will-change-transform"
 			>
 				<div
 					className={cn(

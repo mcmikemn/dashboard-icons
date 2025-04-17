@@ -3,11 +3,12 @@
 import { BASE_URL } from "@/constants"
 import type { IconWithName } from "@/types/icons"
 import { format, isToday, isYesterday } from "date-fns"
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { ArrowRight, Clock, ExternalLink } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useTheme } from "next-themes"
+import { useRef } from "react"
 
 function formatIconDate(timestamp: string): string {
 	const date = new Date(timestamp)
@@ -68,17 +69,68 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 				</motion.div>
 
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-5">
-					{icons.map(({ name, data }, index) => (
+					{icons.map(({ name, data }) => (
+						<RecentIconCard key={name} name={name} data={data} getIconVariant={getIconVariant} />
+					))}
+				</div>
+
 						<motion.div
-							key={name}
-							initial={{ opacity: 0, y: 15 }}
-							whileInView={{ opacity: 1, y: 0 }}
+					className="mt-12 text-center"
+					initial={{ opacity: 0 }}
+					whileInView={{ opacity: 1 }}
 							viewport={{ once: true }}
-							transition={{
-								duration: 0.5,
-								delay: index * 0.05,
-								ease: "easeOut",
-							}}
+					transition={{ duration: 0.8, delay: 0.4 }}
+				>
+					<Link
+						href="/icons"
+						className="text-rose-500 dark:text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 font-medium inline-flex items-center py-2 px-4 rounded-full border border-rose-200 dark:border-rose-800/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all duration-200 group"
+					>
+						View all icons
+						<ArrowRight className="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" />
+					</Link>
+				</motion.div>
+			</div>
+		</div>
+	)
+}
+
+// Extracted component for better animation handling
+function RecentIconCard({ name, data, getIconVariant }: {
+	name: string;
+	data: any;
+	getIconVariant: (name: string, data: any) => string;
+}) {
+	const ref = useRef(null);
+	const isInView = useInView(ref, {
+		once: false,
+		amount: 0.2,
+		margin: "100px 0px"
+	});
+
+	const variants = {
+		hidden: { opacity: 0, y: 20, scale: 0.95 },
+		visible: {
+			opacity: 1,
+			y: 0,
+			scale: 1,
+			transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] }
+		},
+		exit: {
+			opacity: 0,
+			y: -10,
+			scale: 0.98,
+			transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] }
+		}
+	};
+
+	return (
+		<motion.div
+			ref={ref}
+			initial="hidden"
+			animate={isInView ? "visible" : "hidden"}
+			exit="exit"
+			variants={variants}
+			className="will-change-transform"
 						>
 							<Link
 								prefetch={false}
@@ -110,25 +162,5 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 								</div>
 							</Link>
 						</motion.div>
-					))}
-				</div>
-
-				<motion.div
-					className="mt-12 text-center"
-					initial={{ opacity: 0 }}
-					whileInView={{ opacity: 1 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.8, delay: 0.4 }}
-				>
-					<Link
-						href="/icons"
-						className="text-rose-500 dark:text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 font-medium inline-flex items-center py-2 px-4 rounded-full border border-rose-200 dark:border-rose-800/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all duration-200 group"
-					>
-						View all icons
-						<ArrowRight className="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" />
-					</Link>
-				</motion.div>
-			</div>
-		</div>
-	)
+	);
 }
