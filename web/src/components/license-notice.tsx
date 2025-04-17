@@ -42,7 +42,7 @@ export function LicenseNotice() {
 								identification purposes only and do not imply endorsement.
 							</p>
 							<p>
-								Read the{" "}
+								View our{" "}
 								<Link
 									href={`${REPO_PATH}/blob/main/LICENSE`}
 									className="underline hover:text-foreground"

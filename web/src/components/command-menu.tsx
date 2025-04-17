@@ -1,103 +1,137 @@
 "use client"
 
+import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { useMediaQuery } from "@/hooks/use-media-query"
+import { fuzzySearch } from "@/lib/utils"
+import { Icon } from "@/types/icons"
 import { useRouter } from "next/navigation"
-import * as React from "react"
-
-import { Button } from "@/components/ui/button"
-import { CommandDialog, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { ImageIcon, Search } from "lucide-react"
-import Link from "next/link"
+import { useCallback, useEffect, useState } from "react"
 
 interface CommandMenuProps {
-	icons: string[]
+	icons: {
+		name: string
+		data: {
+			categories: string[]
+			aliases: string[]
+			[key: string]: unknown
+		}
+	}[]
 	triggerButtonId?: string
-	displayAsButton?: boolean
+	open?: boolean
+	onOpenChange?: (open: boolean) => void
 }
 
-export function CommandMenu({ icons, triggerButtonId, displayAsButton = false }: CommandMenuProps) {
+export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalOnOpenChange }: CommandMenuProps) {
 	const router = useRouter()
-	const [open, setOpen] = React.useState(false)
-	const [mounted, setMounted] = React.useState(false)
-	const [inputValue, setInputValue] = React.useState("")
-	const getFilteredIcons = React.useCallback(() => {
-		const query = inputValue.toLowerCase().trim()
-		if (!query) return icons.slice(0, 75)
-		return icons.filter((icon) => {
-			const iconName = icon.toLowerCase()
-			if (iconName.includes(query)) return true
-			const parts = query.split(/\s+/)
-			let lastIndex = -1
-			return parts.every((part) => {
-				const index = iconName.indexOf(part, lastIndex + 1)
-				if (index === -1) return false
-				lastIndex = index
-				return true
-			})
-		})
-	}, [icons, inputValue])
+	const [internalOpen, setInternalOpen] = useState(false)
+	const [query, setQuery] = useState("")
+	const isDesktop = useMediaQuery("(min-width: 768px)")
 
-	const filteredIcons = getFilteredIcons()
+	// Use either external or internal state for controlling open state
+	const isOpen = externalOpen !== undefined ? externalOpen : internalOpen
 
-	React.useEffect(() => {
-		setMounted(true)
-	}, [])
+	// Wrap setIsOpen in useCallback to fix dependency issue
+	const setIsOpen = useCallback(
+		(value: boolean) => {
+			if (externalOnOpenChange) {
+				externalOnOpenChange(value)
+			} else {
+				setInternalOpen(value)
+			}
+		},
+		[externalOnOpenChange],
+	)
 
-	React.useEffect(() => {
-		const down = (e: KeyboardEvent) => {
-			if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+	const filteredIcons = getFilteredIcons(icons, query)
+
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (
+				(e.key === "k" && (e.metaKey || e.ctrlKey)) ||
+				(e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA")
+			) {
 				e.preventDefault()
-				setOpen((open) => !open)
+				setIsOpen(!isOpen)
 			}
 		}
 
-		document.addEventListener("keydown", down)
-		return () => document.removeEventListener("keydown", down)
-	}, [])
+		document.addEventListener("keydown", handleKeyDown)
+		return () => document.removeEventListener("keydown", handleKeyDown)
+	}, [isOpen, setIsOpen])
 
-	// Effect to connect to external trigger button
-	React.useEffect(() => {
-		if (!triggerButtonId || !mounted) return
-
-		const triggerButton = document.getElementById(triggerButtonId)
-		if (!triggerButton) return
-
-		const handleClick = () => {
-			setOpen(true)
+	function getFilteredIcons(iconList: CommandMenuProps["icons"], query: string) {
+		if (!query) {
+			// Return a limited number of icons when no query is provided
+			return iconList.slice(0, 8)
 		}
 
-		triggerButton.addEventListener("click", handleClick)
-		return () => triggerButton.removeEventListener("click", handleClick)
-	}, [triggerButtonId, mounted])
+		// Calculate scores for each icon
+		const scoredIcons = iconList.map((icon) => {
+			// Calculate scores for different fields
+			const nameScore = fuzzySearch(icon.name, query) * 2.0 // Give more weight to name matches
 
-	const handleInputChange = React.useCallback((value: string) => {
-		setInputValue(value)
-	}, [])
+			// Get max score from aliases
+			const aliasScore =
+				icon.data.aliases && icon.data.aliases.length > 0
+					? Math.max(...icon.data.aliases.map((alias) => fuzzySearch(alias, query))) * 1.8 // Increased weight for aliases
+					: 0
 
-	const handleSelectIcon = React.useCallback(
-		(iconName: string) => {
-			router.push(`/icons/${iconName}`)
-			setOpen(false)
-		},
-		[router],
-	)
+			// Get max score from categories
+			const categoryScore =
+				icon.data.categories && icon.data.categories.length > 0
+					? Math.max(...icon.data.categories.map((category) => fuzzySearch(category, query)))
+					: 0
 
-	if (!mounted) return null
+			// Use the highest score
+			const score = Math.max(nameScore, aliasScore, categoryScore)
+
+			return { icon, score, matchedField: score === nameScore ? "name" : score === aliasScore ? "alias" : "category" }
+		})
+
+		// Filter icons with a minimum score and sort by highest score
+		return scoredIcons
+			.filter((item) => item.score > 0.3) // Higher threshold for more accurate results
+			.sort((a, b) => b.score - a.score)
+			.slice(0, 20) // Limit the number of results
+			.map((item) => item.icon)
+	}
+
+	const handleSelect = (name: string) => {
+		setIsOpen(false)
+		router.push(`/icons/${name}`)
+	}
 
 	return (
-		<CommandDialog open={open} onOpenChange={setOpen}>
-			<CommandInput placeholder="Type to search icons..." value={inputValue} onValueChange={handleInputChange} />
-			<CommandList className="max-h-[300px]">
-				{filteredIcons.length === 0 && <CommandEmpty>No results found. Try a different search term.</CommandEmpty>}
-				{filteredIcons.map((icon) => (
-					<CommandItem key={icon} onSelect={() => handleSelectIcon(icon)} className="cursor-pointer">
-						<Link prefetch={filteredIcons.length < 3} href={`/icons/${icon}`} className="flex items-center gap-2 w-full">
-							<span className="text-rose-500">
-								<ImageIcon className="h-4 w-4" />
-							</span>
-							<span className="capitalize">{icon.replace(/-/g, " ")}</span>
-						</Link>
-					</CommandItem>
-				))}
+		<CommandDialog open={isOpen} onOpenChange={setIsOpen}>
+			<CommandInput placeholder="Search for icons by name, category, or purpose..." value={query} onValueChange={setQuery} />
+			<CommandList>
+				<CommandEmpty>No matching icons found. Try a different search term or browse all icons.</CommandEmpty>
+				<CommandGroup heading="Icons">
+					{filteredIcons.map(({ name, data }) => {
+						// Find matched alias for display if available
+						const matchedAlias =
+							query && data.aliases && data.aliases.length > 0
+								? data.aliases.find((alias) => alias.toLowerCase().includes(query.toLowerCase()))
+								: null
+
+						return (
+							<CommandItem key={name} value={name} onSelect={() => handleSelect(name)} className="flex items-center gap-2 cursor-pointer">
+								<div className="flex-shrink-0 h-5 w-5 relative">
+									<div className="h-5 w-5 bg-rose-100 dark:bg-rose-900/30 rounded-md flex items-center justify-center">
+										<span className="text-[10px] font-medium text-rose-800 dark:text-rose-300">{name.substring(0, 2).toUpperCase()}</span>
+									</div>
+								</div>
+								<span className="flex-grow capitalize">{name.replace(/-/g, " ")}</span>
+								{matchedAlias && <span className="text-xs text-primary-500 truncate max-w-[100px]">alias: {matchedAlias}</span>}
+								{!matchedAlias && data.categories && data.categories.length > 0 && (
+									<span className="text-xs text-muted-foreground truncate max-w-[100px]">
+										{data.categories[0].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+									</span>
+								)}
+							</CommandItem>
+						)
+					})}
+				</CommandGroup>
 			</CommandList>
 		</CommandDialog>
 	)

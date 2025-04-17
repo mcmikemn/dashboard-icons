@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { motion, useAnimation, useInView } from "framer-motion"
 import { Circle, Github, Heart, Search, Sparkles } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface IconCardProps {
 	name: string
@@ -72,7 +72,7 @@ function ElegantShape({
 					delay,
 					ease: [0.23, 0.86, 0.39, 0.96],
 					opacity: { duration: 1.2 },
-				}
+				},
 			})
 		}
 	}, [controls, delay, isInView, rotate])
@@ -302,7 +302,7 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 							<Input
 								name="q"
 								type="search"
-								placeholder={`Search ${totalIcons} icons...`}
+								placeholder={`Find any of ${totalIcons} icons by name or category...`}
 								className="pl-10 h-10 md:h-12 rounded-lg border-muted-foreground/20 focus:border-rose-500 focus:ring-rose-500/20 transition-all bg-background/95 dark:bg-background/90 backdrop-blur-sm text-sm md:text-base"
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
@@ -318,7 +318,7 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 						<div className="flex gap-3 md:gap-4 flex-wrap justify-center">
 							<Button variant="default" className="h-9 md:h-10 px-4 gap-2 bg-rose-500 hover:bg-rose-600 text-white" asChild>
 								<Link href="/icons" className="flex items-center text-sm md:text-base">
-									Browse all icons
+									Explore all icons
 								</Link>
 							</Button>
 							<Button

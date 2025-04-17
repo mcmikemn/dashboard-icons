@@ -1,13 +1,13 @@
 "use client"
 
 import { BASE_URL } from "@/constants"
-import type { IconWithName } from "@/types/icons"
+import type { Icon, IconWithName } from "@/types/icons"
 import { format, isToday, isYesterday } from "date-fns"
 import { motion, useInView } from "framer-motion"
 import { ArrowRight, Clock, ExternalLink } from "lucide-react"
+import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { useTheme } from "next-themes"
 import { useRef } from "react"
 
 function formatIconDate(timestamp: string): string {
@@ -25,20 +25,20 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 	const { resolvedTheme } = useTheme()
 
 	// Helper function to get the appropriate icon variant based on theme
-	const getIconVariant = (name: string, data: any) => {
+	const getIconVariant = (name: string, data: Icon) => {
 		// Check if the icon has theme variants and use appropriate one
 		if (data.colors) {
 			// If in dark mode and a light variant exists, use the light variant
-			if (resolvedTheme === 'dark' && data.colors.light) {
-				return data.colors.light;
+			if (resolvedTheme === "dark" && data.colors.light) {
+				return data.colors.light
 			}
 			// If in light mode and a dark variant exists, use the dark variant
-			else if (resolvedTheme === 'light' && data.colors.dark) {
-				return data.colors.dark;
+			if (resolvedTheme === "light" && data.colors.dark) {
+				return data.colors.dark
 			}
 		}
 		// Fall back to the default name if no appropriate variant
-		return name;
+		return name
 	}
 
 	return (
@@ -74,18 +74,18 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 					))}
 				</div>
 
-						<motion.div
+				<motion.div
 					className="mt-12 text-center"
 					initial={{ opacity: 0 }}
 					whileInView={{ opacity: 1 }}
-							viewport={{ once: true }}
+					viewport={{ once: true }}
 					transition={{ duration: 0.8, delay: 0.4 }}
 				>
 					<Link
 						href="/icons"
 						className="text-rose-500 dark:text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 font-medium inline-flex items-center py-2 px-4 rounded-full border border-rose-200 dark:border-rose-800/30 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all duration-200 group hover-lift soft-shadow"
 					>
-						View all icons
+						View complete collection
 						<ArrowRight className="w-4 h-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" />
 					</Link>
 				</motion.div>
@@ -95,17 +95,21 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 }
 
 // Extracted component for better animation handling
-function RecentIconCard({ name, data, getIconVariant }: {
-	name: string;
-	data: any;
-	getIconVariant: (name: string, data: any) => string;
+function RecentIconCard({
+	name,
+	data,
+	getIconVariant,
+}: {
+	name: string
+	data: Icon
+	getIconVariant: (name: string, data: Icon) => string
 }) {
-	const ref = useRef(null);
+	const ref = useRef(null)
 	const isInView = useInView(ref, {
 		once: false,
 		amount: 0.2,
-		margin: "100px 0px"
-	});
+		margin: "100px 0px",
+	})
 
 	const variants = {
 		hidden: { opacity: 0, y: 20, scale: 0.95 },
@@ -113,15 +117,15 @@ function RecentIconCard({ name, data, getIconVariant }: {
 			opacity: 1,
 			y: 0,
 			scale: 1,
-			transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] }
+			transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] },
 		},
 		exit: {
 			opacity: 0,
 			y: -10,
 			scale: 0.98,
-			transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] }
-		}
-	};
+			transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] },
+		},
+	}
 
 	return (
 		<motion.div
@@ -162,5 +166,5 @@ function RecentIconCard({ name, data, getIconVariant }: {
 				</div>
 			</Link>
 		</motion.div>
-	);
+	)
 }
