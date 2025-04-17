@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import { ArrowRight, Clock, ExternalLink } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useTheme } from "next-themes"
 
 function formatIconDate(timestamp: string): string {
 	const date = new Date(timestamp)
@@ -20,6 +21,25 @@ function formatIconDate(timestamp: string): string {
 }
 
 export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
+	const { resolvedTheme } = useTheme()
+
+	// Helper function to get the appropriate icon variant based on theme
+	const getIconVariant = (name: string, data: any) => {
+		// Check if the icon has theme variants and use appropriate one
+		if (data.colors) {
+			// If in dark mode and a light variant exists, use the light variant
+			if (resolvedTheme === 'dark' && data.colors.light) {
+				return data.colors.light;
+			}
+			// If in light mode and a dark variant exists, use the dark variant
+			else if (resolvedTheme === 'light' && data.colors.dark) {
+				return data.colors.dark;
+			}
+		}
+		// Fall back to the default name if no appropriate variant
+		return name;
+	}
+
 	return (
 		<div className="relative isolate overflow-hidden py-16 md:py-24">
 			{/* Background glow */}
@@ -69,7 +89,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 
 								<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
 									<Image
-										src={`${BASE_URL}/${data.base}/${name}.${data.base}`}
+										src={`${BASE_URL}/${data.base}/${getIconVariant(name, data)}.${data.base}`}
 										alt={`${name} icon`}
 										fill
 										className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
