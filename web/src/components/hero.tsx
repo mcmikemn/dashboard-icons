@@ -252,7 +252,7 @@ export function HeroSection({ totalIcons, stars }: { totalIcons: number; stars: 
 								</Button>
 							</Link>
 							{/* Give us money */}
-							<Link href="https://github.com/sponsors/homarr-labs">
+							<Link href="https://opencollective.com/homarr">
 								<Button variant="outline" className="h-9 md:h-10 px-4" asChild>
 									<div className="flex items-center gap-2">
 										<p>Give us money</p>
