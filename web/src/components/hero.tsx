@@ -1,20 +1,19 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { motion, useAnimation, useInView } from "framer-motion"
-import { Github, Heart, Search } from "lucide-react"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
-import { AnimatedShinyText } from "./magicui/animated-shiny-text"
-import { AuroraText } from "./magicui/aurora-text"
-import { InteractiveHoverButton } from "./magicui/interactive-hover-button"
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { motion, useAnimation, useInView } from "framer-motion";
+import { DollarSign, Heart, Search, Star } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { AuroraText } from "./magicui/aurora-text";
+import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
 
 interface IconCardProps {
-	name: string
-	imageUrl: string
+	name: string;
+	imageUrl: string;
 }
 
 function IconCard({ name, imageUrl }: IconCardProps) {
@@ -23,9 +22,11 @@ function IconCard({ name, imageUrl }: IconCardProps) {
 			<div className="w-16 h-16 flex items-center justify-center">
 				<img src={imageUrl} alt={name} className="max-w-full max-h-full" />
 			</div>
-			<p className="text-sm text-center text-muted-foreground group-hover:text-foreground transition-colors">{name}</p>
+			<p className="text-sm text-center text-muted-foreground group-hover:text-foreground transition-colors">
+				{name}
+			</p>
 		</Card>
-	)
+	);
 }
 
 function ElegantShape({
@@ -38,28 +39,28 @@ function ElegantShape({
 	mobileWidth,
 	mobileHeight,
 }: {
-	className?: string
-	delay?: number
-	width?: number
-	height?: number
-	rotate?: number
-	gradient?: string
-	mobileWidth?: number
-	mobileHeight?: number
+	className?: string;
+	delay?: number;
+	width?: number;
+	height?: number;
+	rotate?: number;
+	gradient?: string;
+	mobileWidth?: number;
+	mobileHeight?: number;
 }) {
-	const controls = useAnimation()
-	const [isMobile, setIsMobile] = useState(false)
-	const ref = useRef(null)
-	const isInView = useInView(ref, { once: true, amount: 0.1 })
+	const controls = useAnimation();
+	const [isMobile, setIsMobile] = useState(false);
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, amount: 0.1 });
 
 	useEffect(() => {
 		const checkMobile = () => {
-			setIsMobile(window.innerWidth < 768)
-		}
-		checkMobile()
-		window.addEventListener("resize", checkMobile)
-		return () => window.removeEventListener("resize", checkMobile)
-	}, [])
+			setIsMobile(window.innerWidth < 768);
+		};
+		checkMobile();
+		window.addEventListener("resize", checkMobile);
+		return () => window.removeEventListener("resize", checkMobile);
+	}, []);
 
 	useEffect(() => {
 		if (isInView) {
@@ -76,9 +77,9 @@ function ElegantShape({
 					ease: [0.23, 0.86, 0.39, 0.96],
 					opacity: { duration: 1.2 },
 				},
-			})
+			});
 		}
-	}, [controls, delay, isInView, rotate])
+	}, [controls, delay, isInView, rotate]);
 
 	return (
 		<motion.div
@@ -120,11 +121,14 @@ function ElegantShape({
 				/>
 			</motion.div>
 		</motion.div>
-	)
+	);
 }
 
-export function HeroSection({ totalIcons }: { totalIcons: number }) {
-	const [searchQuery, setSearchQuery] = useState("")
+export function HeroSection({
+	totalIcons,
+	stars,
+}: { totalIcons: number; stars: number }) {
+	const [searchQuery, setSearchQuery] = useState("");
 
 	return (
 		<div className="relative my-20 w-full flex items-center justify-center overflow-hidden">
@@ -189,26 +193,40 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 
 			<div className="relative z-10 container mx-auto px-4 md:px-6">
 				<div className="max-w-4xl mx-auto text-center flex flex-col gap-4">
-					<Link prefetch href="https://github.com/homarr-labs" target="_blank" rel="noopener noreferrer" className="mx-auto">
+					<Link
+						prefetch
+						href="https://github.com/homarr-labs"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="mx-auto"
+					>
 						<Card className="group p-2 px-4 flex flex-row items-center gap-2 border-2  z-10 relative glass-effect motion-safe:motion-preset-slide-up motion-duration-1500 hover:scale-105 transition-all duration-300">
 							<Heart
 								// Filled when hovered
 								className="h-4 w-4 text-primary group-hover:fill-primary transition-all duration-300"
 							/>
-							<span className="text-sm text-foreground/70 tracking-wide">Made with love by Homarr Labs</span>
+							<span className="text-sm text-foreground/70 tracking-wide">
+								Made with love by Homarr Labs
+							</span>
 						</Card>
 					</Link>
 
 					<h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight motion-safe:motion-preset-slide-up motion-duration-1500">
 						Your definitive source for
 						<br />
-						<AuroraText colors={["#FA5352", "#FA5352", "orange"]}>dashboard icons</AuroraText>
+						<AuroraText colors={["#FA5352", "#FA5352", "orange"]}>
+							dashboard icons
+						</AuroraText>
 					</h1>
 
-					<motion.div custom={2} className="motion-safe:motion-preset-slide-up motion-duration-1500">
+					<motion.div
+						custom={2}
+						className="motion-safe:motion-preset-slide-up motion-duration-1500"
+					>
 						<p className="text-sm sm:text-base md:text-xl text-muted-foreground mb-6 md:mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
-							A collection of <span className="font-medium ">{totalIcons}</span> curated icons for services, applications and tools,
-							designed specifically for dashboards and app directories.
+							A collection of <span className="font-medium ">{totalIcons}</span>{" "}
+							curated icons for services, applications and tools, designed
+							specifically for dashboards and app directories.
 						</p>
 					</motion.div>
 
@@ -216,12 +234,17 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 						custom={3}
 						className="flex flex-col items-center gap-4 md:gap-6 mb-8 md:mb-12 motion-safe:motion-preset-slide-up motion-duration-1500"
 					>
-						<form action="/icons" method="GET" className="relative w-full max-w-md group">
+						<form
+							action="/icons"
+							method="GET"
+							className="relative w-full max-w-md group"
+						>
 							<Input
 								name="q"
+								autoFocus
 								type="search"
 								placeholder={`Find any of ${totalIcons} icons by name or category...`}
-								className="pl-10 h-10 md:h-12 rounded-lg border-muted-foreground/20  focus:ring-rose-500/20 transition-all   backdrop-blur-sm text-sm md:text-base"
+								className="pl-10 h-10 md:h-12 rounded-lg border-muted-foreground/20  focus:ring-rose-500/20 text-sm md:text-base"
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 							/>
@@ -235,19 +258,35 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 						</form>
 						<div className="flex gap-3 md:gap-4 flex-wrap justify-center">
 							<Link href="/icons">
-								<InteractiveHoverButton className="rounded-md">Explore icons</InteractiveHoverButton>
+								<InteractiveHoverButton className="rounded-md bg-input/30">
+									Explore icons
+								</InteractiveHoverButton>
 							</Link>
-							<Button variant="outline" className="h-9 md:h-10 px-4 gap-2 backdrop-blur-sm" asChild>
-								<Link
-									href="https://github.com/homarr-labs/dashboard-icons"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="flex items-center text-sm md:text-base"
-								>
-									GitHub
-									<Github className="h-4 w-4 ml-1" />
-								</Link>
-							</Button>
+							<Link
+								href="https://github.com/homarr-labs/dashboard-icons"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center text-sm md:text-base"
+							>
+								<Button variant="outline" className="h-9 md:h-10 px-4" asChild>
+									<div>
+										<p>Give us a star</p>
+										<Star className="h-4 w-4 ml-1 text-yellow-500 fill-yellow-500" />
+										<span className="text-xs text-muted-foreground">
+											{stars}
+										</span>
+									</div>
+								</Button>
+							</Link>
+							{/* Give us money */}
+							<Link href="https://github.com/sponsors/homarr-labs">
+								<Button variant="outline" className="h-9 md:h-10 px-4" asChild>
+									<div className="flex items-center gap-2">
+										<p>Give us money</p>
+										<DollarSign className="h-4 w-4 ml-1 text-yellow-500" />
+									</div>
+								</Button>
+							</Link>
 						</div>
 					</motion.div>
 				</div>
@@ -255,5 +294,5 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 
 			<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80 pointer-events-none" />
 		</div>
-	)
+	);
 }

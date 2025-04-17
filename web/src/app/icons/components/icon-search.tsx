@@ -19,7 +19,6 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { BASE_URL } from "@/constants"
 import type { Icon, IconSearchProps } from "@/types/icons"
-import { useInView } from "framer-motion"
 import { ArrowDownAZ, ArrowUpZA, Calendar, Filter, Search, SortAsc, X } from "lucide-react"
 import { useTheme } from "next-themes"
 import Image from "next/image"
@@ -420,28 +419,6 @@ function IconCard({
 	data: Icon
 	matchedAlias?: string | null
 }) {
-	const ref = useRef(null)
-	const isInView = useInView(ref, {
-		once: false,
-		amount: 0.2,
-		margin: "100px 0px",
-	})
-
-	const variants = {
-		hidden: { opacity: 0, y: 20, scale: 0.95 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			scale: 1,
-			transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] },
-		},
-		exit: {
-			opacity: 0,
-			y: -10,
-			scale: 0.98,
-			transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] },
-		},
-	}
 
 	return (
 		<MagicCard className="rounded-md shadow-md">
