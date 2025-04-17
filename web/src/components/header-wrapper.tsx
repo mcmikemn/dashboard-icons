@@ -1,5 +1,5 @@
 import { ClientHeader } from "./client-header"
 
-export function Header() {
+export function HeaderWrapper() {
 	return <ClientHeader />
 }

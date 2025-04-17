@@ -1,6 +1,6 @@
 import { PostHogProvider } from "@/components/PostHogProvider"
 import { Footer } from "@/components/footer"
-import { Header } from "@/components/header-wrapper"
+import { HeaderWrapper } from "@/components/header-wrapper"
 import { LicenseNotice } from "@/components/license-notice"
 import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
@@ -101,7 +101,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 			<body className={`${inter.variable} antialiased bg-background flex flex-col min-h-screen`}>
 				<PostHogProvider>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-						<Header />
+						<HeaderWrapper />
 						<main className="flex-grow">{children}</main>
 						<Footer />
 						<Toaster />
