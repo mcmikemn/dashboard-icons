@@ -309,7 +309,10 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 										<div className="flex flex-wrap gap-2">
 											{iconData.categories.map((category) => (
 												<Link key={category} href={`/icons?category=${encodeURIComponent(category)}`} className="cursor-pointer">
-													<Badge variant="outline" className="inline-flex items-center border border-primary/20 hover:border-primary px-2.5 py-0.5 text-sm">
+													<Badge
+														variant="outline"
+														className="inline-flex items-center border border-primary/20 hover:border-primary px-2.5 py-0.5 text-sm"
+													>
 														{category
 															.split("-")
 															.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
