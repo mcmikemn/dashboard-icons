@@ -10,6 +10,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useRef, useState } from "react"
+import { useTheme } from "next-themes"
 
 export function IconSearch({ icons }: IconSearchProps) {
 	const searchParams = useSearchParams()
@@ -18,6 +19,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 	const pathname = usePathname()
 	const [searchQuery, setSearchQuery] = useState(initialQuery ?? "")
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+	const { resolvedTheme } = useTheme()
 	const [filteredIcons, setFilteredIcons] = useState(() => {
 		if (!initialQuery?.trim()) return icons
 
@@ -79,6 +81,23 @@ export function IconSearch({ icons }: IconSearchProps) {
 		}
 	}, [])
 
+	// Helper function to get the appropriate icon variant based on theme
+	const getIconVariant = (name: string, data: any) => {
+		// Check if the icon has theme variants and use appropriate one
+		if (data.colors) {
+			// If in dark mode and a light variant exists, use the light variant
+			if (resolvedTheme === 'dark' && data.colors.light) {
+				return data.colors.light;
+			}
+			// If in light mode and a dark variant exists, use the dark variant
+			else if (resolvedTheme === 'light' && data.colors.dark) {
+				return data.colors.dark;
+			}
+		}
+		// Fall back to the default name if no appropriate variant
+		return name;
+	}
+
 	if (!searchParams) return null
 
 	return (
@@ -133,7 +152,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 
 								<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
 									<Image
-										src={`${BASE_URL}/${data.base}/${name}.${data.base}`}
+										src={`${BASE_URL}/${data.base}/${getIconVariant(name, data)}.${data.base}`}
 										alt={`${name} icon`}
 										fill
 										className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"

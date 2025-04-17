@@ -13,6 +13,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { toast } from "sonner"
 import { Carbon } from "./carbon"
+import { useTheme } from "next-themes"
 
 export type IconDetailsProps = {
 	icon: string
@@ -21,6 +22,7 @@ export type IconDetailsProps = {
 }
 
 export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
+	const { resolvedTheme } = useTheme()
 	const authorName = authorData.name || authorData.login || ""
 	const iconColorVariants = iconData.colors
 	const formattedDate = new Date(iconData.update.timestamp).toLocaleDateString("en-GB", {
@@ -41,6 +43,23 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 	const availableFormats = getAvailableFormats()
 	const [copiedVariants, setCopiedVariants] = useState<Record<string, boolean>>({})
+
+	// Helper function to get the appropriate icon variant based on theme
+	const getIconVariant = (iconName: string) => {
+		// Check if the icon has theme variants
+		if (iconColorVariants) {
+			// If in dark mode and a light variant exists, use the light variant
+			if (resolvedTheme === 'dark' && iconColorVariants.light) {
+				return iconColorVariants.light;
+			}
+			// If in light mode and a dark variant exists, use the dark variant
+			else if (resolvedTheme === 'light' && iconColorVariants.dark) {
+				return iconColorVariants.dark;
+			}
+		}
+		// Fall back to the default name if no appropriate variant
+		return iconName;
+	}
 
 	const handleCopy = (url: string, variantKey: string) => {
 		navigator.clipboard.writeText(url)
@@ -168,7 +187,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 							<div className="flex flex-col items-center">
 								<div className="relative w-32 h-32 bg-background/90 rounded-xl overflow-hidden border flex items-center justify-center p-3 mb-4">
 									<Image
-										src={`${BASE_URL}/${iconData.base}/${icon}.${iconData.base}`}
+										src={`${BASE_URL}/${iconData.base}/${getIconVariant(icon)}.${iconData.base}`}
 										width={96}
 										height={96}
 										alt={icon}
@@ -332,7 +351,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 									<h3 className="text-sm font-semibold text-muted-foreground">Source</h3>
 									<Button variant="outline" className="w-full" asChild>
 										<Link
-											href={`${REPO_PATH}/tree/main/${iconData.base}/${icon}.${iconData.base}`}
+											href={`${REPO_PATH}/blob/main/meta/${icon}.json`}
 											target="_blank"
 											rel="noopener noreferrer"
 										>
