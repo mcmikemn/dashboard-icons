@@ -49,7 +49,7 @@ export function IconSubmissionContent({ onClose }: { onClose?: () => void }) {
 						<Button
 							key={template.id}
 							variant="outline"
-							className="w-full flex flex-col items-start gap-1 h-auto p-4 text-left cursor-pointer"
+							className="w-full flex flex-col items-start gap-1 h-auto p-4 text-left cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 hover:border-rose-500 dark:hover:border-rose-500 transition-colors duration-200"
 						>
 							<div className="flex w-full items-center justify-between">
 								<span className="font-medium">{template.name}</span>
@@ -69,7 +69,10 @@ export function IconSubmissionForm() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline" className="hidden md:inline-flex">
+				<Button
+					variant="outline"
+					className="hidden md:inline-flex cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 hover:border-rose-500 dark:hover:border-rose-500 transition-colors duration-200"
+				>
 					<PlusCircle className="h-4 w-4" /> Suggest new icon
 				</Button>
 			</DialogTrigger>

@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { BASE_URL, REPO_PATH } from "@/constants"
 import type { AuthorData, Icon } from "@/types/icons"
 import { motion } from "framer-motion"
-import { Check, Copy, Download, Github } from "lucide-react"
+import { Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -69,19 +69,19 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 		return (
 			<TooltipProvider key={variantKey}>
-				<div className="flex flex-col items-center bg-card rounded-lg p-4 border shadow-sm hover:shadow-md transition-all">
+				<div className="flex flex-col items-center bg-background/90 dark:bg-background/50 rounded-lg p-4 border border-rose-100/50 dark:border-rose-950/50 shadow-sm hover:shadow-md transition-all">
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<motion.div
-								className="relative w-28 h-28 mb-3 cursor-pointer rounded-md overflow-hidden group"
+								className="relative w-28 h-28 mb-3 cursor-pointer rounded-xl overflow-hidden group"
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
 								onClick={() => handleCopy(url, variantKey)}
 							>
-								<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-md z-10 transition-colors" />
+								<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl z-10 transition-colors" />
 
 								<motion.div
-									className="absolute inset-0 bg-primary/10 flex items-center justify-center z-20 rounded-md"
+									className="absolute inset-0 bg-primary/10 flex items-center justify-center z-20 rounded-xl"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: isCopied ? 1 : 0 }}
 									transition={{ duration: 0.2 }}
@@ -99,7 +99,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 									src={url}
 									alt={`${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
 									fill
-									className="object-contain p-2"
+									className="object-contain p-4"
 								/>
 							</motion.div>
 						</TooltipTrigger>
@@ -113,7 +113,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 					<div className="flex gap-2 mt-3 w-full justify-center">
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<Button variant="outline" size="icon" className="h-8 w-8" asChild>
+								<Button variant="outline" size="icon" className="h-8 w-8 rounded-lg" asChild>
 									<a href={url} download={`${iconName}.${format}`}>
 										<Download className="w-4 h-4" />
 									</a>
@@ -129,7 +129,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 								<Button
 									variant="outline"
 									size="icon"
-									className="h-8 w-8 cursor-pointer"
+									className="h-8 w-8 rounded-lg cursor-pointer"
 									onClick={() => handleCopy(url, `btn-${variantKey}`)}
 								>
 									{copiedVariants[`btn-${variantKey}`] ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
@@ -142,7 +142,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<Button variant="outline" size="icon" className="h-8 w-8" asChild>
+								<Button variant="outline" size="icon" className="h-8 w-8 rounded-lg" asChild>
 									<Link href={githubUrl} target="_blank" rel="noopener noreferrer">
 										<Github className="w-4 h-4" />
 									</Link>
@@ -163,10 +163,10 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 				{/* Left Column: Icon Info and Author */}
 				<div className="lg:col-span-1">
-					<Card className="h-full">
+					<Card className="h-full backdrop-blur-sm bg-background/95 dark:bg-background/80 border shadow-lg">
 						<CardHeader className="pb-4">
 							<div className="flex flex-col items-center">
-								<div className="relative w-32 h-32 bg-background rounded-xl overflow-hidden border flex items-center justify-center p-3 mb-4">
+								<div className="relative w-32 h-32 bg-background/90 rounded-xl overflow-hidden border flex items-center justify-center p-3 mb-4">
 									<Image
 										src={`${BASE_URL}/${iconData.base}/${icon}.${iconData.base}`}
 										width={96}
@@ -194,14 +194,18 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 													<AvatarImage src={authorData.avatar_url} alt={authorName} />
 													<AvatarFallback>{authorName ? authorName.slice(0, 2).toUpperCase() : "??"}</AvatarFallback>
 												</Avatar>
-												<Link
-													href={authorData.html_url}
-													target="_blank"
-													rel="noopener noreferrer"
-													className="text-primary hover:underline text-sm"
-												>
-													{authorName}
-												</Link>
+												{authorData.html_url ? (
+													<Link
+														href={authorData.html_url}
+														target="_blank"
+														rel="noopener noreferrer"
+														className="text-primary hover:underline text-sm"
+													>
+														{authorName}
+													</Link>
+												) : (
+													<span className="text-sm">{authorName}</span>
+												)}
 											</div>
 										</div>
 									</div>
@@ -239,7 +243,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Middle Column: Icon variants */}
 				<div className="lg:col-span-2">
-					<Card className="h-full">
+					<Card className="h-full backdrop-blur-sm bg-background/95 dark:bg-background/80 border shadow-lg">
 						<CardHeader>
 							<CardTitle>Icon variants</CardTitle>
 							<CardDescription>Click on any icon to copy its URL to your clipboard</CardDescription>
@@ -253,19 +257,19 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 								<div className="space-y-10">
 									<div>
 										<h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-											<span className="inline-block w-3 h-3 rounded-full bg-primary" />
+											<Sun className="w-4 h-4 text-amber-500" />
 											Light theme
 										</h3>
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3 rounded-lg bg-background/50 dark:bg-background/30 border border-rose-100 dark:border-rose-950/40">
 											{availableFormats.map((format) => renderVariant(format, icon, "light"))}
 										</div>
 									</div>
 									<div>
 										<h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-											<span className="inline-block w-3 h-3 rounded-full bg-primary" />
+											<Moon className="w-4 h-4 text-indigo-500" />
 											Dark theme
 										</h3>
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3 rounded-lg bg-background/50 dark:bg-background/30 border border-rose-100 dark:border-rose-950/40">
 											{availableFormats.map((format) => renderVariant(format, icon, "dark"))}
 										</div>
 									</div>
@@ -277,7 +281,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Right Column: Technical details */}
 				<div className="lg:col-span-1">
-					<Card className="h-full">
+					<Card className="h-full backdrop-blur-sm bg-background/95 dark:bg-background/80 border shadow-lg">
 						<CardHeader>
 							<CardTitle>Technical details</CardTitle>
 						</CardHeader>
@@ -286,8 +290,10 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 								<div className="space-y-3">
 									<h3 className="text-sm font-semibold text-muted-foreground">Base format</h3>
 									<div className="flex items-center gap-2">
-										<span className="w-3 h-3 rounded-full bg-primary/80" />
-										<div className="px-3 py-1.5 bg-muted rounded-md text-sm font-medium">{iconData.base.toUpperCase()}</div>
+										<FileType className="w-4 h-4 text-blue-500" />
+										<div className="px-3 py-1.5 bg-background/80 dark:bg-background/50 border border-border rounded-lg text-sm font-medium">
+											{iconData.base.toUpperCase()}
+										</div>
 									</div>
 								</div>
 
@@ -295,7 +301,10 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 									<h3 className="text-sm font-semibold text-muted-foreground">Available formats</h3>
 									<div className="flex flex-wrap gap-2">
 										{availableFormats.map((format) => (
-											<div key={format} className="px-3 py-1.5 bg-muted rounded-md text-xs font-medium">
+											<div
+												key={format}
+												className="px-3 py-1.5 bg-background/80 dark:bg-background/50 border border-border rounded-lg text-xs font-medium"
+											>
 												{format.toUpperCase()}
 											</div>
 										))}
@@ -308,9 +317,11 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 										<div className="space-y-2">
 											{Object.entries(iconData.colors).map(([theme, variant]) => (
 												<div key={theme} className="flex items-center gap-2">
-													<span className="w-3 h-3 rounded-full bg-primary/80" />
+													<PaletteIcon className="w-4 h-4 text-purple-500" />
 													<span className="capitalize font-medium text-sm">{theme}:</span>
-													<code className="bg-muted px-2 py-0.5 rounded text-xs">{variant}</code>
+													<code className="bg-background/80 dark:bg-background/50 border border-border px-2 py-0.5 rounded-lg text-xs">
+														{variant}
+													</code>
 												</div>
 											))}
 										</div>

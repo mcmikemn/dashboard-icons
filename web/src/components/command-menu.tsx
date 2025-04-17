@@ -3,14 +3,18 @@
 import { useRouter } from "next/navigation"
 import * as React from "react"
 
+import { Button } from "@/components/ui/button"
 import { CommandDialog, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { ImageIcon, Search } from "lucide-react"
 import Link from "next/link"
 
 interface CommandMenuProps {
 	icons: string[]
+	triggerButtonId?: string
+	displayAsButton?: boolean
 }
 
-export function CommandMenu({ icons }: CommandMenuProps) {
+export function CommandMenu({ icons, triggerButtonId, displayAsButton = false }: CommandMenuProps) {
 	const router = useRouter()
 	const [open, setOpen] = React.useState(false)
 	const [mounted, setMounted] = React.useState(false)
@@ -37,6 +41,7 @@ export function CommandMenu({ icons }: CommandMenuProps) {
 	React.useEffect(() => {
 		setMounted(true)
 	}, [])
+
 	React.useEffect(() => {
 		const down = (e: KeyboardEvent) => {
 			if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -49,6 +54,21 @@ export function CommandMenu({ icons }: CommandMenuProps) {
 		return () => document.removeEventListener("keydown", down)
 	}, [])
 
+	// Effect to connect to external trigger button
+	React.useEffect(() => {
+		if (!triggerButtonId || !mounted) return
+
+		const triggerButton = document.getElementById(triggerButtonId)
+		if (!triggerButton) return
+
+		const handleClick = () => {
+			setOpen(true)
+		}
+
+		triggerButton.addEventListener("click", handleClick)
+		return () => triggerButton.removeEventListener("click", handleClick)
+	}, [triggerButtonId, mounted])
+
 	const handleInputChange = React.useCallback((value: string) => {
 		setInputValue(value)
 	}, [])
@@ -60,31 +80,25 @@ export function CommandMenu({ icons }: CommandMenuProps) {
 		},
 		[router],
 	)
+
 	if (!mounted) return null
 
 	return (
-		<>
-			<p className="text-sm text-muted-foreground">
-				Press{" "}
-				<kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-					<span className="text-xs">⌘</span>K
-				</kbd>{" "}
-				to search
-			</p>
-			<CommandDialog open={open} onOpenChange={setOpen}>
-				<CommandInput placeholder="Type to search icons..." value={inputValue} onValueChange={handleInputChange} />
-				<CommandList className="max-h-[300px]">
-					{filteredIcons.length === 0 && <CommandEmpty>No results found. Try a different search term.</CommandEmpty>}
-					{filteredIcons.map((icon) => (
-						<CommandItem key={icon} onSelect={() => handleSelectIcon(icon)}>
-							<Link prefetch={filteredIcons.length < 3} href={`/icons/${icon}`} className="flex items-center gap-2">
-								<div className="w-2 h-2 bg-primary-foreground" />
-								<span className="capitalize">{icon.replace(/-/g, " ")}</span>
-							</Link>
-						</CommandItem>
-					))}
-				</CommandList>
-			</CommandDialog>
-		</>
+		<CommandDialog open={open} onOpenChange={setOpen}>
+			<CommandInput placeholder="Type to search icons..." value={inputValue} onValueChange={handleInputChange} />
+			<CommandList className="max-h-[300px]">
+				{filteredIcons.length === 0 && <CommandEmpty>No results found. Try a different search term.</CommandEmpty>}
+				{filteredIcons.map((icon) => (
+					<CommandItem key={icon} onSelect={() => handleSelectIcon(icon)} className="cursor-pointer">
+						<Link prefetch={filteredIcons.length < 3} href={`/icons/${icon}`} className="flex items-center gap-2 w-full">
+							<span className="text-rose-500">
+								<ImageIcon className="h-4 w-4" />
+							</span>
+							<span className="capitalize">{icon.replace(/-/g, " ")}</span>
+						</Link>
+					</CommandItem>
+				))}
+			</CommandList>
+		</CommandDialog>
 	)
 }

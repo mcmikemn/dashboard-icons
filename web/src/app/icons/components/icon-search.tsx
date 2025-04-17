@@ -4,6 +4,7 @@ import { IconSubmissionContent } from "@/components/icon-submission-form"
 import { Input } from "@/components/ui/input"
 import { BASE_URL } from "@/constants"
 import type { IconSearchProps } from "@/types/icons"
+import { motion } from "framer-motion"
 import { Search } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -82,43 +83,67 @@ export function IconSearch({ icons }: IconSearchProps) {
 
 	return (
 		<>
-			<div className="relative w-full sm:max-w-md">
+			<motion.div
+				className="relative w-full sm:max-w-md"
+				initial={{ opacity: 0, y: 10 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5 }}
+			>
 				<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 				<Input
 					type="search"
 					placeholder="Search icons by name, aliases, or categories..."
-					className="w-full pl-8"
+					className="w-full pl-8 cursor-text"
 					value={searchQuery}
 					onChange={(e) => handleSearch(e.target.value)}
 				/>
-			</div>
+			</motion.div>
 
 			{filteredIcons.length === 0 ? (
-				<div className="flex flex-col gap-8 py-12 max-w-2xl mx-auto">
+				<motion.div
+					className="flex flex-col gap-8 py-12 max-w-2xl mx-auto"
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.5, delay: 0.2 }}
+				>
 					<div className="text-center">
 						<h2 className="text-5xl font-semibold">We don't have this one...yet!</h2>
 					</div>
 					<IconSubmissionContent />
-				</div>
+				</motion.div>
 			) : (
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-8">
-					{filteredIcons.map(({ name, data }) => (
-						<Link
-							prefetch={false}
+					{filteredIcons.map(({ name, data }, index) => (
+						<motion.div
 							key={name}
-							href={`/icons/${name}`}
-							className="group flex flex-col items-center p-3 sm:p-4 rounded-lg border border-border hover:border-primary hover:bg-accent transition-colors"
+							initial={{ opacity: 0, y: 15 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{
+								duration: 0.5,
+								delay: index * 0.03,
+								ease: "easeOut",
+							}}
 						>
-							<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
-								<Image
-									src={`${BASE_URL}/${data.base}/${name}.${data.base}`}
-									alt={`${name} icon`}
-									fill
-									className="object-contain p-1 group-hover:scale-110 transition-transform"
-								/>
-							</div>
-							<span className="text-xs sm:text-sm text-center truncate w-full capitalize">{name.replace(/-/g, " ")}</span>
-						</Link>
+							<Link
+								prefetch={false}
+								href={`/icons/${name}`}
+								className="group flex flex-col items-center p-3 sm:p-4 rounded-lg border border-border bg-background/95 dark:bg-background/80 hover:border-rose-500 hover:bg-rose-500/10 dark:hover:bg-rose-900/30 dark:hover:border-rose-500 transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/5 relative overflow-hidden"
+							>
+								<div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+								<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
+									<Image
+										src={`${BASE_URL}/${data.base}/${name}.${data.base}`}
+										alt={`${name} icon`}
+										fill
+										className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
+									/>
+								</div>
+								<span className="text-xs sm:text-sm text-center truncate w-full capitalize group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-200 font-medium">
+									{name.replace(/-/g, " ")}
+								</span>
+							</Link>
+						</motion.div>
 					))}
 				</div>
 			)}

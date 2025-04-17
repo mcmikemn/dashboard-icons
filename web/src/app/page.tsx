@@ -1,6 +1,7 @@
 import { HeroSection } from "@/components/hero"
+import { RecentlyAddedIcons } from "@/components/recently-added-icons"
 import { BASE_URL } from "@/constants"
-import { getTotalIcons } from "@/lib/api"
+import { getRecentlyAddedIcons, getTotalIcons } from "@/lib/api"
 import type { Metadata } from "next"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -9,14 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return {
 		title: "Dashboard Icons - Beautiful icons for your dashboard",
 		description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
-		keywords: [
-			"dashboard icons",
-			"service icons",
-			"application icons",
-			"tool icons",
-			"web dashboard",
-			"app directory",
-		],
+		keywords: ["dashboard icons", "service icons", "application icons", "tool icons", "web dashboard", "app directory"],
 		openGraph: {
 			title: "Dashboard Icons - Your definitive source for dashboard icons",
 			description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
@@ -45,10 +39,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
 	const { totalIcons } = await getTotalIcons()
+	const recentIcons = await getRecentlyAddedIcons(8)
 
 	return (
 		<div className="flex flex-col min-h-screen">
 			<HeroSection totalIcons={totalIcons} />
+			<RecentlyAddedIcons icons={recentIcons} />
 		</div>
 	)
 }

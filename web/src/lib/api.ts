@@ -72,3 +72,17 @@ export async function getTotalIcons() {
 		totalIcons: Object.keys(iconsData).length,
 	}
 }
+
+/**
+ * Fetches recently added icons sorted by timestamp
+ */
+export async function getRecentlyAddedIcons(limit = 8): Promise<IconWithName[]> {
+	const icons = await getIconsArray()
+
+	return icons
+		.sort((a, b) => {
+			// Sort by timestamp in descending order (newest first)
+			return new Date(b.data.update.timestamp).getTime() - new Date(a.data.update.timestamp).getTime()
+		})
+		.slice(0, limit)
+}

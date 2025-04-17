@@ -15,7 +15,7 @@ import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
-export function Header() {
+export function ClientHeader() {
 	const [icons, setIcons] = useState<Record<string, Icon>>({})
 	const [isLoaded, setIsLoaded] = useState(false)
 
@@ -43,9 +43,8 @@ export function Header() {
 		>
 			<div className="px-4 md:px-12 flex items-center justify-between h-16 md:h-18">
 				<div className="flex items-center gap-2 md:gap-6">
-					<Link href="/" className="text-lg md:text-xl font-bold group relative">
-						<span className="relative z-10 inline-block transition-colors duration-300 group-hover:text-rose-500">Dashboard Icons</span>
-						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-500 group-hover:w-full transition-all duration-300 ease-in-out rounded-full" />
+					<Link href="/" className="text-lg md:text-xl font-bold group">
+						<span className="transition-colors duration-300 group-hover:text-rose-500">Dashboard Icons</span>
 					</Link>
 					<div className="hidden md:block">
 						<HeaderNav />

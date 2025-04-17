@@ -38,8 +38,8 @@ export function LicenseNotice() {
 					<div className="flex items-start justify-between">
 						<div className="text-xs text-muted-foreground space-y-1">
 							<p>
-								Unless otherwise indicated, all images and assets are the property of their respective owners and used for identification
-								purposes only.
+								All product names, trademarks, and registered trademarks are the property of their respective owners. Icons are used for
+								identification purposes only and do not imply endorsement.
 							</p>
 							<p>
 								Read the{" "}

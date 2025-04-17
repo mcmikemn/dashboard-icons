@@ -1,23 +1,28 @@
-import { PostHogProvider } from "@/components/PostHogProvider";
-import { Header } from "@/components/header";
-import { LicenseNotice } from "@/components/license-notice";
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import { Toaster } from "sonner";
-import "./globals.css";
-import { ThemeProvider } from "./theme-provider";
+import { PostHogProvider } from "@/components/PostHogProvider"
+import { Footer } from "@/components/footer"
+import { Header } from "@/components/header-wrapper"
+import { LicenseNotice } from "@/components/license-notice"
+import type { Metadata, Viewport } from "next"
+import { Inter } from "next/font/google"
+import { Toaster } from "sonner"
+import "./globals.css"
 import { getTotalIcons } from "@/lib/api"
+import { ThemeProvider } from "./theme-provider"
 
 const inter = Inter({
 	variable: "--font-inter",
 	subsets: ["latin"],
-});
+})
 
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
+	minimumScale: 1,
+	maximumScale: 5,
+	userScalable: true,
 	themeColor: "#ffffff",
-};
+	viewportFit: "cover",
+}
 
 export async function generateMetadata(): Promise<Metadata> {
 	const { totalIcons } = await getTotalIcons()
@@ -26,14 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		metadataBase: new URL("https://dashboardicons.com"),
 		title: "Dashboard Icons - Your definitive source for dashboard icons",
 		description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
-		keywords: [
-			"dashboard icons",
-			"service icons",
-			"application icons",
-			"tool icons",
-			"web dashboard",
-			"app directory",
-		],
+		keywords: ["dashboard icons", "service icons", "application icons", "tool icons", "web dashboard", "app directory"],
 		robots: {
 			index: true,
 			follow: true,
@@ -84,9 +82,7 @@ export async function generateMetadata(): Promise<Metadata> {
 				{ url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
 				{ url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
 			],
-			apple: [
-				{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-			],
+			apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
 			other: [
 				{
 					rel: "mask-icon",
@@ -99,26 +95,20 @@ export async function generateMetadata(): Promise<Metadata> {
 	}
 }
 
-export default function RootLayout({
-	children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={`${inter.variable} antialiased bg-background`}>
+			<body className={`${inter.variable} antialiased bg-background flex flex-col min-h-screen`}>
 				<PostHogProvider>
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="system"
-						enableSystem
-						disableTransitionOnChange
-					>
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 						<Header />
-						<main>{children}</main>
+						<main className="flex-grow">{children}</main>
+						<Footer />
 						<Toaster />
 						<LicenseNotice />
 					</ThemeProvider>
 				</PostHogProvider>
 			</body>
 		</html>
-	);
+	)
 }
