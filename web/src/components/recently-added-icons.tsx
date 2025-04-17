@@ -1,50 +1,33 @@
-"use client"
+"use client";
 
-import { BASE_URL } from "@/constants"
-import type { Icon, IconWithName } from "@/types/icons"
-import { format, isToday, isYesterday } from "date-fns"
-import { motion, useInView } from "framer-motion"
-import { ArrowRight, Clock, ExternalLink } from "lucide-react"
-import { useTheme } from "next-themes"
-import Image from "next/image"
-import Link from "next/link"
-import { useRef } from "react"
+import { BASE_URL } from "@/constants";
+import type { Icon, IconWithName } from "@/types/icons";
+import { format, isToday, isYesterday } from "date-fns";
+import { motion, useInView } from "framer-motion";
+import { ArrowRight, Clock, ExternalLink } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRef } from "react";
 
 function formatIconDate(timestamp: string): string {
-	const date = new Date(timestamp)
+	const date = new Date(timestamp);
 	if (isToday(date)) {
-		return "Today"
+		return "Today";
 	}
 	if (isYesterday(date)) {
-		return "Yesterday"
+		return "Yesterday";
 	}
-	return format(date, "MMM d, yyyy")
+	return format(date, "MMM d, yyyy");
 }
 
 export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
-	const { resolvedTheme } = useTheme()
-
-	// Helper function to get the appropriate icon variant based on theme
-	const getIconVariant = (name: string, data: Icon) => {
-		// Check if the icon has theme variants and use appropriate one
-		if (data.colors) {
-			// If in dark mode and a light variant exists, use the light variant
-			if (resolvedTheme === "dark" && data.colors.light) {
-				return data.colors.light
-			}
-			// If in light mode and a dark variant exists, use the dark variant
-			if (resolvedTheme === "light" && data.colors.dark) {
-				return data.colors.dark
-			}
-		}
-		// Fall back to the default name if no appropriate variant
-		return name
-	}
-
 	return (
 		<div className="relative isolate overflow-hidden py-16 md:py-24">
 			{/* Background glow */}
-			<div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+			<div
+				className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+				aria-hidden="true"
+			>
 				<div
 					className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-rose-400/40 to-red-300/40 dark:from-red-600/50 dark:to-red-900/50 opacity-60 dark:opacity-50 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
 					style={{
@@ -65,12 +48,14 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 					<h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-rose-500">
 						Recently Added Icons
 					</h2>
-					<p className="mt-3 text-lg text-muted-foreground">Check out the latest additions to our collection.</p>
+					<p className="mt-3 text-lg text-muted-foreground">
+						Check out the latest additions to our collection.
+					</p>
 				</motion.div>
 
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-5">
 					{icons.map(({ name, data }) => (
-						<RecentIconCard key={name} name={name} data={data} getIconVariant={getIconVariant} />
+						<RecentIconCard key={name} name={name} data={data} />
 					))}
 				</div>
 
@@ -91,25 +76,23 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 				</motion.div>
 			</div>
 		</div>
-	)
+	);
 }
 
 // Extracted component for better animation handling
 function RecentIconCard({
 	name,
 	data,
-	getIconVariant,
 }: {
-	name: string
-	data: Icon
-	getIconVariant: (name: string, data: Icon) => string
+	name: string;
+	data: Icon;
 }) {
-	const ref = useRef(null)
+	const ref = useRef(null);
 	const isInView = useInView(ref, {
 		once: false,
 		amount: 0.2,
 		margin: "100px 0px",
-	})
+	});
 
 	const variants = {
 		hidden: { opacity: 0, y: 20, scale: 0.95 },
@@ -125,7 +108,7 @@ function RecentIconCard({
 			scale: 0.98,
 			transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] },
 		},
-	}
+	};
 
 	return (
 		<motion.div
@@ -145,7 +128,7 @@ function RecentIconCard({
 
 				<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
 					<Image
-						src={`${BASE_URL}/${data.base}/${getIconVariant(name, data)}.${data.base}`}
+						src={`${BASE_URL}/${data.base}/${name}.${data.base}`}
 						alt={`${name} icon`}
 						fill
 						className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
@@ -166,5 +149,5 @@ function RecentIconCard({
 				</div>
 			</Link>
 		</motion.div>
-	)
+	);
 }
