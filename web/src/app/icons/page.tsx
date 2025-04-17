@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			url: `${BASE_URL}/icons`,
 			images: [
 				{
-					url: "/og-image-browse.png",
+					url: "/og-image.png",
 					width: 1200,
 					height: 630,
 					alt: "Browse Dashboard Icons Collection",
