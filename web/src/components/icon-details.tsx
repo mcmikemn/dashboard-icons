@@ -251,11 +251,11 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 	}
 
 	return (
-		<div className="container mx-auto px-4 py-8">
+		<div className="container mx-auto pt-12 pb-14">
 			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 				{/* Left Column: Icon Info and Author */}
 				<div className="lg:col-span-1">
-					<Card className="h-full backdrop-blur-sm bg-card/50 border shadow-lg">
+					<Card className="h-full bg-background/80 border shadow-lg">
 						<CardHeader className="pb-4">
 							<div className="flex flex-col items-center">
 								<div className="relative w-32 h-32  rounded-xl overflow-hidden border flex items-center justify-center p-3 ">
@@ -364,7 +364,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Middle Column: Icon variants */}
 				<div className="lg:col-span-2">
-					<Card className="h-full backdrop-blur-sm bg-card/50 shadow-lg">
+					<Card className="h-full bg-background/80 shadow-lg">
 						<CardHeader>
 							<CardTitle>Icon variants</CardTitle>
 							<CardDescription>Click on any icon to copy its URL to your clipboard</CardDescription>
@@ -402,7 +402,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Right Column: Technical details */}
 				<div className="lg:col-span-1">
-					<Card className="h-full backdrop-blur-sm bg-card/50 border shadow-lg">
+					<Card className="h-full bg-background/80 border shadow-lg">
 						<CardHeader>
 							<CardTitle>Technical details</CardTitle>
 						</CardHeader>

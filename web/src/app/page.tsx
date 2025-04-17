@@ -1,6 +1,6 @@
 import { HeroSection } from "@/components/hero"
 import { RecentlyAddedIcons } from "@/components/recently-added-icons"
-import { BASE_URL, REPO_NAME, REPO_PATH } from "@/constants"
+import { BASE_URL, REPO_NAME } from "@/constants"
 import { getRecentlyAddedIcons, getTotalIcons } from "@/lib/api"
 import type { Metadata } from "next"
 

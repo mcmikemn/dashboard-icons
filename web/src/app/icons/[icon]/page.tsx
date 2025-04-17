@@ -1,6 +1,6 @@
 import { IconDetails } from "@/components/icon-details"
 import { BASE_URL } from "@/constants"
-import { getAllIcons, getAuthorData, getTotalIcons } from "@/lib/api"
+import { getAllIcons, getAuthorData } from "@/lib/api"
 import type { Metadata, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
 
@@ -42,7 +42,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
 	return {
 		title: `${formattedIconName} Icon | Dashboard Icons`,
-		description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+		description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 		keywords: [
 			`${formattedIconName} icon`,
 			"dashboard icon",
@@ -64,7 +64,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 		],
 		openGraph: {
 			title: `${formattedIconName} Icon | Dashboard Icons`,
-			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 			type: "article",
 			url: pageUrl,
 			images: [
@@ -83,7 +83,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 		twitter: {
 			card: "summary_large_image",
 			title: `${formattedIconName} Icon | Dashboard Icons`,
-			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 			images: [iconImageUrl],
 			creator: "@homarr_app",
 		},
@@ -104,10 +104,5 @@ export default async function IconPage({ params }: { params: Promise<{ icon: str
 
 	const authorData = await getAuthorData(originalIconData.update.author.id)
 
-	return (
-		<div className="relative isolate overflow-hidden pt-14">
-			{/* Existing Icon Details */}
-			<IconDetails icon={icon} iconData={originalIconData} authorData={authorData} />
-		</div>
-	)
+	return <IconDetails icon={icon} iconData={originalIconData} authorData={authorData} />
 }
