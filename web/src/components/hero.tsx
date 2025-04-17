@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { motion, useAnimation, useInView } from "framer-motion"
-import { Circle, Github, Heart, Search, Sparkles } from "lucide-react"
+import { Github, Heart, Search, Sparkles } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
@@ -232,22 +232,8 @@ export function HeroSection({ totalIcons }: { totalIcons: number }) {
 										},
 									}}
 								/>
-								<Card className="p-2 flex flex-row items-center gap-2 border-rose-200 dark:border-rose-900/30 shadow-sm bg-background/80 z-10 relative glass-effect">
-									<motion.div
-										variants={{
-											hover: {
-												scale: [1, 1.2, 1],
-												rotate: [0, 5, -5, 0],
-											},
-										}}
-										transition={{
-											duration: 0.6,
-											repeat: Number.POSITIVE_INFINITY,
-											repeatType: "reverse",
-										}}
-									>
-										<Heart className="h-4 w-4 text-rose-500" />
-									</motion.div>
+								<Card className="p-2 px-4 flex flex-row items-center gap-2 border-2 border-rose-200 dark:border-rose-900/30 z-10 relative glass-effect">
+										<Heart color="red" fill="red" className="h-4 w-4 motion-safe:motion-preset-pulse-sm" />
 									<span className="text-sm text-foreground/70 tracking-wide">Made with love by Homarr Labs</span>
 								</Card>
 							</motion.div>
