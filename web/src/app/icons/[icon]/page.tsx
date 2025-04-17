@@ -74,8 +74,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 					height: 512,
 					alt: `${formattedIconName} Icon`,
 					type: "image/png",
-				},
-				...previousImages,
+				}
 			],
 			authors: [authorName, "homarr"],
 			publishedTime: updateDate.toISOString(),
