@@ -15,6 +15,7 @@ import { useCallback, useState } from "react"
 import { toast } from "sonner"
 import { Carbon } from "./carbon"
 import { MagicCard } from "./magicui/magic-card"
+import { Badge } from "./ui/badge"
 
 export type IconDetailsProps = {
 	icon: string
@@ -270,8 +271,8 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 							</div>
 						</CardHeader>
 						<CardContent>
-							<div className="space-y-6">
-								<div className="space-y-3">
+							<div className="space-y-4">
+								<div>
 									<div className="space-y-2">
 										<div className="flex items-center gap-2">
 											<p className="text-sm">
@@ -303,19 +304,17 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 								</div>
 
 								{iconData.categories && iconData.categories.length > 0 && (
-									<div className="space-y-3">
+									<div>
 										<h3 className="text-sm font-semibold text-muted-foreground">Categories</h3>
 										<div className="flex flex-wrap gap-2">
 											{iconData.categories.map((category) => (
-												<Link
-													key={category}
-													href={`/icons?category=${encodeURIComponent(category)}`}
-													className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold0/10  transition-colors cursor-pointer"
-												>
-													{category
-														.split("-")
-														.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-														.join(" ")}
+												<Link key={category} href={`/icons?category=${encodeURIComponent(category)}`} className="cursor-pointer">
+													<Badge variant="outline" className="inline-flex items-center border border-primary/20 hover:border-primary px-2.5 py-0.5 text-sm">
+														{category
+															.split("-")
+															.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+															.join(" ")}
+													</Badge>
 												</Link>
 											))}
 										</div>
@@ -323,22 +322,41 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 								)}
 
 								{iconData.aliases && iconData.aliases.length > 0 && (
-									<div className="space-y-3">
+									<div>
 										<h3 className="text-sm font-semibold text-muted-foreground">Aliases</h3>
 										<div className="flex flex-wrap gap-2">
 											{iconData.aliases.map((alias) => (
-												<span
+												<Badge
+													variant="outline"
 													key={alias}
-													className="inline-flex items-center rounded-full bg-rose-50 dark:bg-rose-950/20 border   px-2.5 py-1 text-xs text-rose-700 dark:text-rose-300"
+													className="inline-flex items-center px-2.5 py-1 text-xs"
 													title={`This icon can also be found by searching for "${alias}"`}
 												>
 													{alias}
-												</span>
+												</Badge>
 											))}
 										</div>
-										<p className="text-[10px] text-muted-foreground mt-1">These aliases can be used to find this icon in search results.</p>
 									</div>
 								)}
+
+								<div>
+									<h3 className="text-sm font-semibold text-muted-foreground">About this icon</h3>
+									<div className="text-xs text-muted-foreground space-y-2">
+										<p>This icon is licensed under the open source MIT license</p>
+										<p>
+											Available in{" "}
+											{availableFormats.length > 1
+												? `${availableFormats.length} formats (${availableFormats.map((f) => f.toUpperCase()).join(", ")})`
+												: `${availableFormats[0].toUpperCase()} format`}{" "}
+											with a base format of {iconData.base.toUpperCase()}.
+											{iconData.colors && " Includes both light and dark theme variants for better integration with different UI designs."}
+										</p>
+										<p>
+											Use the {icon} icon in your web applications, dashboards, or documentation to enhance visual communication and user
+											experience.
+										</p>
+									</div>
+								</div>
 							</div>
 						</CardContent>
 					</Card>
@@ -390,7 +408,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 						</CardHeader>
 						<CardContent>
 							<div className="space-y-6">
-								<div className="space-y-3">
+								<div className="">
 									<h3 className="text-sm font-semibold text-muted-foreground">Base format</h3>
 									<div className="flex items-center gap-2">
 										<FileType className="w-4 h-4 text-blue-500" />
@@ -398,7 +416,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 									</div>
 								</div>
 
-								<div className="space-y-3">
+								<div className="">
 									<h3 className="text-sm font-semibold text-muted-foreground">Available formats</h3>
 									<div className="flex flex-wrap gap-2">
 										{availableFormats.map((format) => (
@@ -410,7 +428,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 								</div>
 
 								{iconData.colors && (
-									<div className="space-y-3">
+									<div className="">
 										<h3 className="text-sm font-semibold text-muted-foreground">Color variants</h3>
 										<div className="space-y-2">
 											{Object.entries(iconData.colors).map(([theme, variant]) => (
@@ -424,7 +442,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 									</div>
 								)}
 
-								<div className="space-y-3">
+								<div className="">
 									<h3 className="text-sm font-semibold text-muted-foreground">Source</h3>
 									<Button variant="outline" className="w-full" asChild>
 										<Link href={`${REPO_PATH}/blob/main/meta/${icon}.json`} target="_blank" rel="noopener noreferrer">
