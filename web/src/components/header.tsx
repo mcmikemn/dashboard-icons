@@ -61,7 +61,6 @@ export function Header() {
 					<div className="hidden md:block">
 						<Button
 							variant="outline"
-							size="sm"
 							className="gap-2 cursor-pointer hover:bg-rose-500/10 dark:hover:bg-rose-900/30 hover:border-rose-500 dark:hover:border-rose-500 transition-all duration-300"
 							onClick={openCommandMenu}
 						>
