@@ -1,37 +1,34 @@
-"use client";
+"use client"
 
-import { Marquee } from "@/components/magicui/marquee";
-import { BASE_URL } from "@/constants";
-import { cn } from "@/lib/utils";
-import type { Icon, IconWithName } from "@/types/icons";
-import { format, isToday, isYesterday } from "date-fns";
-import { ArrowRight, Clock, ExternalLink } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Marquee } from "@/components/magicui/marquee"
+import { BASE_URL } from "@/constants"
+import { cn } from "@/lib/utils"
+import type { Icon, IconWithName } from "@/types/icons"
+import { format, isToday, isYesterday } from "date-fns"
+import { ArrowRight, Clock, ExternalLink } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
 function formatIconDate(timestamp: string): string {
-	const date = new Date(timestamp);
+	const date = new Date(timestamp)
 	if (isToday(date)) {
-		return "Today";
+		return "Today"
 	}
 	if (isYesterday(date)) {
-		return "Yesterday";
+		return "Yesterday"
 	}
-	return format(date, "MMM d, yyyy");
+	return format(date, "MMM d, yyyy")
 }
 
 export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 	// Split icons into two rows for the marquee
-	const firstRow = icons.slice(0, Math.ceil(icons.length / 2));
-	const secondRow = icons.slice(Math.ceil(icons.length / 2));
+	const firstRow = icons.slice(0, Math.ceil(icons.length / 2))
+	const secondRow = icons.slice(Math.ceil(icons.length / 2))
 
 	return (
 		<div className="relative isolate overflow-hidden my-8">
 			{/* Background glow */}
-			<div
-				className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-				aria-hidden="true"
-			/>
+			<div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true" />
 
 			<div className="mx-auto px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl text-center my-4">
@@ -41,10 +38,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 				</div>
 
 				<div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-					<Marquee
-						pauseOnHover
-						className="[--duration:60s] [--gap:1em] motion-safe:motion-preset-slide-left-sm motion-duration-1000"
-					>
+					<Marquee pauseOnHover className="[--duration:60s] [--gap:1em] motion-safe:motion-preset-slide-left-sm motion-duration-1000">
 						{firstRow.map(({ name, data }) => (
 							<RecentIconCard key={name} name={name} data={data} />
 						))}
@@ -73,7 +67,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }
 
 // Marquee-compatible icon card
@@ -81,8 +75,8 @@ function RecentIconCard({
 	name,
 	data,
 }: {
-	name: string;
-	data: Icon;
+	name: string
+	data: Icon
 }) {
 	return (
 		<Link
@@ -118,5 +112,5 @@ function RecentIconCard({
 				<ExternalLink className="w-3 h-3 " />
 			</div>
 		</Link>
-	);
+	)
 }

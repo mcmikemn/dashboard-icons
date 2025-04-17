@@ -1,73 +1,48 @@
-"use client";
+"use client"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { BASE_URL, REPO_PATH } from "@/constants";
-import type { AuthorData, Icon } from "@/types/icons";
-import confetti from "canvas-confetti";
-import { motion } from "framer-motion";
-import {
-	Check,
-	Copy,
-	Download,
-	FileType,
-	Github,
-	Moon,
-	PaletteIcon,
-	Sun,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useCallback, useState } from "react";
-import { toast } from "sonner";
-import { Carbon } from "./carbon";
-import { MagicCard } from "./magicui/magic-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { BASE_URL, REPO_PATH } from "@/constants"
+import type { AuthorData, Icon } from "@/types/icons"
+import confetti from "canvas-confetti"
+import { motion } from "framer-motion"
+import { Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useCallback, useState } from "react"
+import { toast } from "sonner"
+import { Carbon } from "./carbon"
+import { MagicCard } from "./magicui/magic-card"
 
 export type IconDetailsProps = {
-	icon: string;
-	iconData: Icon;
-	authorData: AuthorData;
-};
+	icon: string
+	iconData: Icon
+	authorData: AuthorData
+}
 
 export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
-	const authorName = authorData.name || authorData.login || "";
-	const iconColorVariants = iconData.colors;
-	const formattedDate = new Date(iconData.update.timestamp).toLocaleDateString(
-		"en-GB",
-		{
-			day: "numeric",
-			month: "long",
-			year: "numeric",
-		},
-	);
+	const authorName = authorData.name || authorData.login || ""
+	const iconColorVariants = iconData.colors
+	const formattedDate = new Date(iconData.update.timestamp).toLocaleDateString("en-GB", {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	})
 	const getAvailableFormats = () => {
 		switch (iconData.base) {
 			case "svg":
-				return ["svg", "png", "webp"];
+				return ["svg", "png", "webp"]
 			case "png":
-				return ["png", "webp"];
+				return ["png", "webp"]
 			default:
-				return [iconData.base];
+				return [iconData.base]
 		}
-	};
+	}
 
-	const availableFormats = getAvailableFormats();
-	const [copiedVariants, setCopiedVariants] = useState<Record<string, boolean>>(
-		{},
-	);
+	const availableFormats = getAvailableFormats()
+	const [copiedVariants, setCopiedVariants] = useState<Record<string, boolean>>({})
 
 	// Launch confetti from the pointer position
 	const launchConfetti = useCallback((originX?: number, originY?: number) => {
@@ -77,15 +52,8 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 			ticks: 50,
 			zIndex: 0,
 			disableForReducedMotion: true,
-			colors: [
-				"#ff0a54",
-				"#ff477e",
-				"#ff7096",
-				"#ff85a1",
-				"#fbb1bd",
-				"#f9bec7",
-			],
-		};
+			colors: ["#ff0a54", "#ff477e", "#ff7096", "#ff85a1", "#fbb1bd", "#f9bec7"],
+		}
 
 		// If we have origin coordinates, use them
 		if (originX !== undefined && originY !== undefined) {
@@ -96,103 +64,87 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 					x: originX / window.innerWidth,
 					y: originY / window.innerHeight,
 				},
-			});
+			})
 		} else {
 			// Default to center of screen
 			confetti({
 				...defaults,
 				particleCount: 50,
 				origin: { x: 0.5, y: 0.5 },
-			});
+			})
 		}
-	}, []);
+	}, [])
 
-	const handleCopy = (
-		url: string,
-		variantKey: string,
-		event?: React.MouseEvent,
-	) => {
-		navigator.clipboard.writeText(url);
+	const handleCopy = (url: string, variantKey: string, event?: React.MouseEvent) => {
+		navigator.clipboard.writeText(url)
 		setCopiedVariants((prev) => ({
 			...prev,
 			[variantKey]: true,
-		}));
+		}))
 		setTimeout(() => {
 			setCopiedVariants((prev) => ({
 				...prev,
 				[variantKey]: false,
-			}));
-		}, 2000);
+			}))
+		}, 2000)
 
 		// Launch confetti from click position or center of screen
 		if (event) {
-			launchConfetti(event.clientX, event.clientY);
+			launchConfetti(event.clientX, event.clientY)
 		} else {
-			launchConfetti();
+			launchConfetti()
 		}
 
 		toast.success("URL copied", {
-			description:
-				"The icon URL has been copied to your clipboard. Ready to use!",
-		});
-	};
+			description: "The icon URL has been copied to your clipboard. Ready to use!",
+		})
+	}
 
-	const handleDownload = async (
-		event: React.MouseEvent,
-		url: string,
-		filename: string,
-	) => {
-		event.preventDefault();
+	const handleDownload = async (event: React.MouseEvent, url: string, filename: string) => {
+		event.preventDefault()
 
 		// Launch confetti from download button position
-		launchConfetti(event.clientX, event.clientY);
+		launchConfetti(event.clientX, event.clientY)
 
 		try {
 			// Show loading toast
-			toast.loading("Preparing download...");
+			toast.loading("Preparing download...")
 
 			// Fetch the file first as a blob
-			const response = await fetch(url);
-			const blob = await response.blob();
+			const response = await fetch(url)
+			const blob = await response.blob()
 
 			// Create a blob URL and use it for download
-			const blobUrl = URL.createObjectURL(blob);
-			const link = document.createElement("a");
-			link.href = blobUrl;
-			link.download = filename;
-			document.body.appendChild(link);
-			link.click();
+			const blobUrl = URL.createObjectURL(blob)
+			const link = document.createElement("a")
+			link.href = blobUrl
+			link.download = filename
+			document.body.appendChild(link)
+			link.click()
 
 			// Clean up
-			document.body.removeChild(link);
-			setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+			document.body.removeChild(link)
+			setTimeout(() => URL.revokeObjectURL(blobUrl), 100)
 
-			toast.dismiss();
+			toast.dismiss()
 			toast.success("Download started", {
-				description:
-					"Your icon file is being downloaded and will be saved to your device.",
-			});
+				description: "Your icon file is being downloaded and will be saved to your device.",
+			})
 		} catch (error) {
-			console.error("Download error:", error);
-			toast.dismiss();
+			console.error("Download error:", error)
+			toast.dismiss()
 			toast.error("Download failed", {
-				description:
-					"There was an error downloading the file. Please try again.",
-			});
+				description: "There was an error downloading the file. Please try again.",
+			})
 		}
-	};
+	}
 
-	const renderVariant = (
-		format: string,
-		iconName: string,
-		theme?: "light" | "dark",
-	) => {
-		const variantName =
-			theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName;
-		const imageUrl = `${BASE_URL}/${format}/${variantName}.${format}`;
-		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`;
-		const variantKey = `${format}-${theme || "default"}`;
-		const isCopied = copiedVariants[variantKey] || false;
+	const renderVariant = (format: string, iconName: string, theme?: "light" | "dark") => {
+		const variantName = theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName
+		const imageUrl = `${BASE_URL}/${format}/${variantName}.${format}`
+		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`
+		const variantKey = `${format}-${theme || "default"}`
+		const isCopied = copiedVariants[variantKey] || false
 
 		return (
 			<TooltipProvider key={variantKey} delayDuration={500}>
@@ -252,9 +204,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 										variant="outline"
 										size="icon"
 										className="h-8 w-8 rounded-lg cursor-pointer"
-										onClick={(e) =>
-											handleDownload(e, imageUrl, `${iconName}.${format}`)
-										}
+										onClick={(e) => handleDownload(e, imageUrl, `${iconName}.${format}`)}
 									>
 										<Download className="w-4 h-4" />
 									</Button>
@@ -272,11 +222,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 										className="h-8 w-8 rounded-lg cursor-pointer"
 										onClick={(e) => handleCopy(imageUrl, `btn-${variantKey}`, e)}
 									>
-										{copiedVariants[`btn-${variantKey}`] ? (
-											<Check className="w-4 h-4 text-green-500" />
-										) : (
-											<Copy className="w-4 h-4" />
-										)}
+										{copiedVariants[`btn-${variantKey}`] ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent>
@@ -286,17 +232,8 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 							<Tooltip>
 								<TooltipTrigger asChild>
-									<Button
-										variant="outline"
-										size="icon"
-										className="h-8 w-8 rounded-lg"
-										asChild
-									>
-										<Link
-											href={githubUrl}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
+									<Button variant="outline" size="icon" className="h-8 w-8 rounded-lg" asChild>
+										<Link href={githubUrl} target="_blank" rel="noopener noreferrer">
 											<Github className="w-4 h-4" />
 										</Link>
 									</Button>
@@ -309,8 +246,8 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 					</div>
 				</MagicCard>
 			</TooltipProvider>
-		);
-	};
+		)
+	}
 
 	return (
 		<div className="container mx-auto px-4 py-8">
@@ -329,9 +266,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 										className="w-full h-full object-contain"
 									/>
 								</div>
-								<CardTitle className="text-2xl font-bold capitalize text-center mb-2">
-									{icon}
-								</CardTitle>
+								<CardTitle className="text-2xl font-bold capitalize text-center mb-2">{icon}</CardTitle>
 							</div>
 						</CardHeader>
 						<CardContent>
@@ -340,23 +275,15 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 									<div className="space-y-2">
 										<div className="flex items-center gap-2">
 											<p className="text-sm">
-												<span className="font-medium">Updated on:</span>{" "}
-												{formattedDate}
+												<span className="font-medium">Updated on:</span> {formattedDate}
 											</p>
 										</div>
 										<div className="flex items-center gap-2">
 											<div className="flex items-center gap-2">
 												<p className="text-sm font-medium">By:</p>
 												<Avatar className="h-5 w-5 border">
-													<AvatarImage
-														src={authorData.avatar_url}
-														alt={authorName}
-													/>
-													<AvatarFallback>
-														{authorName
-															? authorName.slice(0, 2).toUpperCase()
-															: "??"}
-													</AvatarFallback>
+													<AvatarImage src={authorData.avatar_url} alt={authorName} />
+													<AvatarFallback>{authorName ? authorName.slice(0, 2).toUpperCase() : "??"}</AvatarFallback>
 												</Avatar>
 												{authorData.html_url ? (
 													<Link
@@ -377,9 +304,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 								{iconData.categories && iconData.categories.length > 0 && (
 									<div className="space-y-3">
-										<h3 className="text-sm font-semibold text-muted-foreground">
-											Categories
-										</h3>
+										<h3 className="text-sm font-semibold text-muted-foreground">Categories</h3>
 										<div className="flex flex-wrap gap-2">
 											{iconData.categories.map((category) => (
 												<Link
@@ -389,10 +314,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 												>
 													{category
 														.split("-")
-														.map(
-															(word) =>
-																word.charAt(0).toUpperCase() + word.slice(1),
-														)
+														.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 														.join(" ")}
 												</Link>
 											))}
@@ -402,9 +324,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 								{iconData.aliases && iconData.aliases.length > 0 && (
 									<div className="space-y-3">
-										<h3 className="text-sm font-semibold text-muted-foreground">
-											Aliases
-										</h3>
+										<h3 className="text-sm font-semibold text-muted-foreground">Aliases</h3>
 										<div className="flex flex-wrap gap-2">
 											{iconData.aliases.map((alias) => (
 												<span
@@ -416,10 +336,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 												</span>
 											))}
 										</div>
-										<p className="text-[10px] text-muted-foreground mt-1">
-											These aliases can be used to find this icon in search
-											results.
-										</p>
+										<p className="text-[10px] text-muted-foreground mt-1">These aliases can be used to find this icon in search results.</p>
 									</div>
 								)}
 							</div>
@@ -432,16 +349,12 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 					<Card className="h-full backdrop-blur-sm bg-card/50 shadow-lg">
 						<CardHeader>
 							<CardTitle>Icon variants</CardTitle>
-							<CardDescription>
-								Click on any icon to copy its URL to your clipboard
-							</CardDescription>
+							<CardDescription>Click on any icon to copy its URL to your clipboard</CardDescription>
 						</CardHeader>
 						<CardContent>
 							{!iconData.colors ? (
 								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-									{availableFormats.map((format) =>
-										renderVariant(format, icon),
-									)}
+									{availableFormats.map((format) => renderVariant(format, icon))}
 								</div>
 							) : (
 								<div className="space-y-10">
@@ -451,9 +364,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 											Light theme
 										</h3>
 										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3 rounded-lg ">
-											{availableFormats.map((format) =>
-												renderVariant(format, icon, "light"),
-											)}
+											{availableFormats.map((format) => renderVariant(format, icon, "light"))}
 										</div>
 									</div>
 									<div>
@@ -462,9 +373,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 											Dark theme
 										</h3>
 										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3 rounded-lg ">
-											{availableFormats.map((format) =>
-												renderVariant(format, icon, "dark"),
-											)}
+											{availableFormats.map((format) => renderVariant(format, icon, "dark"))}
 										</div>
 									</div>
 								</div>
@@ -482,27 +391,18 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 						<CardContent>
 							<div className="space-y-6">
 								<div className="space-y-3">
-									<h3 className="text-sm font-semibold text-muted-foreground">
-										Base format
-									</h3>
+									<h3 className="text-sm font-semibold text-muted-foreground">Base format</h3>
 									<div className="flex items-center gap-2">
 										<FileType className="w-4 h-4 text-blue-500" />
-										<div className="px-3 py-1.5  border border-border rounded-lg text-sm font-medium">
-											{iconData.base.toUpperCase()}
-										</div>
+										<div className="px-3 py-1.5  border border-border rounded-lg text-sm font-medium">{iconData.base.toUpperCase()}</div>
 									</div>
 								</div>
 
 								<div className="space-y-3">
-									<h3 className="text-sm font-semibold text-muted-foreground">
-										Available formats
-									</h3>
+									<h3 className="text-sm font-semibold text-muted-foreground">Available formats</h3>
 									<div className="flex flex-wrap gap-2">
 										{availableFormats.map((format) => (
-											<div
-												key={format}
-												className="px-3 py-1.5  border border-border rounded-lg text-xs font-medium"
-											>
+											<div key={format} className="px-3 py-1.5  border border-border rounded-lg text-xs font-medium">
 												{format.toUpperCase()}
 											</div>
 										))}
@@ -511,37 +411,23 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 								{iconData.colors && (
 									<div className="space-y-3">
-										<h3 className="text-sm font-semibold text-muted-foreground">
-											Color variants
-										</h3>
+										<h3 className="text-sm font-semibold text-muted-foreground">Color variants</h3>
 										<div className="space-y-2">
-											{Object.entries(iconData.colors).map(
-												([theme, variant]) => (
-													<div key={theme} className="flex items-center gap-2">
-														<PaletteIcon className="w-4 h-4 text-purple-500" />
-														<span className="capitalize font-medium text-sm">
-															{theme}:
-														</span>
-														<code className=" border border-border px-2 py-0.5 rounded-lg text-xs">
-															{variant}
-														</code>
-													</div>
-												),
-											)}
+											{Object.entries(iconData.colors).map(([theme, variant]) => (
+												<div key={theme} className="flex items-center gap-2">
+													<PaletteIcon className="w-4 h-4 text-purple-500" />
+													<span className="capitalize font-medium text-sm">{theme}:</span>
+													<code className=" border border-border px-2 py-0.5 rounded-lg text-xs">{variant}</code>
+												</div>
+											))}
 										</div>
 									</div>
 								)}
 
 								<div className="space-y-3">
-									<h3 className="text-sm font-semibold text-muted-foreground">
-										Source
-									</h3>
+									<h3 className="text-sm font-semibold text-muted-foreground">Source</h3>
 									<Button variant="outline" className="w-full" asChild>
-										<Link
-											href={`${REPO_PATH}/blob/main/meta/${icon}.json`}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
+										<Link href={`${REPO_PATH}/blob/main/meta/${icon}.json`} target="_blank" rel="noopener noreferrer">
 											<Github className="w-4 h-4 mr-2" />
 											View on GitHub
 										</Link>
@@ -554,5 +440,5 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }

@@ -1,48 +1,43 @@
-"use client";
+"use client"
 
-import { IconSubmissionForm } from "@/components/icon-submission-form";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { REPO_PATH } from "@/constants";
-import { getIconsArray } from "@/lib/api";
-import type { IconWithName } from "@/types/icons";
-import { motion } from "framer-motion";
-import { Github, Search } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { CommandMenu } from "./command-menu";
-import { HeaderNav } from "./header-nav";
-import { Button } from "./ui/button";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "./ui/tooltip";
+import { IconSubmissionForm } from "@/components/icon-submission-form"
+import { ThemeSwitcher } from "@/components/theme-switcher"
+import { REPO_PATH } from "@/constants"
+import { getIconsArray } from "@/lib/api"
+import type { IconWithName } from "@/types/icons"
+import { motion } from "framer-motion"
+import { Github, Search } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { CommandMenu } from "./command-menu"
+import { HeaderNav } from "./header-nav"
+import { Button } from "./ui/button"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
 export function Header() {
-	const [iconsData, setIconsData] = useState<IconWithName[]>([]);
-	const [isLoaded, setIsLoaded] = useState(false);
-	const [commandMenuOpen, setCommandMenuOpen] = useState(false);
+	const [iconsData, setIconsData] = useState<IconWithName[]>([])
+	const [isLoaded, setIsLoaded] = useState(false)
+	const [commandMenuOpen, setCommandMenuOpen] = useState(false)
 
 	useEffect(() => {
 		async function loadIcons() {
 			try {
-				const icons = await getIconsArray();
-				setIconsData(icons);
-				setIsLoaded(true);
+				const icons = await getIconsArray()
+				setIconsData(icons)
+				setIsLoaded(true)
 			} catch (error) {
-				console.error("Failed to load icons:", error);
-				setIsLoaded(true);
+				console.error("Failed to load icons:", error)
+				setIsLoaded(true)
 			}
 		}
 
-		loadIcons();
-	}, []);
+		loadIcons()
+	}, [])
 
 	// Function to open the command menu
 	const openCommandMenu = () => {
-		setCommandMenuOpen(true);
-	};
+		setCommandMenuOpen(true)
+	}
 
 	return (
 		<motion.header
@@ -53,13 +48,8 @@ export function Header() {
 		>
 			<div className="px-4 md:px-12 flex items-center justify-between h-16 md:h-18">
 				<div className="flex items-center gap-2 md:gap-6">
-					<Link
-						href="/"
-						className="text-lg md:text-xl font-bold group hidden md:block"
-					>
-						<span className="transition-colors duration-300 group-hover:">
-							Dashboard Icons
-						</span>
+					<Link href="/" className="text-lg md:text-xl font-bold group hidden md:block">
+						<span className="transition-colors duration-300 group-hover:">Dashboard Icons</span>
 					</Link>
 					<div className="flex-nowrap">
 						<HeaderNav />
@@ -122,13 +112,7 @@ export function Header() {
 			</div>
 
 			{/* Single instance of CommandMenu */}
-			{isLoaded && (
-				<CommandMenu
-					icons={iconsData}
-					open={commandMenuOpen}
-					onOpenChange={setCommandMenuOpen}
-				/>
-			)}
+			{isLoaded && <CommandMenu icons={iconsData} open={commandMenuOpen} onOpenChange={setCommandMenuOpen} />}
 		</motion.header>
-	);
+	)
 }

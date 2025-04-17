@@ -78,10 +78,6 @@
 	},
 	"packageManager": "pnpm@10.8.0",
 	"pnpm": {
-		"onlyBuiltDependencies": [
-			"@biomejs/biome",
-			"core-js",
-			"sharp"
-		]
+		"onlyBuiltDependencies": ["@biomejs/biome", "core-js", "sharp"]
 	}
 }

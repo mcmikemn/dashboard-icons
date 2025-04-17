@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { REPO_PATH } from "@/constants";
-import { motion } from "framer-motion";
-import { ExternalLink, Github, Heart } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { REPO_PATH } from "@/constants"
+import { motion } from "framer-motion"
+import { ExternalLink, Github, Heart } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 
 // Pre-define unique IDs for animations to avoid using array indices as keys
 const HOVER_HEART_IDS = [
@@ -16,23 +16,17 @@ const HOVER_HEART_IDS = [
 	"hover-heart-6",
 	"hover-heart-7",
 	"hover-heart-8",
-];
-const BURST_HEART_IDS = [
-	"burst-heart-1",
-	"burst-heart-2",
-	"burst-heart-3",
-	"burst-heart-4",
-	"burst-heart-5",
-];
+]
+const BURST_HEART_IDS = ["burst-heart-1", "burst-heart-2", "burst-heart-3", "burst-heart-4", "burst-heart-5"]
 
 export function Footer() {
-	const [isHeartHovered, setIsHeartHovered] = useState(false);
-	const [isHeartFilled, setIsHeartFilled] = useState(false);
+	const [isHeartHovered, setIsHeartHovered] = useState(false)
+	const [isHeartFilled, setIsHeartFilled] = useState(false)
 
 	// Toggle heart fill state and add extra mini hearts on click
 	const handleHeartClick = () => {
-		setIsHeartFilled(!isHeartFilled);
-	};
+		setIsHeartFilled(!isHeartFilled)
+	}
 
 	return (
 		<footer className="border-t py-4  relative overflow-hidden">
@@ -41,28 +35,19 @@ export function Footer() {
 			<div className="container mx-auto px-4 md:px-6 relative z-10">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
 					<div className="flex flex-col gap-3">
-						<h3 className="font-bold text-lg text-foreground/90">
-							Dashboard Icons
-						</h3>
+						<h3 className="font-bold text-lg text-foreground/90">Dashboard Icons</h3>
 						<p className="text-sm text-muted-foreground leading-relaxed">
-							A collection of curated icons for services, applications and
-							tools, designed specifically for dashboards and app directories.
+							A collection of curated icons for services, applications and tools, designed specifically for dashboards and app directories.
 						</p>
 					</div>
 
 					<div className="flex flex-col gap-3">
 						<h3 className="font-bold text-lg text-foreground/90">Links</h3>
 						<div className="flex flex-col gap-2">
-							<Link
-								href="/"
-								className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center w-fit"
-							>
+							<Link href="/" className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center w-fit">
 								<span>Home</span>
 							</Link>
-							<Link
-								href="/icons"
-								className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center w-fit"
-							>
+							<Link href="/icons" className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center w-fit">
 								<span>Icons</span>
 							</Link>
 							<Link
@@ -132,9 +117,7 @@ export function Footer() {
 												}}
 												className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
 											>
-												<Heart
-													className={`h-2 w-2 ${i < 3 ? "text-rose-300" : i < 6 ? "text-rose-400" : ""}`}
-												/>
+												<Heart className={`h-2 w-2 ${i < 3 ? "text-rose-300" : i < 6 ? "text-rose-400" : ""}`} />
 											</motion.div>
 										))}
 
@@ -182,10 +165,7 @@ export function Footer() {
 												}}
 												className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
 											>
-												<Heart
-													className="h-2 w-2 "
-													fill="#f43f5e"
-												/>
+												<Heart className="h-2 w-2 " fill="#f43f5e" />
 											</motion.div>
 										))}
 									</>
@@ -210,5 +190,5 @@ export function Footer() {
 				</div>
 			</div>
 		</footer>
-	);
+	)
 }
