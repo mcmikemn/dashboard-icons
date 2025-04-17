@@ -44,7 +44,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 				</div>
 
 				<div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-					<Marquee pauseOnHover className="[--duration:30s] [--gap:2rem]">
+					<Marquee pauseOnHover className="[--duration:30s] [--gap:1em]">
 						{firstRow.map(({ name, data }) => (
 							<RecentIconCard key={name} name={name} data={data} />
 						))}
@@ -52,7 +52,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 					<Marquee
 						reverse
 						pauseOnHover
-						className="[--duration:30s] [--gap:2rem] mt-6"
+						className="[--duration:30s] [--gap:1rem] mt-6"
 					>
 						{secondRow.map(({ name, data }) => (
 							<RecentIconCard key={name} name={name} data={data} />
