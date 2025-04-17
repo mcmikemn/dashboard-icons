@@ -9,7 +9,7 @@ export function HeaderNav() {
 	const isIconsActive = pathname === "/icons" || pathname.startsWith("/icons/")
 
 	return (
-		<nav className="flex md:flex-row flex-col md:items-center items-start gap-4 md:gap-6">
+		<nav className="flex flex-row md:items-center items-start gap-4 md:gap-6">
 			<Link
 				href="/"
 				className={cn(
