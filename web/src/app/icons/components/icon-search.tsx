@@ -257,23 +257,6 @@ export function IconSearch({ icons }: IconSearchProps) {
 		}
 	}, [])
 
-	// Helper function to get the appropriate icon variant based on theme
-	const getIconVariant = (name: string, data: Icon) => {
-		// Check if the icon has theme variants and use appropriate one
-		if (data.colors) {
-			// If in dark mode and a light variant exists, use the light variant
-			if (resolvedTheme === "dark" && data.colors.light) {
-				return data.colors.light
-			}
-			// If in light mode and a dark variant exists, use the dark variant
-			if (resolvedTheme === "light" && data.colors.dark) {
-				return data.colors.dark
-			}
-		}
-		// Fall back to the default name if no appropriate variant
-		return name
-	}
-
 	if (!searchParams) return null
 
 	const getSortLabel = (sort: SortOption) => {
@@ -507,7 +490,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 					</div>
 					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-2">
 						{filteredIcons.map(({ name, data }) => (
-							<IconCard key={name} name={name} data={data} getIconVariant={getIconVariant} matchedAlias={matchedAliases[name] || null} />
+							<IconCard key={name} name={name} data={data} matchedAlias={matchedAliases[name] || null} />
 						))}
 					</div>
 				</>
@@ -519,12 +502,10 @@ export function IconSearch({ icons }: IconSearchProps) {
 function IconCard({
 	name,
 	data,
-	getIconVariant,
 	matchedAlias,
 }: {
 	name: string
 	data: Icon
-	getIconVariant: (name: string, data: Icon) => string
 	matchedAlias?: string | null
 }) {
 	const ref = useRef(null)
@@ -568,7 +549,7 @@ function IconCard({
 
 				<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
 					<Image
-						src={`${BASE_URL}/${data.base}/${getIconVariant(name, data)}.${data.base}`}
+						src={`${BASE_URL}/${data.base}/${name}.${data.base}`}
 						alt={`${name} icon`}
 						fill
 						className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
