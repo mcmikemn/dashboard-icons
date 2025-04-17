@@ -1,0 +1,3 @@
+User-Agent: *
+Allow: /
+Sitemap: https://icons.homarr.dev/sitemap.xml
