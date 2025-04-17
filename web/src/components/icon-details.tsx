@@ -1,278 +1,338 @@
-"use client"
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { BASE_URL, REPO_PATH } from "@/constants"
-import type { AuthorData, Icon } from "@/types/icons"
-import confetti from "canvas-confetti"
-import { motion } from "framer-motion"
-import { Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
-import Image from "next/image"
-import Link from "next/link"
-import { useCallback, useState } from "react"
-import { toast } from "sonner"
-import { Carbon } from "./carbon"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { BASE_URL, REPO_PATH } from "@/constants";
+import type { AuthorData, Icon } from "@/types/icons";
+import confetti from "canvas-confetti";
+import { motion } from "framer-motion";
+import {
+	Check,
+	Copy,
+	Download,
+	FileType,
+	Github,
+	Moon,
+	PaletteIcon,
+	Sun,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import Link from "next/link";
+import { useCallback, useState } from "react";
+import { toast } from "sonner";
+import { Carbon } from "./carbon";
+import { MagicCard } from "./magicui/magic-card";
 
 export type IconDetailsProps = {
-	icon: string
-	iconData: Icon
-	authorData: AuthorData
-}
+	icon: string;
+	iconData: Icon;
+	authorData: AuthorData;
+};
 
 export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
-	const { resolvedTheme } = useTheme()
-	const authorName = authorData.name || authorData.login || ""
-	const iconColorVariants = iconData.colors
-	const formattedDate = new Date(iconData.update.timestamp).toLocaleDateString("en-GB", {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	})
+	const authorName = authorData.name || authorData.login || "";
+	const iconColorVariants = iconData.colors;
+	const formattedDate = new Date(iconData.update.timestamp).toLocaleDateString(
+		"en-GB",
+		{
+			day: "numeric",
+			month: "long",
+			year: "numeric",
+		},
+	);
 	const getAvailableFormats = () => {
 		switch (iconData.base) {
 			case "svg":
-				return ["svg", "png", "webp"]
+				return ["svg", "png", "webp"];
 			case "png":
-				return ["png", "webp"]
+				return ["png", "webp"];
 			default:
-				return [iconData.base]
+				return [iconData.base];
 		}
-	}
+	};
 
-	const availableFormats = getAvailableFormats()
-	const [copiedVariants, setCopiedVariants] = useState<Record<string, boolean>>({})
+	const availableFormats = getAvailableFormats();
+	const [copiedVariants, setCopiedVariants] = useState<Record<string, boolean>>(
+		{},
+	);
 
 	// Launch confetti from the pointer position
 	const launchConfetti = useCallback((originX?: number, originY?: number) => {
 		const defaults = {
-			startVelocity: 30,
-			spread: 360,
+			startVelocity: 15,
+			spread: 180,
 			ticks: 50,
 			zIndex: 0,
 			disableForReducedMotion: true,
-			colors: ["#ff0a54", "#ff477e", "#ff7096", "#ff85a1", "#fbb1bd", "#f9bec7"],
-		}
+			colors: [
+				"#ff0a54",
+				"#ff477e",
+				"#ff7096",
+				"#ff85a1",
+				"#fbb1bd",
+				"#f9bec7",
+			],
+		};
 
 		// If we have origin coordinates, use them
 		if (originX !== undefined && originY !== undefined) {
 			confetti({
 				...defaults,
-				particleCount: 100,
-				origin: { x: originX / window.innerWidth, y: originY / window.innerHeight },
-			})
+				particleCount: 50,
+				origin: {
+					x: originX / window.innerWidth,
+					y: originY / window.innerHeight,
+				},
+			});
 		} else {
 			// Default to center of screen
 			confetti({
 				...defaults,
-				particleCount: 100,
+				particleCount: 50,
 				origin: { x: 0.5, y: 0.5 },
-			})
+			});
 		}
-	}, [])
+	}, []);
 
-	// Helper function to get the appropriate icon variant based on theme
-	const getIconVariant = (iconName: string) => {
-		// Check if the icon has theme variants
-		if (iconColorVariants) {
-			// If in dark mode and a light variant exists, use the light variant
-			if (resolvedTheme === "dark" && iconColorVariants.light) {
-				return iconColorVariants.light
-			}
-			// If in light mode and a dark variant exists, use the dark variant
-			if (resolvedTheme === "light" && iconColorVariants.dark) {
-				return iconColorVariants.dark
-			}
-		}
-		// Fall back to the default name if no appropriate variant
-		return iconName
-	}
-
-	const handleCopy = (url: string, variantKey: string, event?: React.MouseEvent) => {
-		navigator.clipboard.writeText(url)
+	const handleCopy = (
+		url: string,
+		variantKey: string,
+		event?: React.MouseEvent,
+	) => {
+		navigator.clipboard.writeText(url);
 		setCopiedVariants((prev) => ({
 			...prev,
 			[variantKey]: true,
-		}))
+		}));
 		setTimeout(() => {
 			setCopiedVariants((prev) => ({
 				...prev,
 				[variantKey]: false,
-			}))
-		}, 2000)
+			}));
+		}, 2000);
 
 		// Launch confetti from click position or center of screen
 		if (event) {
-			launchConfetti(event.clientX, event.clientY)
+			launchConfetti(event.clientX, event.clientY);
 		} else {
-			launchConfetti()
+			launchConfetti();
 		}
 
 		toast.success("URL copied", {
-			description: "The icon URL has been copied to your clipboard. Ready to use!",
-		})
-	}
+			description:
+				"The icon URL has been copied to your clipboard. Ready to use!",
+		});
+	};
 
-	const handleDownload = async (event: React.MouseEvent, url: string, filename: string) => {
-		event.preventDefault()
+	const handleDownload = async (
+		event: React.MouseEvent,
+		url: string,
+		filename: string,
+	) => {
+		event.preventDefault();
 
 		// Launch confetti from download button position
-		launchConfetti(event.clientX, event.clientY)
+		launchConfetti(event.clientX, event.clientY);
 
 		try {
 			// Show loading toast
-			toast.loading("Preparing download...")
+			toast.loading("Preparing download...");
 
 			// Fetch the file first as a blob
-			const response = await fetch(url)
-			const blob = await response.blob()
+			const response = await fetch(url);
+			const blob = await response.blob();
 
 			// Create a blob URL and use it for download
-			const blobUrl = URL.createObjectURL(blob)
-			const link = document.createElement("a")
-			link.href = blobUrl
-			link.download = filename
-			document.body.appendChild(link)
-			link.click()
+			const blobUrl = URL.createObjectURL(blob);
+			const link = document.createElement("a");
+			link.href = blobUrl;
+			link.download = filename;
+			document.body.appendChild(link);
+			link.click();
 
 			// Clean up
-			document.body.removeChild(link)
-			setTimeout(() => URL.revokeObjectURL(blobUrl), 100)
+			document.body.removeChild(link);
+			setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
 
-			toast.dismiss()
+			toast.dismiss();
 			toast.success("Download started", {
-				description: "Your icon file is being downloaded and will be saved to your device.",
-			})
+				description:
+					"Your icon file is being downloaded and will be saved to your device.",
+			});
 		} catch (error) {
-			console.error("Download error:", error)
-			toast.dismiss()
+			console.error("Download error:", error);
+			toast.dismiss();
 			toast.error("Download failed", {
-				description: "There was an error downloading the file. Please try again.",
-			})
+				description:
+					"There was an error downloading the file. Please try again.",
+			});
 		}
-	}
+	};
 
-	const renderVariant = (format: string, iconName: string, theme?: "light" | "dark") => {
-		const variantName = theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName
-		const url = `${BASE_URL}/${format}/${variantName}.${format}`
-		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`
-		const variantKey = `${format}-${theme || "default"}`
-		const isCopied = copiedVariants[variantKey] || false
+	const renderVariant = (
+		format: string,
+		iconName: string,
+		theme?: "light" | "dark",
+	) => {
+		const variantName =
+			theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName;
+		const url = `${BASE_URL}/${format}/${variantName}.${format}`;
+		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`;
+		const variantKey = `${format}-${theme || "default"}`;
+		const isCopied = copiedVariants[variantKey] || false;
 
 		return (
-			<TooltipProvider key={variantKey}>
-				<div className="flex flex-col items-center bg-background/90 dark:bg-background/50 rounded-lg p-4 border border-rose-100/50 dark:border-rose-950/50 shadow-sm hover:shadow-md transition-all">
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<motion.div
-								className="relative w-28 h-28 mb-3 cursor-pointer rounded-xl overflow-hidden group"
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={(e) => handleCopy(url, variantKey, e)}
-							>
-								<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl z-10 transition-colors" />
-
+			<TooltipProvider key={variantKey} delayDuration={500}>
+				<MagicCard>
+					<div className="flex flex-col items-center rounded-lg p-4 border border-border shadow-sm hover:shadow-md transition-all">
+						<Tooltip>
+							<TooltipTrigger asChild>
 								<motion.div
-									className="absolute inset-0 bg-primary/10 flex items-center justify-center z-20 rounded-xl"
-									initial={{ opacity: 0 }}
-									animate={{ opacity: isCopied ? 1 : 0 }}
-									transition={{ duration: 0.2 }}
+									className="relative w-28 h-28 mb-3 cursor-pointer rounded-xl overflow-hidden group"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={(e) => handleCopy(url, variantKey, e)}
 								>
+									<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl z-10 transition-colors" />
+
 									<motion.div
-										initial={{ scale: 0.5, opacity: 0 }}
-										animate={{ scale: isCopied ? 1 : 0.5, opacity: isCopied ? 1 : 0 }}
-										transition={{ type: "spring", stiffness: 300, damping: 20 }}
+										className="absolute inset-0 bg-primary/10 flex items-center justify-center z-20 rounded-xl"
+										initial={{ opacity: 0 }}
+										animate={{ opacity: isCopied ? 1 : 0 }}
+										transition={{ duration: 0.2 }}
 									>
-										<Check className="w-8 h-8 text-primary" />
+										<motion.div
+											initial={{ scale: 0.5, opacity: 0 }}
+											animate={{
+												scale: isCopied ? 1 : 0.5,
+												opacity: isCopied ? 1 : 0,
+											}}
+											transition={{
+												type: "spring",
+												stiffness: 300,
+												damping: 20,
+											}}
+										>
+											<Check className="w-8 h-8 text-primary" />
+										</motion.div>
 									</motion.div>
+
+									<Image
+										src={url}
+										alt={`${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
+										fill
+										className="object-contain p-4"
+									/>
 								</motion.div>
-
-								<Image
-									src={url}
-									alt={`${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
-									fill
-									className="object-contain p-4"
-								/>
-							</motion.div>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p>Click to copy direct URL to clipboard</p>
-						</TooltipContent>
-					</Tooltip>
-
-					<p className="text-sm font-medium">{format.toUpperCase()}</p>
-
-					<div className="flex gap-2 mt-3 w-full justify-center">
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<Button
-									variant="outline"
-									size="icon"
-									className="h-8 w-8 rounded-lg cursor-pointer"
-									onClick={(e) => handleDownload(e, url, `${iconName}.${format}`)}
-								>
-									<Download className="w-4 h-4" />
-								</Button>
 							</TooltipTrigger>
 							<TooltipContent>
-								<p>Download icon file</p>
+								<p>Click to copy direct URL to clipboard</p>
 							</TooltipContent>
 						</Tooltip>
 
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<Button
-									variant="outline"
-									size="icon"
-									className="h-8 w-8 rounded-lg cursor-pointer"
-									onClick={(e) => handleCopy(url, `btn-${variantKey}`, e)}
-								>
-									{copiedVariants[`btn-${variantKey}`] ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-								</Button>
-							</TooltipTrigger>
-							<TooltipContent>
-								<p>Copy direct URL to clipboard</p>
-							</TooltipContent>
-						</Tooltip>
+						<p className="text-sm font-medium">{format.toUpperCase()}</p>
 
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<Button variant="outline" size="icon" className="h-8 w-8 rounded-lg" asChild>
-									<Link href={githubUrl} target="_blank" rel="noopener noreferrer">
-										<Github className="w-4 h-4" />
-									</Link>
-								</Button>
-							</TooltipTrigger>
-							<TooltipContent>
-								<p>View on GitHub</p>
-							</TooltipContent>
-						</Tooltip>
+						<div className="flex gap-2 mt-3 w-full justify-center">
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<Button
+										variant="outline"
+										size="icon"
+										className="h-8 w-8 rounded-lg cursor-pointer"
+										onClick={(e) =>
+											handleDownload(e, url, `${iconName}.${format}`)
+										}
+									>
+										<Download className="w-4 h-4" />
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Download icon file</p>
+								</TooltipContent>
+							</Tooltip>
+
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<Button
+										variant="outline"
+										size="icon"
+										className="h-8 w-8 rounded-lg cursor-pointer"
+										onClick={(e) => handleCopy(url, `btn-${variantKey}`, e)}
+									>
+										{copiedVariants[`btn-${variantKey}`] ? (
+											<Check className="w-4 h-4 text-green-500" />
+										) : (
+											<Copy className="w-4 h-4" />
+										)}
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Copy direct URL to clipboard</p>
+								</TooltipContent>
+							</Tooltip>
+
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<Button
+										variant="outline"
+										size="icon"
+										className="h-8 w-8 rounded-lg"
+										asChild
+									>
+										<Link
+											href={githubUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<Github className="w-4 h-4" />
+										</Link>
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>View on GitHub</p>
+								</TooltipContent>
+							</Tooltip>
+						</div>
 					</div>
-				</div>
+				</MagicCard>
 			</TooltipProvider>
-		)
-	}
+		);
+	};
 
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 				{/* Left Column: Icon Info and Author */}
 				<div className="lg:col-span-1">
-					<Card className="h-full backdrop-blur-sm bg-background/95 dark:bg-background/80 border shadow-lg">
+					<Card className="h-full backdrop-blur-sm  border shadow-lg">
 						<CardHeader className="pb-4">
 							<div className="flex flex-col items-center">
-								<div className="relative w-32 h-32 bg-background/90 rounded-xl overflow-hidden border flex items-center justify-center p-3 mb-4">
+								<div className="relative w-32 h-32  rounded-xl overflow-hidden border flex items-center justify-center p-3 ">
 									<Image
-										src={`${BASE_URL}/${iconData.base}/${getIconVariant(icon)}.${iconData.base}`}
+										src={`${BASE_URL}/${iconData.base}/${icon}.${iconData.base}`}
 										width={96}
 										height={96}
 										alt={icon}
 										className="w-full h-full object-contain"
 									/>
 								</div>
-								<CardTitle className="text-2xl font-bold capitalize text-center mb-2">{icon}</CardTitle>
+								<CardTitle className="text-2xl font-bold capitalize text-center mb-2">
+									{icon}
+								</CardTitle>
 							</div>
 						</CardHeader>
 						<CardContent>
@@ -281,15 +341,23 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 									<div className="space-y-2">
 										<div className="flex items-center gap-2">
 											<p className="text-sm">
-												<span className="font-medium">Updated on:</span> {formattedDate}
+												<span className="font-medium">Updated on:</span>{" "}
+												{formattedDate}
 											</p>
 										</div>
 										<div className="flex items-center gap-2">
 											<div className="flex items-center gap-2">
 												<p className="text-sm font-medium">By:</p>
 												<Avatar className="h-5 w-5 border">
-													<AvatarImage src={authorData.avatar_url} alt={authorName} />
-													<AvatarFallback>{authorName ? authorName.slice(0, 2).toUpperCase() : "??"}</AvatarFallback>
+													<AvatarImage
+														src={authorData.avatar_url}
+														alt={authorName}
+													/>
+													<AvatarFallback>
+														{authorName
+															? authorName.slice(0, 2).toUpperCase()
+															: "??"}
+													</AvatarFallback>
 												</Avatar>
 												{authorData.html_url ? (
 													<Link
@@ -310,7 +378,9 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 								{iconData.categories && iconData.categories.length > 0 && (
 									<div className="space-y-3">
-										<h3 className="text-sm font-semibold text-muted-foreground">Categories</h3>
+										<h3 className="text-sm font-semibold text-muted-foreground">
+											Categories
+										</h3>
 										<div className="flex flex-wrap gap-2">
 											{iconData.categories.map((category) => (
 												<Link
@@ -320,7 +390,10 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 												>
 													{category
 														.split("-")
-														.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+														.map(
+															(word) =>
+																word.charAt(0).toUpperCase() + word.slice(1),
+														)
 														.join(" ")}
 												</Link>
 											))}
@@ -330,7 +403,9 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 								{iconData.aliases && iconData.aliases.length > 0 && (
 									<div className="space-y-3">
-										<h3 className="text-sm font-semibold text-muted-foreground">Aliases</h3>
+										<h3 className="text-sm font-semibold text-muted-foreground">
+											Aliases
+										</h3>
 										<div className="flex flex-wrap gap-2">
 											{iconData.aliases.map((alias) => (
 												<span
@@ -342,7 +417,10 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 												</span>
 											))}
 										</div>
-										<p className="text-[10px] text-muted-foreground mt-1">These aliases can be used to find this icon in search results.</p>
+										<p className="text-[10px] text-muted-foreground mt-1">
+											These aliases can be used to find this icon in search
+											results.
+										</p>
 									</div>
 								)}
 							</div>
@@ -352,34 +430,42 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Middle Column: Icon variants */}
 				<div className="lg:col-span-2">
-					<Card className="h-full backdrop-blur-sm bg-background/95 dark:bg-background/80 border shadow-lg">
+					<Card className="h-full backdrop-blur-sm bg-card shadow-lg">
 						<CardHeader>
 							<CardTitle>Icon variants</CardTitle>
-							<CardDescription>Click on any icon to copy its URL to your clipboard</CardDescription>
+							<CardDescription>
+								Click on any icon to copy its URL to your clipboard
+							</CardDescription>
 						</CardHeader>
 						<CardContent>
 							{!iconData.colors ? (
 								<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-									{availableFormats.map((format) => renderVariant(format, icon))}
+									{availableFormats.map((format) =>
+										renderVariant(format, icon),
+									)}
 								</div>
 							) : (
 								<div className="space-y-10">
 									<div>
-										<h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+										<h3 className="text-lg font-semibold  flex items-center gap-2">
 											<Sun className="w-4 h-4 text-amber-500" />
 											Light theme
 										</h3>
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3 rounded-lg bg-background/50 dark:bg-background/30 border border-rose-100 dark:border-rose-950/40">
-											{availableFormats.map((format) => renderVariant(format, icon, "light"))}
+										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3 rounded-lg ">
+											{availableFormats.map((format) =>
+												renderVariant(format, icon, "light"),
+											)}
 										</div>
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+										<h3 className="text-lg font-semibold  flex items-center gap-2">
 											<Moon className="w-4 h-4 text-indigo-500" />
 											Dark theme
 										</h3>
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3 rounded-lg bg-background/50 dark:bg-background/30 border border-rose-100 dark:border-rose-950/40">
-											{availableFormats.map((format) => renderVariant(format, icon, "dark"))}
+										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3 rounded-lg ">
+											{availableFormats.map((format) =>
+												renderVariant(format, icon, "dark"),
+											)}
 										</div>
 									</div>
 								</div>
@@ -390,29 +476,33 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Right Column: Technical details */}
 				<div className="lg:col-span-1">
-					<Card className="h-full backdrop-blur-sm bg-background/95 dark:bg-background/80 border shadow-lg">
+					<Card className="h-full backdrop-blur-sm  border shadow-lg">
 						<CardHeader>
 							<CardTitle>Technical details</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<div className="space-y-6">
 								<div className="space-y-3">
-									<h3 className="text-sm font-semibold text-muted-foreground">Base format</h3>
+									<h3 className="text-sm font-semibold text-muted-foreground">
+										Base format
+									</h3>
 									<div className="flex items-center gap-2">
 										<FileType className="w-4 h-4 text-blue-500" />
-										<div className="px-3 py-1.5 bg-background/80 dark:bg-background/50 border border-border rounded-lg text-sm font-medium">
+										<div className="px-3 py-1.5  border border-border rounded-lg text-sm font-medium">
 											{iconData.base.toUpperCase()}
 										</div>
 									</div>
 								</div>
 
 								<div className="space-y-3">
-									<h3 className="text-sm font-semibold text-muted-foreground">Available formats</h3>
+									<h3 className="text-sm font-semibold text-muted-foreground">
+										Available formats
+									</h3>
 									<div className="flex flex-wrap gap-2">
 										{availableFormats.map((format) => (
 											<div
 												key={format}
-												className="px-3 py-1.5 bg-background/80 dark:bg-background/50 border border-border rounded-lg text-xs font-medium"
+												className="px-3 py-1.5  border border-border rounded-lg text-xs font-medium"
 											>
 												{format.toUpperCase()}
 											</div>
@@ -422,25 +512,37 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 								{iconData.colors && (
 									<div className="space-y-3">
-										<h3 className="text-sm font-semibold text-muted-foreground">Color variants</h3>
+										<h3 className="text-sm font-semibold text-muted-foreground">
+											Color variants
+										</h3>
 										<div className="space-y-2">
-											{Object.entries(iconData.colors).map(([theme, variant]) => (
-												<div key={theme} className="flex items-center gap-2">
-													<PaletteIcon className="w-4 h-4 text-purple-500" />
-													<span className="capitalize font-medium text-sm">{theme}:</span>
-													<code className="bg-background/80 dark:bg-background/50 border border-border px-2 py-0.5 rounded-lg text-xs">
-														{variant}
-													</code>
-												</div>
-											))}
+											{Object.entries(iconData.colors).map(
+												([theme, variant]) => (
+													<div key={theme} className="flex items-center gap-2">
+														<PaletteIcon className="w-4 h-4 text-purple-500" />
+														<span className="capitalize font-medium text-sm">
+															{theme}:
+														</span>
+														<code className=" border border-border px-2 py-0.5 rounded-lg text-xs">
+															{variant}
+														</code>
+													</div>
+												),
+											)}
 										</div>
 									</div>
 								)}
 
 								<div className="space-y-3">
-									<h3 className="text-sm font-semibold text-muted-foreground">Source</h3>
+									<h3 className="text-sm font-semibold text-muted-foreground">
+										Source
+									</h3>
 									<Button variant="outline" className="w-full" asChild>
-										<Link href={`${REPO_PATH}/blob/main/meta/${icon}.json`} target="_blank" rel="noopener noreferrer">
+										<Link
+											href={`${REPO_PATH}/blob/main/meta/${icon}.json`}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
 											<Github className="w-4 h-4 mr-2" />
 											View on GitHub
 										</Link>
@@ -453,5 +555,5 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
