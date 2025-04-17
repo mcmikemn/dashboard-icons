@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
 	const { totalIcons } = await getTotalIcons()
-	const recentIcons = await getRecentlyAddedIcons(8)
+	const recentIcons = await getRecentlyAddedIcons(10)
 
 	return (
 		<div className="flex flex-col min-h-screen">
