@@ -102,14 +102,6 @@ export default async function IconPage({ params }: { params: Promise<{ icon: str
 		notFound()
 	}
 
-	// Fetch total icons
-	const { totalIcons } = await getTotalIcons()
-	// Format icon name
-	const formattedIconName = icon
-		.split("-")
-		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(" ")
-
 	const authorData = await getAuthorData(originalIconData.update.author.id)
 
 	return (
@@ -149,16 +141,6 @@ export default async function IconPage({ params }: { params: Promise<{ icon: str
 					}}
 				/>
 			</div>
-
-			{/* Title and Description Section */}
-			<div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 text-center">
-				<h1 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground sm:text-6xl">{formattedIconName} Icon</h1>
-				<p className="mt-3 md:mt-6 text-sm md:text-lg leading-6 md:leading-8 text-muted-foreground">
-					Part of a collection of {totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and
-					app directories.
-				</p>
-			</div>
-
 			{/* Existing Icon Details */}
 			<IconDetails icon={icon} iconData={originalIconData} authorData={authorData} />
 		</div>
