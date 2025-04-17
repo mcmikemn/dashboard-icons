@@ -26,7 +26,6 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 	if (!iconsData[icon]) {
 		notFound()
 	}
-	const previousImages = (await parent).openGraph?.images || []
 	const authorData = await getAuthorData(iconsData[icon].update.author.id)
 	const authorName = authorData.name || authorData.login
 	const updateDate = new Date(iconsData[icon].update.timestamp)
