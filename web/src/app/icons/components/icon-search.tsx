@@ -11,6 +11,7 @@ import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useTheme } from "next-themes"
+import { useInView } from "framer-motion"
 
 export function IconSearch({ icons }: IconSearchProps) {
 	const searchParams = useSearchParams()
@@ -133,39 +134,70 @@ export function IconSearch({ icons }: IconSearchProps) {
 			) : (
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mt-8">
 					{filteredIcons.map(({ name, data }, index) => (
-						<motion.div
-							key={name}
-							initial={{ opacity: 0, y: 15 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{
-								duration: 0.5,
-								delay: index * 0.03,
-								ease: "easeOut",
-							}}
-						>
-							<Link
-								prefetch={false}
-								href={`/icons/${name}`}
-								className="group flex flex-col items-center p-3 sm:p-4 rounded-lg border border-border bg-background/95 dark:bg-background/80 hover:border-rose-500 hover:bg-rose-500/10 dark:hover:bg-rose-900/30 dark:hover:border-rose-500 transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/5 relative overflow-hidden"
-							>
-								<div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-								<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
-									<Image
-										src={`${BASE_URL}/${data.base}/${getIconVariant(name, data)}.${data.base}`}
-										alt={`${name} icon`}
-										fill
-										className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
-									/>
-								</div>
-								<span className="text-xs sm:text-sm text-center truncate w-full capitalize group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-200 font-medium">
-									{name.replace(/-/g, " ")}
-								</span>
-							</Link>
-						</motion.div>
+						<IconCard key={name} name={name} data={data} getIconVariant={getIconVariant} />
 					))}
 				</div>
 			)}
 		</>
 	)
+}
+
+function IconCard({ name, data, getIconVariant }: {
+	name: string;
+	data: any;
+	getIconVariant: (name: string, data: any) => string;
+}) {
+	const ref = useRef(null);
+	const isInView = useInView(ref, {
+		once: false,
+		amount: 0.2,
+		margin: "100px 0px"
+	});
+
+	const variants = {
+		hidden: { opacity: 0, y: 20, scale: 0.95 },
+		visible: {
+			opacity: 1,
+			y: 0,
+			scale: 1,
+			transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] }
+		},
+		exit: {
+			opacity: 0,
+			y: -10,
+			scale: 0.98,
+			transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] }
+		}
+	};
+
+	return (
+		<motion.div
+			ref={ref}
+			initial="hidden"
+			animate={isInView ? "visible" : "hidden"}
+			exit="exit"
+			variants={variants}
+			className="will-change-transform"
+		>
+			<Link
+				prefetch={false}
+				href={`/icons/${name}`}
+				className="group flex flex-col items-center p-3 sm:p-4 rounded-lg border border-border bg-background/95 dark:bg-background/80 hover:border-rose-500 hover:bg-rose-500/10 dark:hover:bg-rose-900/30 dark:hover:border-rose-500 transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/5 relative overflow-hidden"
+			>
+				<div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+				<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
+					<Image
+						src={`${BASE_URL}/${data.base}/${getIconVariant(name, data)}.${data.base}`}
+						alt={`${name} icon`}
+						fill
+						className="object-contain p-1 group-hover:scale-110 transition-transform duration-300"
+					/>
+				</div>
+				<span className="text-xs sm:text-sm text-center truncate w-full capitalize group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-200 font-medium">
+					{name.replace(/-/g, " ")}
+				</span>
+			</Link>
+		</motion.div>
+	);
 }
