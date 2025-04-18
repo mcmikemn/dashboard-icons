@@ -27,6 +27,7 @@ import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { AuroraText } from "./magicui/aurora-text"
 import { InteractiveHoverButton } from "./magicui/interactive-hover-button"
+import { NumberTicker } from "./magicui/number-ticker"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 
 interface IconCardProps {
@@ -206,7 +207,6 @@ export function HeroSection({ totalIcons, stars }: { totalIcons: number; stars: 
 
 			<div className="relative z-10 container mx-auto px-4 md:px-6 mt-4 py-20">
 				<div className="max-w-4xl mx-auto text-center flex flex-col gap-4 ">
-
 					<h1 className="relative text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight motion-preset-slide-up motion-duration-2000 ">
 						Your definitive source for
 						<Sparkles className="absolute -right-1 -bottom-3 text-rose-500 h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-12 motion-delay-300 motion-preset-seesaw-lg motion-scale-in-[0.5] motion-translate-x-in-[-120%] motion-translate-y-in-[-60%] motion-opacity-in-[33%] motion-rotate-in-[-1080deg] motion-blur-in-[10px] motion-duration-[1s] motion-delay-[0.13s]/scale motion-duration-[0.13s]/opacity motion-duration-[0.40s]/rotate motion-duration-[0.05s]/blur motion-delay-[0.20s]/blur motion-ease-spring-bouncier" />
@@ -216,8 +216,8 @@ export function HeroSection({ totalIcons, stars }: { totalIcons: number; stars: 
 					</h1>
 
 					<p className="text-sm sm:text-base md:text-xl text-muted-foreground leading-relaxed mb-8 font-light tracking-wide max-w-2xl mx-auto px-4 motion-preset-slide-down motion-duration-2000">
-						A collection of <span className="font-medium ">{totalIcons}</span> curated icons for services, applications and tools, designed
-						specifically for dashboards and app directories.
+						A collection of <NumberTicker value={totalIcons} className="font-bold tracking-tighter text-muted-foreground" /> curated icons
+						for services, applications and tools, designed specifically for dashboards and app directories.
 					</p>
 					<div className="flex flex-col gap-4 max-w-3xl mx-auto">
 						<SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} totalIcons={totalIcons} />
@@ -232,7 +232,7 @@ export function HeroSection({ totalIcons, stars }: { totalIcons: number; stars: 
 					</div>
 				</div>
 			</div>
-		
+
 			<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80 pointer-events-none" />
 		</div>
 	)
@@ -265,9 +265,10 @@ export default function GiveUsAStarButton({ stars }: { stars: string | number })
 							What is Starring?
 						</h4>
 						<p className="text-sm text-muted-foreground">
-							Starring a repository on GitHub is like bookmarking it.<br/> It helps you keep track of projects you find interesting and shows
-							appreciation to the project maintainers.<br/> You can star a repository by clicking the 'Star' button, usually found in the
-							top-right corner of the repository's page on GitHub.
+							Starring a repository on GitHub is like bookmarking it.
+							<br /> It helps you keep track of projects you find interesting and shows appreciation to the project maintainers.
+							<br /> You can star a repository by clicking the 'Star' button, usually found in the top-right corner of the repository's page
+							on GitHub.
 						</p>
 					</div>
 
@@ -477,17 +478,11 @@ function SearchInput({ searchQuery, setSearchQuery, totalIcons }: SearchInputPro
 				autoFocus
 				type="search"
 				placeholder={`Find any of ${totalIcons} icons by name or category...`}
-				className="pl-10 h-10 md:h-12 rounded-lg w-full border-muted-foreground/20  focus:ring-rose-500/20 text-sm md:text-base"
+				className="pl-10 h-10 md:h-12 rounded-lg w-full border-border focus:border-primary/20 text-sm md:text-base"
 				value={searchQuery}
 				onChange={(e) => setSearchQuery(e.target.value)}
 			/>
 			<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-muted-foreground group-focus-within: transition-all duration-300" />
-			<motion.span
-				className="absolute inset-0 -z-10 rounded-lg bg-rose-500/5 opacity-0 transition-opacity group-hover:opacity-100"
-				initial={{ scale: 0.95 }}
-				whileHover={{ scale: 1 }}
-				transition={{ duration: 0.2 }}
-			/>
 		</form>
 	)
 }
