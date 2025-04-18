@@ -186,7 +186,7 @@ export function Footer() {
 				</div>
 
 				<div className="mt-4 text-center text-sm text-muted-foreground/80">
-					<p>© {new Date().getFullYear()} Homarr Labs. All rights reserved.</p>
+					<p>© {new Date().getFullYear()} Homarr Labs.</p>
 				</div>
 			</div>
 		</footer>
