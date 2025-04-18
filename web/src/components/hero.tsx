@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { Separator } from "@radix-ui/react-dropdown-menu"
 import { motion, useAnimation, useInView } from "framer-motion"
-import { DollarSign, Heart, Search, Star } from "lucide-react"
+import { Car, Code, Coffee, DollarSign, ExternalLink, Eye, GitFork, Heart, Search, Server, Share2, Star, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { AuroraText } from "./magicui/aurora-text"
 import { InteractiveHoverButton } from "./magicui/interactive-hover-button"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 
 interface IconCardProps {
 	name: string
@@ -187,85 +189,294 @@ export function HeroSection({ totalIcons, stars }: { totalIcons: number; stars: 
 			</div>
 
 			<div className="relative z-10 container mx-auto px-4 md:px-6">
-				<div className="max-w-4xl mx-auto text-center flex flex-col gap-4">
-					<Link prefetch href="https://github.com/homarr-labs" target="_blank" rel="noopener noreferrer" className="mx-auto">
-						<Card className="group p-2 px-4 flex flex-row items-center gap-2 border-2  z-10 relative glass-effect motion-safe:motion-preset-slide-up motion-duration-1500 hover:scale-105 transition-all duration-300">
-							<Heart
-								// Filled when hovered
-								className="h-4 w-4 text-primary group-hover:fill-primary transition-all duration-300"
-							/>
+				<div className="max-w-4xl mx-auto text-center flex flex-col gap-4 ">
+					<Link
+						prefetch
+						href="https://github.com/homarr-labs"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="mx-auto  motion-safe:motion-preset-slide-up motion-duration-1500"
+					>
+						<Card className="group p-2 px-4 flex flex-row items-center gap-2 border-2  z-10 relative glass-effect hover:scale-105 transition-all duration-300">
+							<Heart className="h-4 w-4 text-primary group-hover:fill-primary transition-all duration-300" />
 							<span className="text-sm text-foreground/70 tracking-wide">Made with love by Homarr Labs</span>
 						</Card>
 					</Link>
 
-					<h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight motion-safe:motion-preset-slide-up motion-duration-1500">
+					<h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight ">
 						Your definitive source for
 						<br />
 						<AuroraText colors={["#FA5352", "#FA5352", "orange"]}>dashboard icons</AuroraText>
 					</h1>
 
-					<motion.div custom={2} className="motion-safe:motion-preset-slide-up motion-duration-1500">
-						<p className="text-sm sm:text-base md:text-xl text-muted-foreground mb-6 md:mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
-							A collection of <span className="font-medium ">{totalIcons}</span> curated icons for services, applications and tools,
-							designed specifically for dashboards and app directories.
-						</p>
-					</motion.div>
+					<p className="text-sm sm:text-base md:text-xl text-muted-foreground mb-6 md:mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
+						A collection of <span className="font-medium ">{totalIcons}</span> curated icons for services, applications and tools, designed
+						specifically for dashboards and app directories.
+					</p>
 
-					<motion.div
-						custom={3}
-						className="flex flex-col items-center gap-4 md:gap-6 mb-8 md:mb-12 motion-safe:motion-preset-slide-up motion-duration-1500"
-					>
-						<form action="/icons" method="GET" className="relative w-full max-w-md group">
-							<Input
-								name="q"
-								autoFocus
-								type="search"
-								placeholder={`Find any of ${totalIcons} icons by name or category...`}
-								className="pl-10 h-10 md:h-12 rounded-lg border-muted-foreground/20  focus:ring-rose-500/20 text-sm md:text-base"
-								value={searchQuery}
-								onChange={(e) => setSearchQuery(e.target.value)}
-							/>
-							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-muted-foreground group-focus-within: transition-all duration-300" />
-							<motion.span
-								className="absolute inset-0 -z-10 rounded-lg bg-rose-500/5 opacity-0 transition-opacity group-hover:opacity-100"
-								initial={{ scale: 0.95 }}
-								whileHover={{ scale: 1 }}
-								transition={{ duration: 0.2 }}
-							/>
-						</form>
-						<div className="flex gap-3 md:gap-4 flex-wrap justify-center">
-							<Link href="/icons">
-								<InteractiveHoverButton className="rounded-md bg-input/30">Explore icons</InteractiveHoverButton>
-							</Link>
-							<Link
-								href="https://github.com/homarr-labs/dashboard-icons"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="flex items-center text-sm md:text-base"
-							>
-								<Button variant="outline" className="h-9 md:h-10 px-4" asChild>
-									<div>
-										<p>Give us a star</p>
-										<Star className="h-4 w-4 ml-1 text-yellow-500 fill-yellow-500" />
-										<span className="text-xs text-muted-foreground">{stars}</span>
-									</div>
-								</Button>
-							</Link>
-							{/* Give us money */}
-							<Link href="https://opencollective.com/homarr">
-								<Button variant="outline" className="h-9 md:h-10 px-4" asChild>
-									<div className="flex items-center gap-2">
-										<p>Give us money</p>
-										<DollarSign className="h-4 w-4 ml-1 text-yellow-500" />
-									</div>
-								</Button>
-							</Link>
-						</div>
-					</motion.div>
+					<SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} totalIcons={totalIcons} />
+					<div className="flex gap-3 md:gap-4 flex-wrap justify-center">
+						<Link href="/icons">
+							<InteractiveHoverButton className="rounded-md bg-input/30">Explore icons</InteractiveHoverButton>
+						</Link>
+						<GiveUsAStarButton stars={stars} />
+						<GiveUsMoneyButton />
+						<GiveUsLoveButton />
+					</div>
 				</div>
 			</div>
 
 			<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80 pointer-events-none" />
 		</div>
+	)
+}
+
+export default function GiveUsAStarButton({ stars }: { stars: string | number }) {
+	return (
+		<HoverCard openDelay={200} closeDelay={200}>
+			<HoverCardTrigger asChild>
+				<Link
+					href="https://github.com/homarr-labs/dashboard-icons"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="flex items-center text-sm md:text-base"
+				>
+					<Button variant="outline" className="h-9 md:h-10 px-4" asChild>
+						<div>
+							<p>Give us a star</p>
+							<Star className="h-4 w-4 ml-1 text-yellow-500 fill-yellow-500" />
+							<span className="text-xs text-muted-foreground">{stars}</span>
+						</div>
+					</Button>
+				</Link>
+			</HoverCardTrigger>
+			<HoverCardContent className="w-96">
+				<div className="grid gap-4">
+					<div className="space-y-2">
+						<h4 className="font-medium leading-none flex items-center gap-2">
+							<Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+							What is Starring?
+						</h4>
+						<p className="text-sm text-muted-foreground">
+							Starring a repository on GitHub is like bookmarking it. It helps you keep track of projects you find interesting and shows
+							appreciation to the project maintainers. You can star a repository by clicking the 'Star' button, usually found in the
+							top-right corner of the repository's page on GitHub.
+						</p>
+					</div>
+
+					<div className="space-y-2">
+						<h5 className="text-sm font-medium text-secondary-foreground">How your star helps us:</h5>
+						<ul className="text-xs text-secondary-foreground/80 space-y-1.5">
+							<li className="flex items-start gap-2">
+								<TrendingUp className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+								<span>Increases our visibility in GitHub search results</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Eye className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+								<span>Attracts more contributors to improve the project</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<GitFork className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+								<span>Encourages more forks and community involvement</span>
+							</li>
+						</ul>
+					</div>
+
+					<div className="flex justify-between items-center pt-2">
+						<Button
+							variant="default"
+							size="sm"
+							className="bg-primary hover:bg-primary/90"
+							onClick={() => window.open("https://github.com/homarr-labs/dashboard-icons", "_blank")}
+						>
+							Star
+						</Button>
+						<Button
+							variant="link"
+							size="sm"
+							className="flex items-center gap-1 text-xs text-secondary-foreground"
+							onClick={() =>
+								window.open("https://docs.github.com/get-started/exploring-projects-on-github/saving-repositories-with-stars", "_blank")
+							}
+						>
+							Learn More
+							<ExternalLink className="h-3 w-3" />
+						</Button>
+					</div>
+				</div>
+			</HoverCardContent>
+		</HoverCard>
+	)
+}
+
+export function GiveUsLoveButton() {
+	return (
+		<HoverCard openDelay={200} closeDelay={200}>
+			<HoverCardTrigger asChild>
+				<Button variant="outline" className="h-9 md:h-10 px-4">
+					<div className="flex items-center gap-2">
+						<p>Give us love</p>
+						<Heart className="h-4 w-4 ml-1 fill-red-500 text-red-500" />
+					</div>
+				</Button>
+			</HoverCardTrigger>
+			<HoverCardContent className="w-96">
+				<div className="grid gap-4">
+					<div className="space-y-2">
+						<h4 className="font-medium leading-none flex items-center gap-2">
+							<Heart className="h-4 w-4 fill-red-500 text-red-500" />
+							Support us without spending
+						</h4>
+						<p className="text-sm text-muted-foreground">We keep our service free through minimal, non-intrusive ads.</p>
+					</div>
+
+					<div className="flex gap-2 items-start">
+						<div className="space-y-1">
+							<p className="text-sm font-medium text-primary">Please consider disabling your ad-blocker</p>
+							<p className="text-xs text-primary/80">
+								We only show ads on the icon detail pages (/icons/{"{id}"}) and never on the main site.
+							</p>
+							<p className="text-xs text-primary/80 mt-2 italic">
+								Note: If you use a network-wide ad blocker (like Pi-hole or AdGuard Home), you may need to whitelist "carbonads.net"
+								specifically.
+							</p>
+						</div>
+					</div>
+
+					<div className="space-y-2">
+						<h5 className="text-sm font-medium text-secondary-foreground">Our Privacy Promise:</h5>
+						<ul className="text-xs text-secondary-foreground/80 space-y-1.5">
+							<li className="flex items-start gap-2">
+								<span className="text-primary font-bold">✓</span>
+								<span>We don't track your browsing habits</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<span className="text-primary font-bold">✓</span>
+								<span>We don't sell your personal data</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<span className="text-primary font-bold">✓</span>
+								<span>We only use essential cookies</span>
+							</li>
+						</ul>
+					</div>
+
+					<Separator className="bg-secondary/20" />
+
+					<div className="space-y-2">
+						<h5 className="text-sm font-medium text-secondary-foreground flex items-center gap-2">
+							<Share2 className="h-4 w-4 text-primary" />
+							Spread the word
+						</h5>
+						<p className="text-xs text-secondary-foreground/80">
+							Don't want to disable your ad blocker? You can still help us by sharing our website with others who might find it useful.
+						</p>
+					</div>
+				</div>
+			</HoverCardContent>
+		</HoverCard>
+	)
+}
+
+export function GiveUsMoneyButton() {
+	const openCollectiveUrl = "https://opencollective.com/homarr"
+
+	return (
+		<HoverCard openDelay={200} closeDelay={200}>
+			<HoverCardTrigger asChild>
+				<Link target="_blank" rel="noopener noreferrer" href={openCollectiveUrl}>
+					<Button variant="outline" className="h-9 md:h-10 px-4" asChild>
+						<div className="flex items-center gap-2">
+							<p>Give us money</p>
+							<DollarSign className="h-4 w-4 ml-1 text-yellow-500" />
+						</div>
+					</Button>
+				</Link>
+			</HoverCardTrigger>
+			<HoverCardContent className="w-96">
+				<div className="grid gap-4">
+					<div className="space-y-2">
+						<h4 className="font-medium leading-none flex items-center gap-2">
+							<DollarSign className="h-4 w-4 text-yellow-500" />
+							Support our open source work
+						</h4>
+						<p className="text-sm text-muted-foreground">Your donations help us maintain and improve our free, open-source project.</p>
+					</div>
+
+					<div className="space-y-1">
+						<p className="text-sm font-medium text-primary">What is OpenCollective?</p>
+						<p className="text-xs text-primary/80">
+							OpenCollective is a transparent funding platform for open source projects. All donations and expenses are publicly visible,
+							ensuring complete transparency in how funds are used.
+						</p>
+					</div>
+
+					<div className="space-y-2">
+						<h5 className="text-sm font-medium text-secondary-foreground">Where your money goes:</h5>
+						<ul className="text-xs text-secondary-foreground/80 space-y-1.5">
+							<li className="flex items-start gap-2">
+								<Server className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+								<span>Hosting and infrastructure costs</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Code className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+								<span>Development time for new features</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Coffee className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+								<span>Coffee to fuel late-night coding sessions</span>
+							</li>
+							<li className="flex items-start gap-2 line-through opacity-70">
+								<Car className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+								<span>A new Lamborghini (although we'd love to)</span>
+							</li>
+						</ul>
+					</div>
+
+					<div className="flex justify-between items-center pt-2">
+						<Link href={openCollectiveUrl} target="_blank" rel="noopener noreferrer">
+							<Button variant="default" size="sm" className="bg-primary hover:bg-primary/90">
+								Donate
+							</Button>
+						</Link>
+						<Link href={`${openCollectiveUrl}/transactions`} target="_blank" rel="noopener noreferrer">
+							<Button variant="link" size="sm" className="flex items-center gap-1 text-xs text-secondary-foreground">
+								View expenses
+								<ExternalLink className="h-3 w-3" />
+							</Button>
+						</Link>
+					</div>
+				</div>
+			</HoverCardContent>
+		</HoverCard>
+	)
+}
+
+interface SearchInputProps {
+	searchQuery: string
+	setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+	totalIcons: number
+}
+
+function SearchInput({ searchQuery, setSearchQuery, totalIcons }: SearchInputProps) {
+	return (
+		<form action="/icons" method="GET" className="relative w-full group">
+			<Input
+				name="q"
+				autoFocus
+				type="search"
+				placeholder={`Find any of ${totalIcons} icons by name or category...`}
+				className="pl-10 h-10 md:h-12 rounded-lg w-full border-muted-foreground/20  focus:ring-rose-500/20 text-sm md:text-base"
+				value={searchQuery}
+				onChange={(e) => setSearchQuery(e.target.value)}
+			/>
+			<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-muted-foreground group-focus-within: transition-all duration-300" />
+			<motion.span
+				className="absolute inset-0 -z-10 rounded-lg bg-rose-500/5 opacity-0 transition-opacity group-hover:opacity-100"
+				initial={{ scale: 0.95 }}
+				whileHover={{ scale: 1 }}
+				transition={{ duration: 0.2 }}
+			/>
+		</form>
 	)
 }
