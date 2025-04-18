@@ -41,7 +41,7 @@ export function Header() {
 
 	return (
 		<motion.header
-			className="border-b sticky top-0 z-50  backdrop-blur-md border-border/50"
+			className="border-b sticky top-0 z-50 backdrop-blur-2xl bg-background/50 border-border/50"
 			initial={{ y: -20, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
 			transition={{ duration: 0.3, ease: "easeOut" }}

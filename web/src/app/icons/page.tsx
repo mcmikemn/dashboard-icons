@@ -52,9 +52,9 @@ export const dynamic = "force-static"
 export default async function IconsPage() {
 	const icons = await getIconsArray()
 	return (
-		<div className="relative isolate overflow-hidden">
+		<div className="isolate overflow-hidden">
 			<div className="py-8">
-				<div className="space-y-4 mb-8 mx-auto max-w-[80vw] relative">
+				<div className="space-y-4 mb-8 mx-auto min-w-[80vw]">
 					<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 						<div>
 							<h1 className="text-3xl font-bold">Browse icons</h1>

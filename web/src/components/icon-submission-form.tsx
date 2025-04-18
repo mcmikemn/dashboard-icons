@@ -45,17 +45,20 @@ export function IconSubmissionContent({ onClose }: { onClose?: () => void }) {
 		<div className="flex flex-col gap-4">
 			<div className="flex flex-col gap-2">
 				{ISSUE_TEMPLATES.map((template) => (
-					<Link key={template.id} href={template.url} className="w-full group" target="_blank" rel="noopener noreferrer">
+					<Link key={template.id} href={template.url} className="w-full group z10" target="_blank" rel="noopener noreferrer">
 						<Button
+							variant="secondary"
 							key={template.id}
-							variant="outline"
-							className="w-full flex flex-col items-start gap-1 h-auto p-4 text-left cursor-pointer0/10 dark:hover:bg-rose-900/30   transition-all duration-300"
+							className="w-full flex flex-col items-start gap-1 h-auto p-4 text-left cursor-pointer transition-all duration-300"
+							asChild
 						>
-							<div className="flex w-full items-center justify-between">
-								<span className="font-medium group-hover: transition-all duration-300">{template.name}</span>
-								<ExternalLink className="h-4 w-4 text-muted-foreground group-hover: transition-all duration-300" />
+							<div>
+								<div className="flex w-full items-center justify-between">
+									<span className="font-medium transition-all duration-300">{template.name}</span>
+									<ExternalLink className="h-4 w-4 text-muted-foreground transition-all duration-300" />
+								</div>
+								<span className="text-xs text-muted-foreground">{template.description}</span>
 							</div>
-							<span className="text-xs text-muted-foreground">{template.description}</span>
 						</Button>
 					</Link>
 				))}
