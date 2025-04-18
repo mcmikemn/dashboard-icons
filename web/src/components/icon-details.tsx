@@ -9,6 +9,7 @@ import type { AuthorData, Icon } from "@/types/icons"
 import confetti from "canvas-confetti"
 import { motion } from "framer-motion"
 import { Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
 import { useCallback, useState } from "react"
@@ -51,7 +52,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 			startVelocity: 15,
 			spread: 180,
 			ticks: 50,
-			zIndex: 0,
+			zIndex: 20,
 			disableForReducedMotion: true,
 			colors: ["#ff0a54", "#ff477e", "#ff7096", "#ff85a1", "#fbb1bd", "#f9bec7"],
 		}
@@ -141,6 +142,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 	}
 
 	const renderVariant = (format: string, iconName: string, theme?: "light" | "dark") => {
+		const { resolvedTheme } = useTheme()
 		const variantName = theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName
 		const imageUrl = `${BASE_URL}/${format}/${variantName}.${format}`
 		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`
@@ -149,7 +151,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 		return (
 			<TooltipProvider key={variantKey} delayDuration={500}>
-				<MagicCard className="rounded-md">
+				<MagicCard gradientColor={resolvedTheme === "dark" ? "#262626" : "#D9D9D955"} className="p-0 rounded-md">
 					<div className="flex flex-col items-center p-4 transition-all">
 						<Tooltip>
 							<TooltipTrigger asChild>
@@ -255,7 +257,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 				{/* Left Column: Icon Info and Author */}
 				<div className="lg:col-span-1">
-					<Card className="h-full bg-background/80 border shadow-lg">
+					<Card className="h-full bg-background/50 border shadow-lg">
 						<CardHeader className="pb-4">
 							<div className="flex flex-col items-center">
 								<div className="relative w-32 h-32  rounded-xl overflow-hidden border flex items-center justify-center p-3 ">
@@ -367,7 +369,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Middle Column: Icon variants */}
 				<div className="lg:col-span-2">
-					<Card className="h-full bg-background/80 shadow-lg">
+					<Card className="h-full bg-background/50 shadow-lg">
 						<CardHeader>
 							<CardTitle>Icon variants</CardTitle>
 							<CardDescription>Click on any icon to copy its URL to your clipboard</CardDescription>
@@ -405,7 +407,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 				{/* Right Column: Technical details */}
 				<div className="lg:col-span-1">
-					<Card className="h-full bg-background/80 border shadow-lg">
+					<Card className="h-full bg-background/50 border shadow-lg">
 						<CardHeader>
 							<CardTitle>Technical details</CardTitle>
 						</CardHeader>
