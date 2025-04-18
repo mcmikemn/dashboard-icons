@@ -1,5 +1,5 @@
 import { IconDetails } from "@/components/icon-details"
-import { BASE_URL } from "@/constants"
+import { BASE_URL, WEB_URL } from "@/constants"
 import { getAllIcons, getAuthorData } from "@/lib/api"
 import type { Metadata, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
@@ -34,7 +34,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 	console.debug(`Generated metadata for ${icon} by ${authorName} (${authorData.html_url}) updated at ${updateDate.toLocaleString()}`)
 
 	const iconImageUrl = `${BASE_URL}/png/${icon}.png`
-	const pageUrl = `${BASE_URL}/icons/${icon}`
+	const pageUrl = `${WEB_URL}/icons/${icon}`
 	const formattedIconName = icon
 		.split("-")
 		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
