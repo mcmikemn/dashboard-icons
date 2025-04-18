@@ -8,6 +8,7 @@ import { Inter } from "next/font/google"
 import { Toaster } from "sonner"
 import "./globals.css"
 import { ThemeProvider } from "./theme-provider"
+import { getDescription, websiteTitle } from "@/constants"
 
 const inter = Inter({
 	variable: "--font-inter",
@@ -29,8 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 	return {
 		metadataBase: new URL("https://dashboardicons.com"),
-		title: "Dashboard Icons - Your definitive source for dashboard icons",
-		description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+		title: websiteTitle,
+		description: getDescription(totalIcons),
 		keywords: ["dashboard icons", "service icons", "application icons", "tool icons", "web dashboard", "app directory"],
 		robots: {
 			index: true,
@@ -44,8 +45,8 @@ export async function generateMetadata(): Promise<Metadata> {
 			siteName: "Dashboard Icons",
 			type: "website",
 			locale: "en_US",
-			title: "Dashboard Icons - Your definitive source for dashboard icons",
-			description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+			title: websiteTitle,
+			description: getDescription(totalIcons),
 			url: "https://dashboardicons.com",
 			images: [
 				{
@@ -61,8 +62,8 @@ export async function generateMetadata(): Promise<Metadata> {
 			card: "summary_large_image",
 			site: "@homarr_app",
 			creator: "@homarr_app",
-			title: "Dashboard Icons - Your definitive source for dashboard icons",
-			description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+			title: websiteTitle,
+			description: getDescription(totalIcons),
 			images: ["/og-image.png"],
 		},
 		applicationName: "Dashboard Icons",

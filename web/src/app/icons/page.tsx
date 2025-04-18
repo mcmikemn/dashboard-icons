@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	const totalIcons = icons.length
 
 	return {
-		title: "Browse Icons | Dashboard Icons",
+		title: "Browse Icons | Free Dashboard Icons",
 		description: `Search and browse through our collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 		keywords: [
 			"browse icons",
@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			"app directory",
 		],
 		openGraph: {
-			title: "Browse Dashboard Icons Collection",
+			title: "Browse Icons | Free Dashboard Icons",
 			description: `Search and browse through our collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 			type: "website",
 			url: `${BASE_URL}/icons`,
@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		},
 		twitter: {
 			card: "summary_large_image",
-			title: "Browse Dashboard Icons Collection",
+			title: "Browse Icons | Free Dashboard Icons",
 			description: `Search and browse through our collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 			images: ["/og-image-browse.png"],
 		},

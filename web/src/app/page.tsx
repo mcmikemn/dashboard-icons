@@ -1,6 +1,6 @@
 import { HeroSection } from "@/components/hero"
 import { RecentlyAddedIcons } from "@/components/recently-added-icons"
-import { BASE_URL, REPO_NAME } from "@/constants"
+import { BASE_URL, getDescription, REPO_NAME, websiteTitle } from "@/constants"
 import { getRecentlyAddedIcons, getTotalIcons } from "@/lib/api"
 import type { Metadata } from "next"
 
@@ -8,12 +8,12 @@ export async function generateMetadata(): Promise<Metadata> {
 	const { totalIcons } = await getTotalIcons()
 
 	return {
-		title: "Dashboard Icons - Beautiful icons for your dashboard",
-		description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+		title: websiteTitle,
+		description: getDescription(totalIcons),
 		keywords: ["dashboard icons", "service icons", "application icons", "tool icons", "web dashboard", "app directory"],
 		openGraph: {
-			title: "Dashboard Icons - Your definitive source for dashboard icons",
-			description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+			title: websiteTitle,
+			description: getDescription(totalIcons),
 			type: "website",
 			url: BASE_URL,
 			images: [
@@ -26,8 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
 			],
 		},
 		twitter: {
-			title: "Dashboard Icons - Your definitive source for dashboard icons",
-			description: `A collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
+			title: websiteTitle,
+			description: getDescription(totalIcons),
 			card: "summary_large_image",
 			images: ["/og-image.png"],
 		},
