@@ -247,7 +247,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 					{/* Filter dropdown */}
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button variant="outline" size="sm" className="flex-1 sm:flex-none cursor-pointer   border-border shadow-sm0/10 ">
+							<Button variant="outline" size="sm" className="flex-1 sm:flex-none cursor-pointer bg-background border-border shadow-sm ">
 								<Filter className="h-4 w-4 mr-2" />
 								<span>Filter</span>
 								{selectedCategories.length > 0 && (
@@ -294,11 +294,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 					{/* Sort dropdown */}
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button
-								variant="outline"
-								size="sm"
-								className="flex-1 sm:flex-none cursor-pointer   border-border shadow-sm0/10  hover:border-rose-500"
-							>
+							<Button variant="outline" size="sm" className="flex-1 sm:flex-none cursor-pointer bg-background border-border shadow-sm">
 								{getSortIcon(sortOption)}
 								<span className="ml-2">{getSortLabel(sortOption)}</span>
 							</Button>
@@ -327,7 +323,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 
 					{/* Clear all button */}
 					{(searchQuery || selectedCategories.length > 0 || sortOption !== "relevance") && (
-						<Button variant="outline" size="sm" onClick={clearFilters} className="flex-1 sm:flex-none cursor-pointer    border-rose-500/20">
+						<Button variant="outline" size="sm" onClick={clearFilters} className="flex-1 sm:flex-none cursor-pointer bg-background">
 							<X className="h-4 w-4 mr-2" />
 							<span>Clear all</span>
 						</Button>
@@ -361,7 +357,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 								setSelectedCategories([])
 								updateResults(searchQuery, [], sortOption)
 							}}
-							className="text-xs h-7 px-2  0/10 cursor-pointer"
+							className="text-xs h-7 px-2 cursor-pointer"
 						>
 							Clear all
 						</Button>

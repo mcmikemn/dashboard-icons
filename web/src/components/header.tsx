@@ -60,7 +60,7 @@ export function Header() {
 					<div className="hidden md:block">
 						<Button
 							variant="outline"
-							className="gap-2 cursor-pointer0/10 dark:hover:bg-rose-900/30   transition-all duration-300"
+							className="gap-2 cursor-pointer   transition-all duration-300"
 							onClick={openCommandMenu}
 						>
 							<Search className="h-4 w-4 transition-all duration-300" />
@@ -76,7 +76,7 @@ export function Header() {
 						<Button
 							variant="ghost"
 							size="icon"
-							className="rounded-lg cursor-pointer0/10 dark:hover:bg-rose-900/30 transition-all duration-300 focus:ring-2 focus:ring-rose-500/20"
+							className="rounded-lg cursor-pointer transition-all duration-300 hover:ring-2 "
 							onClick={openCommandMenu}
 						>
 							<Search className="h-5 w-5 transition-all duration-300" />
@@ -92,7 +92,7 @@ export function Header() {
 									<Button
 										variant="ghost"
 										size="icon"
-										className="rounded-lg cursor-pointer0/10 dark:hover:bg-rose-900/30 transition-all duration-300 focus:ring-2 focus:ring-rose-500/20"
+										className="rounded-lg cursor-pointer  transition-all duration-300 hover:ring-2"
 										asChild
 									>
 										<Link href={REPO_PATH} target="_blank" className="group">

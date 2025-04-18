@@ -19,7 +19,7 @@ export function ThemeSwitcher() {
 					<TooltipTrigger asChild>
 						<DropdownMenuTrigger asChild>
 							<Button
-								className="rounded-md cursor-pointer0/10 dark:hover:bg-rose-900/30 transition-colors duration-200 group"
+								className=" transition-colors duration-200 group hover:ring-2 rounded-lg cursor-pointer"
 								variant="ghost"
 								size="icon"
 							>

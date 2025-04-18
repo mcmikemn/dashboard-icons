@@ -74,12 +74,12 @@ export function IconSubmissionForm() {
 			<DialogTrigger asChild>
 				<Button
 					variant="outline"
-					className="hidden md:inline-flex cursor-pointer0/10 dark:hover:bg-rose-900/30   transition-all duration-300"
+					className="hidden md:inline-flex cursor-pointer transition-all duration-300"
 				>
 					<PlusCircle className="h-4 w-4 transition-all duration-300" /> Contribute new icon
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="md:max-w-4xl backdrop-blur-2xl">
+			<DialogContent className="md:max-w-4xl backdrop-blur-2xl bg-background">
 				<DialogHeader>
 					<DialogTitle>Contribute a new icon</DialogTitle>
 					<DialogDescription>Choose a template below to suggest a new icon or improve an existing one.</DialogDescription>

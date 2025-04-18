@@ -6,7 +6,23 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { Separator } from "@radix-ui/react-dropdown-menu"
 import { motion, useAnimation, useInView } from "framer-motion"
-import { Car, Code, Coffee, DollarSign, ExternalLink, Eye, GitFork, Heart, Search, Server, Share2, Star, TrendingUp } from "lucide-react"
+import {
+	Car,
+	Code,
+	Coffee,
+	DollarSign,
+	ExternalLink,
+	Eye,
+	GitFork,
+	Heart,
+	Plus,
+	Search,
+	Server,
+	Share2,
+	Sparkles,
+	Star,
+	TrendingUp,
+} from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { AuroraText } from "./magicui/aurora-text"
@@ -128,7 +144,7 @@ export function HeroSection({ totalIcons, stars }: { totalIcons: number; stars: 
 	const [searchQuery, setSearchQuery] = useState("")
 
 	return (
-		<div className="relative my-20 w-full flex items-center justify-center overflow-hidden">
+		<div className="relative w-full flex items-center justify-center overflow-hidden">
 			<div className="absolute inset-0 bg-gradient-to-br from-rose-500/[0.1] via-transparent to-rose-500/[0.1] blur-3xl" />
 
 			<div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -188,44 +204,35 @@ export function HeroSection({ totalIcons, stars }: { totalIcons: number; stars: 
 				/>
 			</div>
 
-			<div className="relative z-10 container mx-auto px-4 md:px-6">
+			<div className="relative z-10 container mx-auto px-4 md:px-6 mt-4 py-20">
 				<div className="max-w-4xl mx-auto text-center flex flex-col gap-4 ">
-					<Link
-						prefetch
-						href="https://github.com/homarr-labs"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="mx-auto  motion-safe:motion-preset-slide-up motion-duration-1500"
-					>
-						<Card className="group p-2 px-4 flex flex-row items-center gap-2 border-2  z-10 relative glass-effect hover:scale-105 transition-all duration-300">
-							<Heart className="h-4 w-4 text-primary group-hover:fill-primary transition-all duration-300" />
-							<span className="text-sm text-foreground/70 tracking-wide">Made with love by Homarr Labs</span>
-						</Card>
-					</Link>
 
-					<h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight ">
+					<h1 className="relative text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight motion-preset-slide-up motion-duration-2000 ">
 						Your definitive source for
+						<Sparkles className="absolute -right-1 -bottom-3 text-rose-500 h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-12 motion-delay-300 motion-preset-seesaw-lg motion-scale-in-[0.5] motion-translate-x-in-[-120%] motion-translate-y-in-[-60%] motion-opacity-in-[33%] motion-rotate-in-[-1080deg] motion-blur-in-[10px] motion-duration-[1s] motion-delay-[0.13s]/scale motion-duration-[0.13s]/opacity motion-duration-[0.40s]/rotate motion-duration-[0.05s]/blur motion-delay-[0.20s]/blur motion-ease-spring-bouncier" />
 						<br />
+						<Sparkles className="absolute -left-1 -top-3 text-rose-500 h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12 motion-delay-300 motion-preset-seesaw-lg motion-scale-in-[0.5] motion-translate-x-in-[159%] motion-translate-y-in-[-60%] motion-opacity-in-[33%] motion-rotate-in-[-1080deg] motion-blur-in-[10px] motion-duration-[1s] motion-delay-[0.13s]/scale motion-duration-[0.13s]/opacity motion-duration-[0.40s]/rotate motion-duration-[0.05s]/blur motion-delay-[0.20s]/blur motion-ease-spring-bouncier" />
 						<AuroraText colors={["#FA5352", "#FA5352", "orange"]}>dashboard icons</AuroraText>
 					</h1>
 
-					<p className="text-sm sm:text-base md:text-xl text-muted-foreground mb-6 md:mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
+					<p className="text-sm sm:text-base md:text-xl text-muted-foreground leading-relaxed mb-8 font-light tracking-wide max-w-2xl mx-auto px-4 motion-preset-slide-down motion-duration-2000">
 						A collection of <span className="font-medium ">{totalIcons}</span> curated icons for services, applications and tools, designed
 						specifically for dashboards and app directories.
 					</p>
-
-					<SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} totalIcons={totalIcons} />
-					<div className="flex gap-3 md:gap-4 flex-wrap justify-center">
-						<Link href="/icons">
-							<InteractiveHoverButton className="rounded-md bg-input/30">Explore icons</InteractiveHoverButton>
-						</Link>
-						<GiveUsAStarButton stars={stars} />
-						<GiveUsMoneyButton />
-						<GiveUsLoveButton />
+					<div className="flex flex-col gap-4 max-w-3xl mx-auto">
+						<SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} totalIcons={totalIcons} />
+						<div className="w-full flex gap-3 md:gap-4 flex-wrap justify-center motion-preset-slide-down motion-duration-2000">
+							<Link href="/icons">
+								<InteractiveHoverButton className="rounded-md bg-input/30">Explore icons</InteractiveHoverButton>
+							</Link>
+							<GiveUsAStarButton stars={stars} />
+							<GiveUsMoneyButton />
+							<GiveUsLoveButton />
+						</div>
 					</div>
 				</div>
 			</div>
-
+		
 			<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80 pointer-events-none" />
 		</div>
 	)
@@ -258,8 +265,8 @@ export default function GiveUsAStarButton({ stars }: { stars: string | number })
 							What is Starring?
 						</h4>
 						<p className="text-sm text-muted-foreground">
-							Starring a repository on GitHub is like bookmarking it. It helps you keep track of projects you find interesting and shows
-							appreciation to the project maintainers. You can star a repository by clicking the 'Star' button, usually found in the
+							Starring a repository on GitHub is like bookmarking it.<br/> It helps you keep track of projects you find interesting and shows
+							appreciation to the project maintainers.<br/> You can star a repository by clicking the 'Star' button, usually found in the
 							top-right corner of the repository's page on GitHub.
 						</p>
 					</div>
@@ -278,6 +285,10 @@ export default function GiveUsAStarButton({ stars }: { stars: string | number })
 							<li className="flex items-start gap-2">
 								<GitFork className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
 								<span>Encourages more forks and community involvement</span>
+							</li>
+							<li className="flex items-start gap-2">
+								<Plus className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+								<span>Grow the library with more icons</span>
 							</li>
 						</ul>
 					</div>
@@ -313,7 +324,7 @@ export function GiveUsLoveButton() {
 	return (
 		<HoverCard openDelay={200} closeDelay={200}>
 			<HoverCardTrigger asChild>
-				<Button variant="outline" className="h-9 md:h-10 px-4">
+				<Button variant="outline" className="h-9 md:h-10 px-4 cursor-pointer">
 					<div className="flex items-center gap-2">
 						<p>Give us love</p>
 						<Heart className="h-4 w-4 ml-1 fill-red-500 text-red-500" />
@@ -460,7 +471,7 @@ interface SearchInputProps {
 
 function SearchInput({ searchQuery, setSearchQuery, totalIcons }: SearchInputProps) {
 	return (
-		<form action="/icons" method="GET" className="relative w-full group">
+		<form action="/icons" method="GET" className="relative group">
 			<Input
 				name="q"
 				autoFocus

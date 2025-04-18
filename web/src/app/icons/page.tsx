@@ -54,7 +54,7 @@ export default async function IconsPage() {
 	return (
 		<div className="isolate overflow-hidden">
 			<div className="py-8">
-				<div className="space-y-4 mb-8 mx-auto min-w-[80vw]">
+				<div className="space-y-4 mb-8 mx-auto w-7xl">
 					<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 						<div>
 							<h1 className="text-3xl font-bold">Browse icons</h1>
