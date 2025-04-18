@@ -5868,7 +5868,7 @@
         }
     },
     "lobe-chat": {
-        "base": "png",
+        "base": "svg",
         "aliases": [
             "lobe-ai",
             "chatgpt-ui"
@@ -5877,10 +5877,10 @@
             "AI-&-LLM-Platforms"
         ],
         "update": {
-            "timestamp": "2025-01-07T17:54:03Z",
+            "timestamp": "2025-04-17T16:52:42.903330",
             "author": {
-                "id": 71191962,
-                "name": "walkxcode"
+                "id": 65860997,
+                "login": "xiaopeng-ye"
             }
         }
     },
@@ -5916,6 +5916,20 @@
             "author": {
                 "id": 71191962,
                 "name": "walkxcode"
+            }
+        }
+    },
+    "alexa": {
+        "base": "svg",
+        "aliases": [],
+        "categories": [
+            "Media"
+        ],
+        "update": {
+            "timestamp": "2025-04-18T08:34:26.627973",
+            "author": {
+                "id": 2432100,
+                "login": "lyneld"
             }
         }
     },
@@ -6000,6 +6014,18 @@
             "author": {
                 "id": 71191962,
                 "name": "walkxcode"
+            }
+        }
+    },
+    "balena-etcher": {
+        "base": "svg",
+        "aliases": [],
+        "categories": [],
+        "update": {
+            "timestamp": "2025-04-17T16:55:42.720426",
+            "author": {
+                "id": 48109134,
+                "login": "jdcool00"
             }
         }
     },
@@ -23729,6 +23755,20 @@
             }
         }
     },
+    "threadfin": {
+        "base": "svg",
+        "aliases": [],
+        "categories": [
+            "Streaming"
+        ],
+        "update": {
+            "timestamp": "2025-04-17T17:01:04.793098",
+            "author": {
+                "id": 797051,
+                "login": "CC-Damo"
+            }
+        }
+    },
     "falcon-player": {
         "base": "svg",
         "aliases": [],
@@ -24461,6 +24501,20 @@
             "light": "discourse-light"
         }
     },
+    "balena-cloud": {
+        "base": "svg",
+        "aliases": [],
+        "categories": [
+            "Cloud"
+        ],
+        "update": {
+            "timestamp": "2025-04-17T16:57:40.799513",
+            "author": {
+                "id": 48109134,
+                "login": "jdcool00"
+            }
+        }
+    },
     "heyform": {
         "base": "svg",
         "aliases": [],
@@ -24631,6 +24685,20 @@
         "colors": {
             "dark": "tube-archivist",
             "light": "tube-archivist-light"
+        }
+    },
+    "openaudible": {
+        "base": "png",
+        "aliases": [],
+        "categories": [
+            "Streaming"
+        ],
+        "update": {
+            "timestamp": "2025-04-17T17:09:27.822795",
+            "author": {
+                "id": 48109134,
+                "login": "jdcool00"
+            }
         }
     },
     "arch-linux": {
