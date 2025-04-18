@@ -1,6 +1,7 @@
-import { BASE_URL } from "@/constants"
 import { getAllIcons } from "@/lib/api"
 import { ImageResponse } from "next/og"
+import { readFile } from "node:fs/promises"
+import { join } from "node:path"
 
 export const dynamic = "force-static"
 
@@ -20,8 +21,6 @@ export default async function Image({ params }: { params: { icon: string } }) {
 	const iconsData = await getAllIcons()
 	const totalIcons = Object.keys(iconsData).length
 	const index = Object.keys(iconsData).indexOf(icon)
-	let iconUrl = `${BASE_URL}/png/${icon}.png`
-	console.log(`Generating opengraph image for ${icon} (${index + 1} / ${totalIcons}) with url ${iconUrl}`)
 
 	// Format the icon name for display
 	const formattedIconName = icon
@@ -29,18 +28,20 @@ export default async function Image({ params }: { params: { icon: string } }) {
 		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 		.join(" ")
 
-	// Get the icon URL
-	// Check if the image exists if the return type of the image is of image type
+	// Read the icon file from local filesystem
+	let iconData: Buffer | null = null
 	try {
-		const response = await fetch(iconUrl)
-		if (!response.ok) {
-			console.error(`Icon ${icon} was not found at ${iconUrl}`)
-			iconUrl = `https://placehold.co/600x400?text=${formattedIconName}`
-		}
+		const iconPath = join(process.cwd(), `../png/${icon}.png`)
+		console.log(`Generating opengraph image for ${icon} (${index + 1} / ${totalIcons}) from path ${iconPath}`)
+		iconData = await readFile(iconPath)
 	} catch (error) {
-		console.error(`Icon ${icon} was not found at ${iconUrl}`)
-		iconUrl = `https://placehold.co/600x400?text=${formattedIconName}`
+		console.error(`Icon ${icon} was not found locally`)
 	}
+
+	// Convert the image data to a data URL or use placeholder
+	const iconUrl = iconData
+		? `data:image/png;base64,${iconData.toString("base64")}`
+		: `https://placehold.co/600x400?text=${formattedIconName}`
 
 	return new ImageResponse(
 		<div
