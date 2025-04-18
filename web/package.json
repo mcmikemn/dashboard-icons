@@ -82,7 +82,9 @@
 		"onlyBuiltDependencies": [
 			"@biomejs/biome",
 			"core-js",
-			"sharp"
+			"esbuild",
+			"sharp",
+			"workerd"
 		]
 	}
 }
