@@ -74,10 +74,15 @@
 		"@types/react": "^19.1.0",
 		"@types/react-dom": "^19.1.2",
 		"tailwindcss": "^4.1.3",
-		"typescript": "^5.8.3"
+		"typescript": "^5.8.3",
+		"wrangler": "^4.12.0"
 	},
 	"packageManager": "pnpm@10.8.0",
 	"pnpm": {
-		"onlyBuiltDependencies": ["@biomejs/biome", "core-js", "sharp"]
+		"onlyBuiltDependencies": [
+			"@biomejs/biome",
+			"core-js",
+			"sharp"
+		]
 	}
 }

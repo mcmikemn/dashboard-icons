@@ -67,15 +67,6 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 			type: "article",
 			url: pageUrl,
-			images: [
-				{
-					url: iconImageUrl,
-					width: 512,
-					height: 512,
-					alt: `${formattedIconName} Icon`,
-					type: "image/png",
-				},
-			],
 			authors: [authorName, "homarr"],
 			publishedTime: updateDate.toISOString(),
 			modifiedTime: updateDate.toISOString(),
