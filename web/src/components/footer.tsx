@@ -2,7 +2,7 @@
 
 import { REPO_PATH } from "@/constants"
 import { motion } from "framer-motion"
-import { ExternalLink, Github, Heart } from "lucide-react"
+import { ExternalLink, Heart } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -32,7 +32,7 @@ export function Footer() {
 		<footer className="border-t py-4  relative overflow-hidden">
 			<div className="absolute inset-0 bg-gradient-to-r from-rose-500/[0.03] via-transparent to-rose-500/[0.03]" />
 
-			<div className="container mx-auto px-4 md:px-6 relative z-10">
+			<div className="container mx-auto mb-2 px-4 md:px-6 relative z-10">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
 					<div className="flex flex-col gap-3">
 						<h3 className="font-bold text-lg text-foreground/90">Dashboard Icons</h3>
@@ -49,15 +49,6 @@ export function Footer() {
 							</Link>
 							<Link href="/icons" className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center w-fit">
 								<span>Icons</span>
-							</Link>
-							<Link
-								href={REPO_PATH}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-sm text-muted-foreground hover: transition-colors duration-200 flex items-center gap-1.5 w-fit group"
-							>
-								<span>GitHub</span>
-								<Github className="h-3.5 w-3.5 group-hover: transition-colors duration-200 flex-shrink-0 self-center" />
 							</Link>
 						</div>
 					</div>
@@ -174,19 +165,15 @@ export function Footer() {
 							by Homarr Labs and the open source community.
 						</div>
 						<Link
-							href="https://github.com/homarr-labs"
+							href={REPO_PATH}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-sm   transition-colors duration-200 flex items-center gap-1.5 w-fit mt-1 group"
 						>
-							<span>Contribute to this project</span>
+							Contribute to this project
 							<ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
 						</Link>
 					</motion.div>
-				</div>
-
-				<div className="mt-4 text-center text-sm text-muted-foreground/80">
-					<p>© {new Date().getFullYear()} Homarr Labs.</p>
 				</div>
 			</div>
 		</footer>
