@@ -347,7 +347,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 								<div>
 									<h3 className="text-sm font-semibold text-muted-foreground">About this icon</h3>
 									<div className="text-xs text-muted-foreground space-y-2">
-										<p>This icon is licensed under the open source MIT license</p>
+										<p>This icon is licensed under the open source Apache License 2.0</p>
 										<p>
 											Available in{" "}
 											{availableFormats.length > 1
