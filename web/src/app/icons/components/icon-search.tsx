@@ -215,7 +215,10 @@ export function IconSearch({ icons }: IconSearchProps) {
 	}, [])
 
 	useEffect(() => {
-		if (filteredIcons.length === 0) {
+		if (filteredIcons.length === 0 && searchQuery) {
+			console.log("no icons found", {
+				query: searchQuery,
+			})
 			posthog.capture("no icons found", {
 				query: searchQuery,
 			})
