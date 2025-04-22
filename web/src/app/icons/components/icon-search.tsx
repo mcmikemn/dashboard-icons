@@ -24,6 +24,7 @@ import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import posthog from "posthog-js"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 type SortOption = "relevance" | "alphabetical-asc" | "alphabetical-desc" | "newest"
@@ -139,6 +140,8 @@ export function IconSearch({ icons }: IconSearchProps) {
 		[pathname, router, initialSort],
 	)
 
+	
+
 	const handleSearch = useCallback(
 		(query: string) => {
 			setSearchQuery(query)
@@ -192,6 +195,14 @@ export function IconSearch({ icons }: IconSearchProps) {
 			}
 		}
 	}, [])
+
+	useEffect(() => {
+		if (filteredIcons.length === 0) {
+			posthog.capture("no icons found", {
+				query: searchQuery,
+			})
+		}
+	}, [filteredIcons, searchQuery])
 
 	if (!searchParams) return null
 
