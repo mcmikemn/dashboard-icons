@@ -26,6 +26,7 @@ import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { toast } from "sonner"
 
 type SortOption = "relevance" | "alphabetical-asc" | "alphabetical-desc" | "newest"
 
@@ -42,6 +43,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 	const [sortOption, setSortOption] = useState<SortOption>(initialSort)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 	const { resolvedTheme } = useTheme()
+	const [isLazyRequestSubmitted, setIsLazyRequestSubmitted] = useState(false)
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -395,19 +397,28 @@ export function IconSearch({ icons }: IconSearchProps) {
 			</div>
 
 			{filteredIcons.length === 0 ? (
-				<div className="flex flex-col gap-8 py-12 max-w-2xl mx-auto">
+				<div className="flex flex-col gap-8 py-12 max-w-2xl mx-auto items-center">
 					<div className="text-center">
 						<h2 className="text-3xl sm:text-5xl font-semibold">We don't have this one...yet!</h2>
-						<p className="mt-4 text-muted-foreground">
-							{searchQuery && selectedCategories.length > 0
-								? `No icons found matching "${searchQuery}" with the selected filters.`
-								: searchQuery
-									? `No icons found matching "${searchQuery}".`
-									: selectedCategories.length > 0
-										? "No icons found with the selected filters."
-										: "No icons found matching your criteria."}
-						</p>
 					</div>
+					<Button
+						className="cursor-pointer motion-preset-pop"
+						variant="default"
+						size="lg"
+						onClick={() => {
+							setIsLazyRequestSubmitted(true); 
+							toast("We hear you!", {
+								description: `Okay, okay... we'll consider adding "${searchQuery || "that icon"}" just for you. 😉`,
+							})
+							posthog.capture("lazy icon request", {
+								query: searchQuery,
+								categories: selectedCategories,
+							})
+						}}
+						disabled={isLazyRequestSubmitted} 
+					>
+						I want this icon added but I'm too lazy to add it myself
+					</Button>
 					<IconSubmissionContent />
 				</div>
 			) : (
