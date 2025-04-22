@@ -37,10 +37,19 @@ export function IconSearch({ icons }: IconSearchProps) {
 	const router = useRouter()
 	const pathname = usePathname()
 	const [searchQuery, setSearchQuery] = useState(initialQuery ?? "")
+	const [debouncedQuery, setDebouncedQuery] = useState(initialQuery ?? "")
 	const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategories ?? [])
 	const [sortOption, setSortOption] = useState<SortOption>(initialSort)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 	const { resolvedTheme } = useTheme()
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedQuery(searchQuery)
+		}, 200)
+
+		return () => clearTimeout(timer)
+	}, [searchQuery])
 
 	// Extract all unique categories
 	const allCategories = useMemo(() => {
@@ -66,11 +75,17 @@ export function IconSearch({ icons }: IconSearchProps) {
 
 			// Then filter by search query
 			if (query.trim()) {
-				const q = query.toLowerCase()
+				// Normalization function: lowercase, remove spaces and hyphens
+				const normalizeString = (str: string) => str.toLowerCase().replace(/[-\s]/g, '')
+				const normalizedQuery = normalizeString(query)
+
 				filtered = filtered.filter(({ name, data }) => {
-					if (name.toLowerCase().includes(q)) return true
-					if (data.aliases.some((alias) => alias.toLowerCase().includes(q))) return true
-					if (data.categories.some((category) => category.toLowerCase().includes(q))) return true
+					// Check normalized name
+					if (normalizeString(name).includes(normalizedQuery)) return true
+					// Check normalized aliases
+					if (data.aliases.some((alias) => normalizeString(alias).includes(normalizedQuery))) return true
+					// Check normalized categories
+					if (data.categories.some((category) => normalizeString(category).includes(normalizedQuery))) return true
 					return false
 				})
 			}
@@ -89,6 +104,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 			}
 
 			// Default sort (relevance or fallback to alphabetical)
+			// TODO: Implement actual relevance sorting
 			return filtered.sort((a, b) => a.name.localeCompare(b.name))
 		},
 		[icons],
@@ -114,10 +130,10 @@ export function IconSearch({ icons }: IconSearchProps) {
 		return matches
 	}, [icons, searchQuery])
 
-	// Use useMemo for filtered icons
+	// Use useMemo for filtered icons with debounced query
 	const filteredIcons = useMemo(() => {
-		return filterIcons(searchQuery, selectedCategories, sortOption)
-	}, [filterIcons, searchQuery, selectedCategories, sortOption])
+		return filterIcons(debouncedQuery, selectedCategories, sortOption)
+	}, [filterIcons, debouncedQuery, selectedCategories, sortOption])
 
 	const updateResults = useCallback(
 		(query: string, categories: string[], sort: SortOption) => {
