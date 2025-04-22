@@ -1,15 +1,14 @@
-import React from "react"
-
+import { useEffect, useRef } from "react"
 export function Carbon() {
 	// biome-ignore lint/style/noNonNullAssertion: <explanation>
-	const ref = React.useRef<HTMLDivElement>(null!)
+	const ref = useRef<HTMLDivElement>(null!)
 	if (process.env.NODE_ENV === "development") {
 		return null
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const serve = "CW7IP27L"
-		const placement = "homarrdev"
+		const placement = "dashboardiconscom"
 		ref.current.innerHTML = ""
 		const s = document.createElement("script")
 		s.id = "_carbonads_js"
@@ -21,7 +20,6 @@ export function Carbon() {
 		<>
 			<style>
 				{`
-					#carbonads_1 { display: none; }
 					#carbonads * { margin: initial; padding: initial; }
 					#carbonads {
 						font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -79,7 +77,7 @@ export function Carbon() {
 					}
 				`}
 			</style>
-			<div className=" shadow-xl flex flex-col m-4 space-y-2 rounded-l-lg">
+			<div className="m-4">
 				<div ref={ref} className="carbon-outer" />
 			</div>
 		</>
