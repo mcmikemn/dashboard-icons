@@ -142,7 +142,6 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 	}
 
 	const renderVariant = (format: string, iconName: string, theme?: "light" | "dark") => {
-		const { resolvedTheme } = useTheme()
 		const variantName = theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName
 		const imageUrl = `${BASE_URL}/${format}/${variantName}.${format}`
 		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`
@@ -151,7 +150,7 @@ export function IconDetails({ icon, iconData, authorData }: IconDetailsProps) {
 
 		return (
 			<TooltipProvider key={variantKey} delayDuration={500}>
-				<MagicCard gradientColor={resolvedTheme === "dark" ? "#262626" : "#D9D9D955"} className="p-0 rounded-md">
+				<MagicCard className="p-0 rounded-md">
 					<div className="flex flex-col items-center p-4 transition-all">
 						<Tooltip>
 							<TooltipTrigger asChild>
