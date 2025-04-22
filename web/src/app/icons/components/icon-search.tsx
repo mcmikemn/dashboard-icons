@@ -156,6 +156,8 @@ export function IconSearch({ icons }: IconSearchProps) {
 		[pathname, router, initialSort],
 	)
 
+	
+
 	const handleSearch = useCallback(
 		(query: string) => {
 			setSearchQuery(query)
@@ -211,10 +213,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 	}, [])
 
 	useEffect(() => {
-		if (filteredIcons.length === 0 && searchQuery && searchQuery.length > 3) {
-			console.log("no icons found", {
-				query: searchQuery,
-			})
+		if (filteredIcons.length === 0) {
 			posthog.capture("no icons found", {
 				query: searchQuery,
 			})
