@@ -20909,7 +20909,7 @@
     "vodafone": {
         "base": "svg",
         "aliases": [
-            "vodacom"
+            "vodafone"
         ],
         "categories": [],
         "update": {
