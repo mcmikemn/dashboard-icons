@@ -78,7 +78,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 			// Then filter by search query
 			if (query.trim()) {
 				// Normalization function: lowercase, remove spaces and hyphens
-				const normalizeString = (str: string) => str.toLowerCase().replace(/[-\s]/g, '')
+				const normalizeString = (str: string) => str.toLowerCase().replace(/[-\s]/g, "")
 				const normalizedQuery = normalizeString(query)
 
 				filtered = filtered.filter(({ name, data }) => {
@@ -157,8 +157,6 @@ export function IconSearch({ icons }: IconSearchProps) {
 		},
 		[pathname, router, initialSort],
 	)
-
-	
 
 	const handleSearch = useCallback(
 		(query: string) => {
@@ -409,7 +407,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 						variant="default"
 						size="lg"
 						onClick={() => {
-							setIsLazyRequestSubmitted(true); 
+							setIsLazyRequestSubmitted(true)
 							toast("We hear you!", {
 								description: `Okay, okay... we'll consider adding "${searchQuery || "that icon"}" just for you. 😉`,
 							})
@@ -418,7 +416,7 @@ export function IconSearch({ icons }: IconSearchProps) {
 								categories: selectedCategories,
 							})
 						}}
-						disabled={isLazyRequestSubmitted} 
+						disabled={isLazyRequestSubmitted}
 					>
 						I want this icon added but I'm too lazy to add it myself
 					</Button>

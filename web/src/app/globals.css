@@ -183,6 +183,8 @@
 	--shadow-xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.1), 0px 8px 10px -1px
 		hsl(0 0% 0% / 0.1);
 	--shadow-2xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+	--magic-gradient-color: oklch(0.67 0.2 23.8 / 15%);
 }
 
 .dark {
@@ -233,6 +235,8 @@
 	--shadow-xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.1), 0px 8px 10px -1px
 		hsl(0 0% 0% / 0.1);
 	--shadow-2xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+	--magic-gradient-color: oklch(0.27 0 0);
 }
 
 @layer base {
