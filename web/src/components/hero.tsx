@@ -207,21 +207,21 @@ export function HeroSection({ totalIcons, stars }: { totalIcons: number; stars: 
 
 			<div className="relative z-10 container mx-auto px-4 md:px-6 mt-4 py-20">
 				<div className="max-w-4xl mx-auto text-center flex flex-col gap-4 ">
-					<h1 className="relative text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight motion-preset-slide-up motion-duration-2000 ">
+					<h1 className="relative text-3xl sm:text-5xl md:text-7xl font-bold mb-4 md:mb-8 tracking-tight motion-preset-slide-up motion-duration-500 ">
 						Your definitive source for
-						<Sparkles className="absolute -right-1 -bottom-3 text-rose-500 h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-12 motion-delay-300 motion-preset-seesaw-lg motion-scale-in-[0.5] motion-translate-x-in-[-120%] motion-translate-y-in-[-60%] motion-opacity-in-[33%] motion-rotate-in-[-1080deg] motion-blur-in-[10px] motion-duration-[1s] motion-delay-[0.13s]/scale motion-duration-[0.13s]/opacity motion-duration-[0.40s]/rotate motion-duration-[0.05s]/blur motion-delay-[0.20s]/blur motion-ease-spring-bouncier" />
+						<Sparkles className="absolute -right-1 -bottom-3 text-rose-500 h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-12 motion-delay-300 motion-preset-seesaw-lg motion-scale-in-[0.5] motion-translate-x-in-[-120%] motion-translate-y-in-[-60%] motion-opacity-in-[33%] motion-rotate-in-[-1080deg] motion-blur-in-[10px] motion-duration-500 motion-delay-[0.13s]/scale motion-duration-[0.13s]/opacity motion-duration-[0.40s]/rotate motion-duration-[0.05s]/blur motion-delay-[0.20s]/blur motion-ease-spring-bouncier" />
 						<br />
-						<Sparkles className="absolute -left-1 -top-3 text-rose-500 h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12 motion-delay-300 motion-preset-seesaw-lg motion-scale-in-[0.5] motion-translate-x-in-[159%] motion-translate-y-in-[-60%] motion-opacity-in-[33%] motion-rotate-in-[-1080deg] motion-blur-in-[10px] motion-duration-[1s] motion-delay-[0.13s]/scale motion-duration-[0.13s]/opacity motion-duration-[0.40s]/rotate motion-duration-[0.05s]/blur motion-delay-[0.20s]/blur motion-ease-spring-bouncier" />
+						<Sparkles className="absolute -left-1 -top-3 text-rose-500 h-5 w-5 sm:h-8 sm:w-8 md:h-12 md:w-12 motion-delay-300 motion-preset-seesaw-lg motion-scale-in-[0.5] motion-translate-x-in-[159%] motion-translate-y-in-[-60%] motion-opacity-in-[33%] motion-rotate-in-[-1080deg] motion-blur-in-[10px] motion-duration-500 motion-delay-[0.13s]/scale motion-duration-[0.13s]/opacity motion-duration-[0.40s]/rotate motion-duration-[0.05s]/blur motion-delay-[0.20s]/blur motion-ease-spring-bouncier" />
 						<AuroraText colors={["#FA5352", "#FA5352", "orange"]}>dashboard icons</AuroraText>
 					</h1>
 
-					<p className="text-sm sm:text-base md:text-xl text-muted-foreground leading-relaxed mb-8 font-light tracking-wide max-w-2xl mx-auto px-4 motion-preset-slide-down motion-duration-2000">
-						A collection of <NumberTicker value={totalIcons} className="font-bold tracking-tighter text-muted-foreground" /> curated icons
+					<p className="text-sm sm:text-base md:text-xl text-muted-foreground leading-relaxed mb-8 font-light tracking-wide max-w-2xl mx-auto px-4 motion-preset-slide-down motion-duration-500">
+						A collection of <NumberTicker value={totalIcons} startValue={1000} className="font-bold tracking-tighter text-muted-foreground" /> curated icons
 						for services, applications and tools, designed specifically for dashboards and app directories.
 					</p>
 					<div className="flex flex-col gap-4 max-w-3xl mx-auto">
 						<SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} totalIcons={totalIcons} />
-						<div className="w-full flex gap-3 md:gap-4 flex-wrap justify-center motion-preset-slide-down motion-duration-2000">
+						<div className="w-full flex gap-3 md:gap-4 flex-wrap justify-center motion-preset-slide-down motion-duration-500">
 							<Link href="/icons">
 								<InteractiveHoverButton className="rounded-md bg-input/30">Explore icons</InteractiveHoverButton>
 							</Link>

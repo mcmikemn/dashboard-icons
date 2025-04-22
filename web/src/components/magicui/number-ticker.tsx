@@ -26,7 +26,7 @@ export function NumberTicker({
   const motionValue = useMotionValue(direction === "down" ? value : startValue);
   const springValue = useSpring(motionValue, {
     damping: 30,
-    stiffness: 100,
+    stiffness: 200,
   });
   const isInView = useInView(ref, { once: true, margin: "0px" });
 
@@ -43,10 +43,7 @@ export function NumberTicker({
     () =>
       springValue.on("change", (latest) => {
         if (ref.current) {
-          ref.current.textContent = Intl.NumberFormat("en-US", {
-            minimumFractionDigits: decimalPlaces,
-            maximumFractionDigits: decimalPlaces,
-          }).format(Number(latest.toFixed(decimalPlaces)));
+          ref.current.textContent = Number(latest.toFixed(decimalPlaces)).toString();
         }
       }),
     [springValue, decimalPlaces],
