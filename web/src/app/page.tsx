@@ -1,6 +1,6 @@
 import { HeroSection } from "@/components/hero"
 import { RecentlyAddedIcons } from "@/components/recently-added-icons"
-import { BASE_URL, getDescription, REPO_NAME, websiteTitle } from "@/constants"
+import { BASE_URL, REPO_NAME, getDescription, websiteTitle } from "@/constants"
 import { getRecentlyAddedIcons, getTotalIcons } from "@/lib/api"
 import type { Metadata } from "next"
 
@@ -11,6 +11,10 @@ export async function generateMetadata(): Promise<Metadata> {
 		title: websiteTitle,
 		description: getDescription(totalIcons),
 		keywords: ["dashboard icons", "service icons", "application icons", "tool icons", "web dashboard", "app directory"],
+		robots: {
+			index: true,
+			follow: true,
+		},
 		openGraph: {
 			title: websiteTitle,
 			description: getDescription(totalIcons),
