@@ -12,12 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/t
 
 export function Header() {
 	return (
-		<motion.header
-			className="border-b sticky top-0 z-50 backdrop-blur-2xl bg-background/50 border-border/50"
-			initial={{ y: -20, opacity: 0 }}
-			animate={{ y: 0, opacity: 1 }}
-			transition={{ duration: 0.3, ease: "easeOut" }}
-		>
+		<div className="border-b sticky top-0 z-50 backdrop-blur-2xl bg-background/50 border-border/50">
 			<div className="px-4 md:px-12 flex items-center justify-between h-16 md:h-18">
 				<div className="flex items-center gap-2 md:gap-6">
 					<Link href="/" className="text-lg md:text-xl font-bold group hidden md:block">
@@ -54,6 +49,6 @@ export function Header() {
 					<ThemeSwitcher />
 				</div>
 			</div>
-		</motion.header>
+		</div>
 	)
 }
