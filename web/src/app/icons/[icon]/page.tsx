@@ -33,7 +33,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
 	console.debug(`Generated metadata for ${icon} by ${authorName} (${authorData.html_url}) updated at ${updateDate.toLocaleString()}`)
 
-	const iconImageUrl = `${BASE_URL}/png/${icon}.png`
+	const iconPreviewImageUrl = `${BASE_URL}/webp/${icon}.webp`
 	const pageUrl = `${WEB_URL}/icons/${icon}`
 	const formattedIconName = icon
 		.split("-")
@@ -43,7 +43,11 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 	return {
 		title: `${formattedIconName} Icon | Dashboard Icons`,
 		description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
-		assets: [iconImageUrl],
+		assets: [
+			`${BASE_URL}/svg/${icon}.svg`,
+			`${BASE_URL}/png/${icon}.png`,
+			`${BASE_URL}/webp/${icon}.webp`,
+		],
 		keywords: [
 			`${formattedIconName} icon`,
 			`${formattedIconName} icon download`,
@@ -57,7 +61,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 			"app directory",
 		],
 		icons: {
-			icon: iconImageUrl,
+			icon: iconPreviewImageUrl,
 		},
 		abstract: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 		openGraph: {
@@ -70,17 +74,18 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 			modifiedTime: updateDate.toISOString(),
 			section: "Icons",
 			tags: [formattedIconName, "dashboard icon", "service icon", "application icon", "tool icon", "web dashboard", "app directory"],
+			images: [iconPreviewImageUrl],
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: `${formattedIconName} Icon | Dashboard Icons`,
 			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
-			images: [iconImageUrl],
+			images: [iconPreviewImageUrl],
 		},
 		alternates: {
 			canonical: pageUrl,
 			media: {
-				png: iconImageUrl,
+				png: `${BASE_URL}/png/${icon}.png`,
 				svg: `${BASE_URL}/svg/${icon}.svg`,
 				webp: `${BASE_URL}/webp/${icon}.webp`,
 			},

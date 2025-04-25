@@ -9,7 +9,7 @@ import { BASE_URL, REPO_PATH } from "@/constants"
 import type { AuthorData, Icon, IconFile } from "@/types/icons"
 import confetti from "canvas-confetti"
 import { motion } from "framer-motion"
-import { ArrowRight, Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun } from "lucide-react"
+import { ArrowRight, Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun, AlertTriangle } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useCallback, useState } from "react"
@@ -26,6 +26,10 @@ export type IconDetailsProps = {
 }
 
 export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetailsProps) {
+	// Add state for the main preview icon
+	const [isPreviewLoading, setIsPreviewLoading] = useState(true)
+	const [hasPreviewError, setHasPreviewError] = useState(false)
+
 	const authorName = authorData.name || authorData.login || ""
 	const iconColorVariants = iconData.colors
 	const formattedDate = new Date(iconData.update.timestamp).toLocaleDateString("en-GB", {
@@ -142,12 +146,43 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 		}
 	}
 
+	// Handlers for main preview icon
+	const handlePreviewLoadingComplete = () => {
+		setIsPreviewLoading(false)
+		setHasPreviewError(false)
+	}
+
+	const handlePreviewError = () => {
+		setIsPreviewLoading(false)
+		setHasPreviewError(true)
+	}
+
+	// URLs for main preview icon
+	const previewWebpSrc = `${BASE_URL}/webp/${icon}.webp`
+	const previewOriginalSrc = `${BASE_URL}/${iconData.base}/${icon}.${iconData.base}`
+	const previewOriginalFormat = iconData.base
+
 	const renderVariant = (format: string, iconName: string, theme?: "light" | "dark") => {
+		const [isLoading, setIsLoading] = useState(true)
+		const [hasError, setHasError] = useState(false)
+
 		const variantName = theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName
-		const imageUrl = `${BASE_URL}/${format}/${variantName}.${format}`
-		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`
+		const originalFormat = iconData.base
+		const originalImageUrl = `${BASE_URL}/${originalFormat}/${variantName}.${originalFormat}`
+		const webpImageUrl = `${BASE_URL}/webp/${variantName}.webp`
+		const githubUrl = `${REPO_PATH}/tree/main/${originalFormat}/${iconName}.${originalFormat}`
 		const variantKey = `${format}-${theme || "default"}`
 		const isCopied = copiedVariants[variantKey] || false
+
+		const handleLoadingComplete = () => {
+			setIsLoading(false)
+			setHasError(false)
+		}
+
+		const handleError = () => {
+			setIsLoading(false)
+			setHasError(true)
+		}
 
 		return (
 			<TooltipProvider key={variantKey} delayDuration={500}>
@@ -156,50 +191,65 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<motion.div
-									className="relative w-28 h-28 mb-3 cursor-pointer rounded-xl overflow-hidden group"
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									onClick={(e) => handleCopy(imageUrl, variantKey, e)}
-									aria-label={`Copy ${format.toUpperCase()} URL for ${iconName}${theme ? ` (${theme} theme)` : ""}`}
+									className="relative w-28 h-28 mb-3 cursor-pointer rounded-xl overflow-hidden group flex items-center justify-center"
+									whileHover={{ scale: hasError ? 1 : 1.05 }}
+									whileTap={{ scale: hasError ? 1 : 0.95 }}
+									onClick={(e) => !hasError && handleCopy(format === 'webp' ? webpImageUrl : originalImageUrl, variantKey, e)}
+									aria-label={hasError ? "Image failed to load" : `Copy ${format.toUpperCase()} URL for ${iconName}${theme ? ` (${theme} theme)` : ""}`}
 								>
-									<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl z-10 transition-colors" />
+									{isLoading && !hasError && (
+										<div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-xl z-10" />
+									)}
+									{hasError ? (
+										<AlertTriangle className="h-12 w-12 text-red-500 z-10 cursor-help" />
+									) : (
+										<>
+											<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl z-10 transition-colors pointer-events-none" />
+											<motion.div
+												className="absolute inset-0 bg-primary/10 flex items-center justify-center z-20 rounded-xl pointer-events-none"
+												initial={{ opacity: 0 }}
+												animate={{ opacity: isCopied ? 1 : 0 }}
+												transition={{ duration: 0.2 }}
+											>
+												<motion.div
+													initial={{ scale: 0.5, opacity: 0 }}
+													animate={{ scale: isCopied ? 1 : 0.5, opacity: isCopied ? 1 : 0 }}
+													transition={{ type: "spring", stiffness: 300, damping: 20 }}
+												>
+													<Check className="w-8 h-8 text-primary" />
+												</motion.div>
+											</motion.div>
 
-									<motion.div
-										className="absolute inset-0 bg-primary/10 flex items-center justify-center z-20 rounded-xl"
-										initial={{ opacity: 0 }}
-										animate={{ opacity: isCopied ? 1 : 0 }}
-										transition={{ duration: 0.2 }}
-									>
-										<motion.div
-											initial={{ scale: 0.5, opacity: 0 }}
-											animate={{
-												scale: isCopied ? 1 : 0.5,
-												opacity: isCopied ? 1 : 0,
-											}}
-											transition={{
-												type: "spring",
-												stiffness: 300,
-												damping: 20,
-											}}
-										>
-											<Check className="w-8 h-8 text-primary" />
-										</motion.div>
-									</motion.div>
-
-									<Image
-										src={imageUrl}
-										alt={`${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
-										fill
-										className="object-contain p-4"
-									/>
+											<picture>
+												<source srcSet={webpImageUrl} type="image/webp" />
+												<source srcSet={originalImageUrl} type={`image/${originalFormat === 'svg' ? 'svg+xml' : originalFormat}`} />
+												<Image
+													src={originalImageUrl}
+													alt={`${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
+													fill
+													className={`object-contain p-4 transition-opacity duration-500 ${isLoading || hasError ? 'opacity-0' : 'opacity-100'}`}
+													onLoadingComplete={handleLoadingComplete}
+													onError={handleError}
+												/>
+											</picture>
+										</>
+									)}
 								</motion.div>
 							</TooltipTrigger>
 							<TooltipContent>
-								<p>Click to copy direct URL to clipboard</p>
+								<p>
+									{hasError
+										? "Image failed to load, likely due to size limits. Please raise an issue on GitHub."
+										: isCopied
+											? "URL Copied!"
+											: "Click to copy direct URL to clipboard"}
+								</p>
 							</TooltipContent>
 						</Tooltip>
 
-						<p className="text-sm font-medium">{format.toUpperCase()}</p>
+						<p className="text-sm font-medium capitalize">
+							{format.toUpperCase()} {theme && `(${theme})`}
+						</p>
 
 						<div className="flex gap-2 mt-3 w-full justify-center">
 							<Tooltip>
@@ -208,14 +258,15 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 										variant="outline"
 										size="icon"
 										className="h-8 w-8 rounded-lg cursor-pointer"
-										onClick={(e) => handleDownload(e, imageUrl, `${iconName}.${format}`)}
+										onClick={(e) => !hasError && handleDownload(e, format === 'webp' ? webpImageUrl : originalImageUrl, `${variantName}.${format}`)}
 										aria-label={`Download ${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
+										disabled={hasError}
 									>
 										<Download className="w-4 h-4" />
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent>
-									<p>Download icon file</p>
+									<p>{hasError ? "Download unavailable" : "Download icon file"}</p>
 								</TooltipContent>
 							</Tooltip>
 
@@ -225,14 +276,15 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 										variant="outline"
 										size="icon"
 										className="h-8 w-8 rounded-lg cursor-pointer"
-										onClick={(e) => handleCopy(imageUrl, `btn-${variantKey}`, e)}
+										onClick={(e) => !hasError && handleCopy(format === 'webp' ? webpImageUrl : originalImageUrl, `btn-${variantKey}`, e)}
 										aria-label={`Copy URL for ${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
+										disabled={hasError}
 									>
 										{copiedVariants[`btn-${variantKey}`] ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent>
-									<p>Copy direct URL to clipboard</p>
+									<p>{hasError ? "Copy unavailable" : isCopied ? "URL Copied!" : "Copy direct URL to clipboard"}</p>
 								</TooltipContent>
 							</Tooltip>
 
@@ -243,7 +295,7 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 											href={githubUrl}
 											target="_blank"
 											rel="noopener noreferrer"
-											aria-label={`View ${iconName} ${format} file on GitHub`}
+											aria-label={`View ${iconName} ${originalFormat} file on GitHub`}
 										>
 											<Github className="w-4 h-4" />
 										</Link>
@@ -268,14 +320,37 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 					<Card className="h-full bg-background/50 border shadow-lg">
 						<CardHeader className="pb-4">
 							<div className="flex flex-col items-center">
-								<div className="relative w-32 h-32 rounded-xl overflow-hidden border flex items-center justify-center p-3">
-									<Image
-										src={`${BASE_URL}/${iconData.base}/${icon}.${iconData.base}`}
-										width={96}
-										height={96}
-										alt={`High quality ${icon.replace(/-/g, " ")} icon in ${iconData.base.toUpperCase()} format`}
-										className="w-full h-full object-contain"
-									/>
+								{/* Apply loading/error handling to the main preview icon */}
+								<div className="relative w-32 h-32 rounded-xl overflow-hidden border flex items-center justify-center p-3 mb-4">
+									{isPreviewLoading && !hasPreviewError && (
+										<div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-xl" />
+									)}
+									{hasPreviewError ? (
+										<TooltipProvider delayDuration={300}>
+											<Tooltip>
+												<TooltipTrigger aria-label="Preview image loading error">
+													<AlertTriangle className="h-16 w-16 text-red-500 cursor-help" />
+												</TooltipTrigger>
+												<TooltipContent side="bottom">
+													<p>Preview failed to load, likely due to size limits. Please raise an issue.</p>
+												</TooltipContent>
+											</Tooltip>
+										</TooltipProvider>
+									) : (
+										<picture>
+											<source srcSet={previewWebpSrc} type="image/webp" />
+											<source srcSet={previewOriginalSrc} type={`image/${previewOriginalFormat === 'svg' ? 'svg+xml' : previewOriginalFormat}`} />
+											<Image
+												src={previewOriginalSrc}
+												alt={`High quality ${icon.replace(/-/g, " ")} icon preview`}
+												fill // Use fill instead of width/height for parent relative sizing
+												className={`object-contain transition-opacity duration-500 ${isPreviewLoading || hasPreviewError ? 'opacity-0' : 'opacity-100'}`}
+												onLoadingComplete={handlePreviewLoadingComplete}
+												onError={handlePreviewError}
+												priority // Prioritize loading the main icon
+											/>
+										</picture>
+									)}
 								</div>
 								<CardTitle className="text-2xl font-bold capitalize text-center mb-2">
 									<h1>{icon.replace(/-/g, " ")}</h1>
