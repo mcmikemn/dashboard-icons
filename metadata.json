@@ -35,7 +35,7 @@
         ],
         "categories": [
             "Networking-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-01-02T00:01:42Z",
@@ -104,7 +104,7 @@
             "idea-voting"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Office-Suites"
         ],
         "update": {
@@ -233,7 +233,7 @@
         ],
         "categories": [
             "Version-Control-Systems",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T20:27:58Z",
@@ -828,7 +828,7 @@
             "user-analytics"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Monitoring-Tools"
         ],
         "update": {
@@ -878,7 +878,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools",
+            "Developer-Tools",
             "Cloud-Computing"
         ],
         "update": {
@@ -1063,7 +1063,7 @@
             "command-line-scripting"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Operating-Systems"
         ],
         "update": {
@@ -1356,7 +1356,7 @@
             "analytics-tool"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -1752,7 +1752,7 @@
             "phone-screen-on-pc"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Hardware"
         ],
         "update": {
@@ -2057,7 +2057,7 @@
             "Setup Wizard"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -2206,7 +2206,7 @@
         ],
         "categories": [
             "Search-Engines",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -2555,7 +2555,7 @@
             "App Deployment"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Server-Panels"
         ],
         "update": {
@@ -2820,7 +2820,7 @@
         ],
         "categories": [
             "Security",
-            "Developper-Tools",
+            "Developer-Tools",
             "Networking-Tools"
         ],
         "update": {
@@ -2942,7 +2942,7 @@
             "Issue Tracker"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Office-Suites"
         ],
         "update": {
@@ -3183,7 +3183,7 @@
             "build-pipeline"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Version-Control-Systems"
         ],
         "update": {
@@ -3217,7 +3217,7 @@
             "website-statistics"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -3517,7 +3517,7 @@
         ],
         "categories": [
             "Media-Servers",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -3886,7 +3886,7 @@
             "decentralized-apps"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Finance-&-Banking"
         ],
         "update": {
@@ -4289,7 +4289,7 @@
         ],
         "categories": [
             "Databases",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2022-08-16T17:22:56Z",
@@ -4452,7 +4452,7 @@
             "Workspace Streaming"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Cloud-Computing"
         ],
         "update": {
@@ -4471,7 +4471,7 @@
         ],
         "categories": [
             "Databases",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -4566,7 +4566,7 @@
             "Text Editor"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T20:27:58Z",
@@ -4764,7 +4764,7 @@
         "aliases": [],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -4900,7 +4900,7 @@
             "app-monetization"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "E-commerce-Platforms"
         ],
         "update": {
@@ -5153,7 +5153,7 @@
         ],
         "categories": [
             "Office-Suites",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -5204,7 +5204,7 @@
         ],
         "categories": [
             "Security",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -5370,7 +5370,7 @@
             "Workflow Orchestration"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps"
         ],
         "update": {
@@ -5428,7 +5428,7 @@
             "Code Analytics"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Monitoring-Tools"
         ],
         "update": {
@@ -5465,7 +5465,7 @@
             "Message Broker"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Networking-Tools"
         ],
         "update": {
@@ -5499,7 +5499,7 @@
             "Command Line Tips"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -5923,7 +5923,7 @@
         ],
         "categories": [
             "Monitoring-Tools",
-            "Developper-Tools",
+            "Developer-Tools",
             "Networking-Tools"
         ],
         "update": {
@@ -6311,7 +6311,7 @@
             "go-web-framework"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -6588,7 +6588,7 @@
         ],
         "categories": [
             "News",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -6628,7 +6628,7 @@
             "php-web-framework"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -6740,7 +6740,7 @@
             "GitOps Tool"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps",
             "Containerization-&-Orchestration"
         ],
@@ -7096,7 +7096,7 @@
             "DevOps Platform"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps",
             "Version-Control-Systems"
         ],
@@ -7708,7 +7708,7 @@
             "website-builder"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -7845,7 +7845,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps"
         ],
         "update": {
@@ -8103,7 +8103,7 @@
         ],
         "categories": [
             "Monitoring-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T20:27:58",
@@ -8220,7 +8220,7 @@
         ],
         "categories": [
             "Home-Automation",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -8292,7 +8292,7 @@
             "utility-website"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -8308,7 +8308,7 @@
             "Script Collection"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -8701,7 +8701,7 @@
         "categories": [
             "Networking-Tools",
             "Smart-Home",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -8803,7 +8803,7 @@
             "website-statistics"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -9094,7 +9094,7 @@
             "Push Notification"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Networking-Tools"
         ],
         "update": {
@@ -9376,7 +9376,7 @@
         ],
         "categories": [
             "Media-Servers",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -9578,7 +9578,7 @@
             "iac-tool"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Cloud-Computing"
         ],
         "update": {
@@ -9679,7 +9679,7 @@
         ],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -9728,7 +9728,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -9993,7 +9993,7 @@
         "categories": [
             "Password-Managers",
             "Security",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -10069,7 +10069,7 @@
         ],
         "categories": [
             "Office-Suites",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -10343,7 +10343,7 @@
         ],
         "categories": [
             "Cloud-Computing",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -10762,7 +10762,7 @@
         "aliases": [],
         "categories": [
             "Version-Control-Systems",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T20:27:58Z",
@@ -10841,7 +10841,7 @@
             "text-editor"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-02-21T11:58:52.385242",
@@ -10947,7 +10947,7 @@
             "shell-interface"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Operating-Systems"
         ],
         "update": {
@@ -11009,7 +11009,7 @@
             "Text Editor"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -11071,7 +11071,7 @@
         ],
         "categories": [
             "Version-Control-Systems",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T20:27:58Z",
@@ -11100,7 +11100,7 @@
         "base": "svg",
         "aliases": [],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -11308,7 +11308,7 @@
             "website-performance"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Search-Engines"
         ],
         "update": {
@@ -11456,7 +11456,7 @@
         "aliases": [],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -11502,7 +11502,7 @@
         ],
         "categories": [
             "Version-Control-Systems",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2022-10-03T09:35:40Z",
@@ -11669,7 +11669,7 @@
             "website-builder"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -11710,7 +11710,7 @@
             "developer-analytics"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Monitoring-Tools"
         ],
         "update": {
@@ -12276,7 +12276,7 @@
         ],
         "categories": [
             "File-Sharing-&-Sync",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -12293,7 +12293,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -12454,7 +12454,7 @@
         ],
         "categories": [
             "Cloud-Computing",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-09-11T09:55:09Z",
@@ -12572,7 +12572,7 @@
         ],
         "categories": [
             "Networking-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-01-01T11:20:28Z",
@@ -12736,7 +12736,7 @@
         ],
         "categories": [
             "Version-Control-Systems",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-06-01T17:47:33Z",
@@ -12784,7 +12784,7 @@
             "Terminal Emulator"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Networking-Tools"
         ],
         "update": {
@@ -12862,7 +12862,7 @@
         ],
         "categories": [
             "Web-Browsers",
-            "Developper-Tools",
+            "Developer-Tools",
             "Cloud-Computing"
         ],
         "update": {
@@ -12901,7 +12901,7 @@
         ],
         "categories": [
             "Networking-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -12984,7 +12984,7 @@
         ],
         "categories": [
             "Monitoring-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -13107,7 +13107,7 @@
         ],
         "categories": [
             "Security",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-03-21T00:59:33Z",
@@ -13363,7 +13363,7 @@
             "text-paste-service"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-08-10T08:28:08Z",
@@ -14013,7 +14013,7 @@
             "build-server"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Version-Control-Systems"
         ],
         "update": {
@@ -14061,7 +14061,7 @@
         ],
         "categories": [
             "Web-Browsers",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -14345,7 +14345,7 @@
             "GitHub Extension"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Web-Browsers"
         ],
         "update": {
@@ -14588,7 +14588,7 @@
             "7-zip"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-05T00:02:27Z",
@@ -14878,7 +14878,7 @@
             "App Updater"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Smart-Home"
         ],
         "update": {
@@ -15209,7 +15209,7 @@
         ],
         "categories": [
             "Networking-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -15265,7 +15265,7 @@
             "Code Search"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Web-Browsers"
         ],
         "update": {
@@ -15664,7 +15664,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -15977,7 +15977,7 @@
         ],
         "categories": [
             "File-Sharing-&-Sync",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T19:32:46Z",
@@ -16296,7 +16296,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -16426,7 +16426,7 @@
             "Maven Repository"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps"
         ],
         "update": {
@@ -16448,7 +16448,7 @@
             "modern-web-dev"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T20:27:58",
@@ -16586,7 +16586,7 @@
             "api-management"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Networking-Tools"
         ],
         "update": {
@@ -16692,7 +16692,7 @@
             "online-ide"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Cloud-Computing"
         ],
         "update": {
@@ -17280,7 +17280,7 @@
             "app-builder"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Cloud-Computing"
         ],
         "update": {
@@ -17295,7 +17295,7 @@
         "base": "svg",
         "aliases": [],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-01-01T19:31:33Z",
@@ -17885,7 +17885,7 @@
         ],
         "categories": [
             "Cloud-Computing",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -18256,7 +18256,7 @@
         "aliases": [],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -18273,7 +18273,7 @@
             "pastebin-alternative"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Note-taking-Apps"
         ],
         "update": {
@@ -18399,7 +18399,7 @@
             "CI/CD"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps"
         ],
         "update": {
@@ -19196,7 +19196,7 @@
         ],
         "categories": [
             "Monitoring-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -19555,7 +19555,7 @@
         ],
         "categories": [
             "AI-&-LLM-Platforms",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-06-01T17:31:33Z",
@@ -19588,7 +19588,7 @@
             "the-cyber-chef"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -19623,7 +19623,7 @@
         ],
         "categories": [
             "Office-Suites",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -19802,7 +19802,7 @@
             "collaborative-latex"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Office-Suites"
         ],
         "update": {
@@ -19907,7 +19907,7 @@
         ],
         "categories": [
             "AI-&-LLM-Platforms",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-16T22:04:08Z",
@@ -19924,7 +19924,7 @@
         ],
         "categories": [
             "Security",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -19945,7 +19945,7 @@
         ],
         "categories": [
             "Version-Control-Systems",
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps"
         ],
         "update": {
@@ -20069,7 +20069,7 @@
         ],
         "categories": [
             "Version-Control-Systems",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-01-05T14:11:25Z",
@@ -20228,7 +20228,7 @@
         ],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -20331,7 +20331,7 @@
             "javascript-bundler"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-14T17:36:25Z",
@@ -20370,7 +20370,7 @@
         ],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -20597,7 +20597,7 @@
             "Static Site Generator"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Web-Browsers"
         ],
         "update": {
@@ -20631,7 +20631,7 @@
             "Automation Tool"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps"
         ],
         "update": {
@@ -20755,7 +20755,7 @@
             "docs-builder"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -20917,7 +20917,7 @@
         "categories": [
             "Security",
             "Networking-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-03-17T15:39:00.007266",
@@ -20951,7 +20951,7 @@
             "jamstack-tool"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -21064,7 +21064,7 @@
             "site-scraper"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T19:32:46Z",
@@ -21361,7 +21361,7 @@
         "aliases": [],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -21510,7 +21510,7 @@
         ],
         "categories": [
             "Web-Browsers",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -21531,7 +21531,7 @@
             "browser-inspector"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Web-Browsers"
         ],
         "update": {
@@ -21763,7 +21763,7 @@
             "Terminal Emulator"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -21906,7 +21906,7 @@
         ],
         "categories": [
             "Databases",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -21970,7 +21970,7 @@
         "categories": [
             "Password-Managers",
             "Security",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-05T22:18:03Z",
@@ -22052,7 +22052,7 @@
             "R IDE"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Programming-Languages"
         ],
         "update": {
@@ -22168,7 +22168,7 @@
         ],
         "categories": [
             "Office-Suites",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -22271,7 +22271,7 @@
             "ide"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -22358,7 +22358,7 @@
             "tracking-tool"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -22647,7 +22647,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools",
+            "Developer-Tools",
             "Server-Panels"
         ],
         "update": {
@@ -22788,7 +22788,7 @@
         ],
         "categories": [
             "Databases",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -22862,7 +22862,7 @@
         ],
         "categories": [
             "Version-Control-Systems",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -23179,7 +23179,7 @@
             "CI/CD"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "DevOps"
         ],
         "update": {
@@ -23221,7 +23221,7 @@
         ],
         "categories": [
             "Security",
-            "Developper-Tools",
+            "Developer-Tools",
             "Version-Control-Systems"
         ],
         "update": {
@@ -23281,7 +23281,7 @@
             "snippet-hosting"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -23507,7 +23507,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools",
+            "Developer-Tools",
             "Cloud-Computing"
         ],
         "update": {
@@ -23543,7 +23543,7 @@
             "data-backup"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -23583,7 +23583,7 @@
             "Email Testing"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Email-Providers"
         ],
         "update": {
@@ -24034,7 +24034,7 @@
         ],
         "categories": [
             "Education",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-04-06T16:45:32.125339",
@@ -24431,7 +24431,7 @@
         ],
         "categories": [
             "Networking-Tools",
-            "Developper-Tools",
+            "Developer-Tools",
             "Monitoring-Tools"
         ],
         "update": {
@@ -24704,7 +24704,7 @@
             "API Gateway"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "Networking-Tools"
         ],
         "update": {
@@ -24846,7 +24846,7 @@
         ],
         "categories": [
             "Security",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -25019,7 +25019,7 @@
         ],
         "categories": [
             "Networking-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -25195,7 +25195,7 @@
         ],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -25469,7 +25469,7 @@
         ],
         "categories": [
             "File-Sharing-&-Sync",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-05T01:06:46Z",
@@ -25561,7 +25561,7 @@
         ],
         "categories": [
             "Databases",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -25628,7 +25628,7 @@
         "aliases": [],
         "categories": [
             "Gaming-Platforms",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-18T21:08:39Z",
@@ -25684,7 +25684,7 @@
         ],
         "categories": [
             "Networking-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -25737,7 +25737,7 @@
             "content-management-system"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -25823,7 +25823,7 @@
             "data-backup"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -26325,7 +26325,7 @@
             "Pastebin"
         ],
         "categories": [
-            "Developper-Tools",
+            "Developer-Tools",
             "File-Sharing-&-Sync"
         ],
         "update": {
@@ -26587,7 +26587,7 @@
         ],
         "categories": [
             "Security",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-10-20T17:24:03Z",
@@ -26638,7 +26638,7 @@
         ],
         "categories": [
             "Containerization-&-Orchestration",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-08-10T08:28:08Z",
@@ -26785,7 +26785,7 @@
             "workflow-engine"
         ],
         "categories": [
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-02-11T23:43:52Z",
@@ -26959,7 +26959,7 @@
         ],
         "categories": [
             "Note-taking-Apps",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2024-06-01T17:38:50Z",
@@ -26986,7 +26986,7 @@
         "aliases": [],
         "categories": [
             "Programming-Languages",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
@@ -27149,7 +27149,7 @@
         ],
         "categories": [
             "Networking-Tools",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2025-01-07T17:54:03Z",
@@ -27262,7 +27262,7 @@
         ],
         "categories": [
             "Media-Servers",
-            "Developper-Tools"
+            "Developer-Tools"
         ],
         "update": {
             "timestamp": "2023-04-13T13:56:18Z",
