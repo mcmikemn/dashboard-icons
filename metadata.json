@@ -26353,6 +26353,22 @@
             }
         }
     },
+    "vite": {
+        "base": "svg",
+        "aliases": [
+            "vite-js vite-ts"
+        ],
+        "categories": [
+            "Development"
+        ],
+        "update": {
+            "timestamp": "2025-04-26T23:02:15.508975",
+            "author": {
+                "id": 61716607,
+                "login": "lesolski"
+            }
+        }
+    },
     "microbin": {
         "base": "png",
         "aliases": [
