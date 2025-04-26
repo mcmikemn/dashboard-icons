@@ -5,6 +5,10 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
 
+export function formatIconName(name: string) {
+	return name.replace(/-/g, " ")
+}
+
 /**
  * Calculate Levenshtein distance between two strings
  */

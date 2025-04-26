@@ -1,13 +1,22 @@
 import { IconDetails } from "@/components/icon-details"
 import { BASE_URL, WEB_URL } from "@/constants"
 import { getAllIcons, getAuthorData } from "@/lib/api"
+import { formatIconName } from "@/lib/utils"
 import type { Metadata, ResolvingMetadata } from "next"
+import { default as dynamicImport } from "next/dynamic"
 import { notFound } from "next/navigation"
-
 export const dynamicParams = false
 
 export async function generateStaticParams() {
 	const iconsData = await getAllIcons()
+	if (process.env.CI_MODE === "false") {
+		// This is meant to speed up the build process in local development
+		return Object.keys(iconsData)
+			.slice(0, 5)
+			.map((icon) => ({
+				icon,
+			}))
+	}
 	return Object.keys(iconsData).map((icon) => ({
 		icon,
 	}))
@@ -33,7 +42,6 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
 	console.debug(`Generated metadata for ${icon} by ${authorName} (${authorData.html_url}) updated at ${updateDate.toLocaleString()}`)
 
-	const iconPreviewImageUrl = `${BASE_URL}/webp/${icon}.webp`
 	const pageUrl = `${WEB_URL}/icons/${icon}`
 	const formattedIconName = icon
 		.split("-")
@@ -61,7 +69,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 			"app directory",
 		],
 		icons: {
-			icon: iconPreviewImageUrl,
+			icon: `${BASE_URL}/webp/${icon}.webp`,
 		},
 		abstract: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 		openGraph: {
@@ -74,13 +82,11 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 			modifiedTime: updateDate.toISOString(),
 			section: "Icons",
 			tags: [formattedIconName, "dashboard icon", "service icon", "application icon", "tool icon", "web dashboard", "app directory"],
-			images: [iconPreviewImageUrl],
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: `${formattedIconName} Icon | Dashboard Icons`,
 			description: `Download the ${formattedIconName} icon in SVG, PNG, and WEBP formats for FREE. Part of a collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
-			images: [iconPreviewImageUrl],
 		},
 		alternates: {
 			canonical: pageUrl,

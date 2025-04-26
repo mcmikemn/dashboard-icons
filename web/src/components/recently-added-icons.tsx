@@ -2,14 +2,12 @@
 
 import { Marquee } from "@/components/magicui/marquee"
 import { BASE_URL } from "@/constants"
-import { cn } from "@/lib/utils"
+import { cn, formatIconName } from "@/lib/utils"
 import type { Icon, IconWithName } from "@/types/icons"
 import { format, isToday, isYesterday } from "date-fns"
-import { ArrowRight, Clock, ExternalLink, AlertTriangle } from "lucide-react"
+import { ArrowRight, Clock, ExternalLink } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 function formatIconDate(timestamp: string): string {
 	const date = new Date(timestamp)
@@ -32,7 +30,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 			{/* Background glow */}
 			<div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true" />
 
-			<div className="mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="mx-auto px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl text-center my-4">
 					<h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-rose-500  motion-safe:motion-preset-fade-lg motion-duration-500">
 						Recently Added Icons
@@ -63,7 +61,7 @@ export function RecentlyAddedIcons({ icons }: { icons: IconWithName[] }) {
 						href="/icons"
 						className="font-medium inline-flex items-center py-2 px-4 rounded-full border  transition-all duration-200 group hover-lift soft-shadow"
 					>
-						View all icons
+						View complete collection
 						<ArrowRight className="w-4 h-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" />
 					</Link>
 				</div>
@@ -80,24 +78,7 @@ function RecentIconCard({
 	name: string
 	data: Icon
 }) {
-	const [isLoading, setIsLoading] = useState(true)
-	const [hasError, setHasError] = useState(false)
-
-	// Construct URLs
-	const webpSrc = `${BASE_URL}/webp/${name}.webp`
-	const originalSrc = `${BASE_URL}/${data.base}/${name}.${data.base}`
-	const originalFormat = data.base
-
-	const handleLoadingComplete = () => {
-		setIsLoading(false)
-		setHasError(false)
-	}
-
-	const handleError = () => {
-		setIsLoading(false)
-		setHasError(true)
-	}
-
+	const formattedIconName = formatIconName(name)
 	return (
 		<Link
 			prefetch={false}
@@ -105,47 +86,22 @@ function RecentIconCard({
 			className={cn(
 				"flex flex-col items-center p-3 sm:p-4 rounded-xl border border-border",
 				"transition-all duration-300 hover:shadow-lg hover:shadow-rose-500/5 relative overflow-hidden hover-lift",
-				"w-36 mx-2",
+				"w-36 mx-2 group/item",
 			)}
-			aria-label={`View details for ${name.replace(/-/g, " ")} icon`}
+			aria-label={`View details for ${formattedIconName} icon`}
 		>
-			<div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+			<div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
 
-			{/* Image container with loading/error handling */}
-			<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2 flex items-center justify-center">
-				{isLoading && !hasError && (
-					<div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
-				)}
-				{hasError ? (
-					<TooltipProvider delayDuration={300}>
-						<Tooltip>
-							<TooltipTrigger aria-label="Image loading error">
-								<AlertTriangle className="h-6 w-6 sm:h-8 sm:w-8 text-red-500 cursor-help" />
-							</TooltipTrigger>
-							<TooltipContent side="bottom">
-								<p>Image failed to load. Please raise an issue.</p>
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-				) : (
-					<picture>
-						<source srcSet={webpSrc} type="image/webp" />
-						<source srcSet={originalSrc} type={`image/${originalFormat === 'svg' ? 'svg+xml' : originalFormat}`} />
-						<Image
-							src={originalSrc}
-							alt={`${name} icon`}
-							fill
-							className={`object-contain p-1 transition-opacity duration-500 group-hover:scale-110 ${isLoading || hasError ? 'opacity-0' : 'opacity-100'}`}
-							onLoadingComplete={handleLoadingComplete}
-							onError={handleError}
-							// No priority needed for marquee items
-						/>
-					</picture>
-				)}
+			<div className="relative h-12 w-12 sm:h-16 sm:w-16 mb-2">
+				<Image
+					src={`${BASE_URL}/${data.base}/${name}.${data.base}`}
+					alt={`${name} icon`}
+					fill
+					className="object-contain p-1 hover:scale-110 transition-transform duration-300"
+				/>
 			</div>
-
-			<span className="text-xs sm:text-sm text-center truncate w-full capitalize dark:hover:text-rose-400 transition-colors duration-200 font-medium">
-				{name.replace(/-/g, " ")}
+			<span className="text-xs sm:text-sm text-center truncate w-full capitalize  dark:hover:text-rose-400 transition-colors duration-200 font-medium">
+				{formattedIconName}
 			</span>
 			<div className="flex items-center justify-center mt-2 w-full">
 				<span className="text-[10px] sm:text-xs text-muted-foreground flex items-center whitespace-nowrap hover:/70 transition-colors duration-200">
@@ -154,8 +110,8 @@ function RecentIconCard({
 				</span>
 			</div>
 
-			<div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-				<ExternalLink className="w-3 h-3 text-muted-foreground" />
+			<div className="absolute top-2 right-2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-200">
+				<ExternalLink className="w-3 h-3 " />
 			</div>
 		</Link>
 	)

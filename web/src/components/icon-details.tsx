@@ -9,7 +9,8 @@ import { BASE_URL, REPO_PATH } from "@/constants"
 import type { AuthorData, Icon, IconFile } from "@/types/icons"
 import confetti from "canvas-confetti"
 import { motion } from "framer-motion"
-import { ArrowRight, Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun, AlertTriangle } from "lucide-react"
+import { Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun } from "lucide-react"
+import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
 import { useCallback, useState } from "react"
@@ -17,6 +18,7 @@ import { toast } from "sonner"
 import { Carbon } from "./carbon"
 import { MagicCard } from "./magicui/magic-card"
 import { Badge } from "./ui/badge"
+import { formatIconName } from "@/lib/utils"
 
 export type IconDetailsProps = {
 	icon: string
@@ -26,10 +28,6 @@ export type IconDetailsProps = {
 }
 
 export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetailsProps) {
-	// Add state for the main preview icon
-	const [isPreviewLoading, setIsPreviewLoading] = useState(true)
-	const [hasPreviewError, setHasPreviewError] = useState(false)
-
 	const authorName = authorData.name || authorData.login || ""
 	const iconColorVariants = iconData.colors
 	const formattedDate = new Date(iconData.update.timestamp).toLocaleDateString("en-GB", {
@@ -146,43 +144,12 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 		}
 	}
 
-	// Handlers for main preview icon
-	const handlePreviewLoadingComplete = () => {
-		setIsPreviewLoading(false)
-		setHasPreviewError(false)
-	}
-
-	const handlePreviewError = () => {
-		setIsPreviewLoading(false)
-		setHasPreviewError(true)
-	}
-
-	// URLs for main preview icon
-	const previewWebpSrc = `${BASE_URL}/webp/${icon}.webp`
-	const previewOriginalSrc = `${BASE_URL}/${iconData.base}/${icon}.${iconData.base}`
-	const previewOriginalFormat = iconData.base
-
 	const renderVariant = (format: string, iconName: string, theme?: "light" | "dark") => {
-		const [isLoading, setIsLoading] = useState(true)
-		const [hasError, setHasError] = useState(false)
-
 		const variantName = theme && iconColorVariants?.[theme] ? iconColorVariants[theme] : iconName
-		const originalFormat = iconData.base
-		const originalImageUrl = `${BASE_URL}/${originalFormat}/${variantName}.${originalFormat}`
-		const webpImageUrl = `${BASE_URL}/webp/${variantName}.webp`
-		const githubUrl = `${REPO_PATH}/tree/main/${originalFormat}/${iconName}.${originalFormat}`
+		const imageUrl = `${BASE_URL}/${format}/${variantName}.${format}`
+		const githubUrl = `${REPO_PATH}/tree/main/${format}/${iconName}.${format}`
 		const variantKey = `${format}-${theme || "default"}`
 		const isCopied = copiedVariants[variantKey] || false
-
-		const handleLoadingComplete = () => {
-			setIsLoading(false)
-			setHasError(false)
-		}
-
-		const handleError = () => {
-			setIsLoading(false)
-			setHasError(true)
-		}
 
 		return (
 			<TooltipProvider key={variantKey} delayDuration={500}>
@@ -191,65 +158,51 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<motion.div
-									className="relative w-28 h-28 mb-3 cursor-pointer rounded-xl overflow-hidden group flex items-center justify-center"
-									whileHover={{ scale: hasError ? 1 : 1.05 }}
-									whileTap={{ scale: hasError ? 1 : 0.95 }}
-									onClick={(e) => !hasError && handleCopy(format === 'webp' ? webpImageUrl : originalImageUrl, variantKey, e)}
-									aria-label={hasError ? "Image failed to load" : `Copy ${format.toUpperCase()} URL for ${iconName}${theme ? ` (${theme} theme)` : ""}`}
+									className="relative w-28 h-28 mb-3 cursor-pointer rounded-xl overflow-hidden group"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={(e) => handleCopy(imageUrl, variantKey, e)}
+									aria-label={`Copy ${format.toUpperCase()} URL for ${iconName}${theme ? ` (${theme} theme)` : ""}`}
 								>
-									{isLoading && !hasError && (
-										<div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-xl z-10" />
-									)}
-									{hasError ? (
-										<AlertTriangle className="h-12 w-12 text-red-500 z-10 cursor-help" />
-									) : (
-										<>
-											<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl z-10 transition-colors pointer-events-none" />
-											<motion.div
-												className="absolute inset-0 bg-primary/10 flex items-center justify-center z-20 rounded-xl pointer-events-none"
-												initial={{ opacity: 0 }}
-												animate={{ opacity: isCopied ? 1 : 0 }}
-												transition={{ duration: 0.2 }}
-											>
-												<motion.div
-													initial={{ scale: 0.5, opacity: 0 }}
-													animate={{ scale: isCopied ? 1 : 0.5, opacity: isCopied ? 1 : 0 }}
-													transition={{ type: "spring", stiffness: 300, damping: 20 }}
-												>
-													<Check className="w-8 h-8 text-primary" />
-												</motion.div>
-											</motion.div>
+									<div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl z-10 transition-colors" />
 
-											<picture>
-												<source srcSet={webpImageUrl} type="image/webp" />
-												<source srcSet={originalImageUrl} type={`image/${originalFormat === 'svg' ? 'svg+xml' : originalFormat}`} />
-												<Image
-													src={originalImageUrl}
-													alt={`${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
-													fill
-													className={`object-contain p-4 transition-opacity duration-500 ${isLoading || hasError ? 'opacity-0' : 'opacity-100'}`}
-													onLoadingComplete={handleLoadingComplete}
-													onError={handleError}
-												/>
-											</picture>
-										</>
-									)}
+									<motion.div
+										className="absolute inset-0 bg-primary/10 flex items-center justify-center z-20 rounded-xl"
+										initial={{ opacity: 0 }}
+										animate={{ opacity: isCopied ? 1 : 0 }}
+										transition={{ duration: 0.2 }}
+									>
+										<motion.div
+											initial={{ scale: 0.5, opacity: 0 }}
+											animate={{
+												scale: isCopied ? 1 : 0.5,
+												opacity: isCopied ? 1 : 0,
+											}}
+											transition={{
+												type: "spring",
+												stiffness: 300,
+												damping: 20,
+											}}
+										>
+											<Check className="w-8 h-8 text-primary" />
+										</motion.div>
+									</motion.div>
+
+									<Image
+										src={imageUrl}
+										alt={`${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
+										fill
+										loading="eager"
+										className="object-contain p-4"
+									/>
 								</motion.div>
 							</TooltipTrigger>
 							<TooltipContent>
-								<p>
-									{hasError
-										? "Image failed to load, likely due to size limits. Please raise an issue on GitHub."
-										: isCopied
-											? "URL Copied!"
-											: "Click to copy direct URL to clipboard"}
-								</p>
+								<p>Click to copy direct URL to clipboard</p>
 							</TooltipContent>
 						</Tooltip>
 
-						<p className="text-sm font-medium capitalize">
-							{format.toUpperCase()} {theme && `(${theme})`}
-						</p>
+						<p className="text-sm font-medium">{format.toUpperCase()}</p>
 
 						<div className="flex gap-2 mt-3 w-full justify-center">
 							<Tooltip>
@@ -258,15 +211,14 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 										variant="outline"
 										size="icon"
 										className="h-8 w-8 rounded-lg cursor-pointer"
-										onClick={(e) => !hasError && handleDownload(e, format === 'webp' ? webpImageUrl : originalImageUrl, `${variantName}.${format}`)}
+										onClick={(e) => handleDownload(e, imageUrl, `${iconName}.${format}`)}
 										aria-label={`Download ${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
-										disabled={hasError}
 									>
 										<Download className="w-4 h-4" />
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent>
-									<p>{hasError ? "Download unavailable" : "Download icon file"}</p>
+									<p>Download icon file</p>
 								</TooltipContent>
 							</Tooltip>
 
@@ -276,26 +228,30 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 										variant="outline"
 										size="icon"
 										className="h-8 w-8 rounded-lg cursor-pointer"
-										onClick={(e) => !hasError && handleCopy(format === 'webp' ? webpImageUrl : originalImageUrl, `btn-${variantKey}`, e)}
+										onClick={(e) => handleCopy(imageUrl, `btn-${variantKey}`, e)}
 										aria-label={`Copy URL for ${iconName} in ${format} format${theme ? ` (${theme} theme)` : ""}`}
-										disabled={hasError}
 									>
 										{copiedVariants[`btn-${variantKey}`] ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent>
-									<p>{hasError ? "Copy unavailable" : isCopied ? "URL Copied!" : "Copy direct URL to clipboard"}</p>
+									<p>Copy direct URL to clipboard</p>
 								</TooltipContent>
 							</Tooltip>
 
 							<Tooltip>
 								<TooltipTrigger asChild>
-									<Button variant="outline" size="icon" className="h-8 w-8 rounded-lg" asChild>
+									<Button
+										variant="outline"
+										size="icon"
+										className="h-8 w-8 rounded-lg"
+										asChild
+									>
 										<Link
 											href={githubUrl}
 											target="_blank"
 											rel="noopener noreferrer"
-											aria-label={`View ${iconName} ${originalFormat} file on GitHub`}
+											aria-label={`View ${iconName} ${format} file on GitHub`}
 										>
 											<Github className="w-4 h-4" />
 										</Link>
@@ -312,6 +268,8 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 		)
 	}
 
+	const formatedIconName = formatIconName(icon)
+
 	return (
 		<main className="container mx-auto pt-12 pb-14 px-4 sm:px-6 lg:px-8">
 			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -320,40 +278,18 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 					<Card className="h-full bg-background/50 border shadow-lg">
 						<CardHeader className="pb-4">
 							<div className="flex flex-col items-center">
-								{/* Apply loading/error handling to the main preview icon */}
-								<div className="relative w-32 h-32 rounded-xl overflow-hidden border flex items-center justify-center p-3 mb-4">
-									{isPreviewLoading && !hasPreviewError && (
-										<div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-xl" />
-									)}
-									{hasPreviewError ? (
-										<TooltipProvider delayDuration={300}>
-											<Tooltip>
-												<TooltipTrigger aria-label="Preview image loading error">
-													<AlertTriangle className="h-16 w-16 text-red-500 cursor-help" />
-												</TooltipTrigger>
-												<TooltipContent side="bottom">
-													<p>Preview failed to load, likely due to size limits. Please raise an issue.</p>
-												</TooltipContent>
-											</Tooltip>
-										</TooltipProvider>
-									) : (
-										<picture>
-											<source srcSet={previewWebpSrc} type="image/webp" />
-											<source srcSet={previewOriginalSrc} type={`image/${previewOriginalFormat === 'svg' ? 'svg+xml' : previewOriginalFormat}`} />
-											<Image
-												src={previewOriginalSrc}
-												alt={`High quality ${icon.replace(/-/g, " ")} icon preview`}
-												fill // Use fill instead of width/height for parent relative sizing
-												className={`object-contain transition-opacity duration-500 ${isPreviewLoading || hasPreviewError ? 'opacity-0' : 'opacity-100'}`}
-												onLoadingComplete={handlePreviewLoadingComplete}
-												onError={handlePreviewError}
-												priority // Prioritize loading the main icon
-											/>
-										</picture>
-									)}
+								<div className="relative w-32 h-32 rounded-xl overflow-hidden border flex items-center justify-center p-3">
+									<Image
+										src={`${BASE_URL}/${iconData.base}/${icon}.${iconData.base}`}
+										width={96}
+										height={96}
+										placeholder="empty"
+										alt={`High quality ${formatedIconName} icon in ${iconData.base.toUpperCase()} format`}
+										className="w-full h-full object-contain"
+									/>
 								</div>
 								<CardTitle className="text-2xl font-bold capitalize text-center mb-2">
-									<h1>{icon.replace(/-/g, " ")}</h1>
+									<h1>{formatedIconName}</h1>
 								</CardTitle>
 							</div>
 						</CardHeader>
@@ -433,16 +369,14 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 									<h3 className="text-sm font-semibold text-muted-foreground mb-2">About this icon</h3>
 									<div className="text-xs text-muted-foreground space-y-2">
 										<p>
-											Available in{" "}
-											{availableFormats.length > 1
+											Available in {availableFormats.length > 1
 												? `${availableFormats.length} formats (${availableFormats.map((f) => f.toUpperCase()).join(", ")}) `
 												: `${availableFormats[0].toUpperCase()} format `}
 											with a base format of {iconData.base.toUpperCase()}.
 											{iconData.colors && " Includes both light and dark theme variants for better integration with different UI designs."}
 										</p>
 										<p>
-											Perfect for adding to dashboards, app directories, documentation, or anywhere you need the {icon.replace(/-/g, " ")}{" "}
-											logo.
+											Perfect for adding to dashboards, app directories, documentation, or anywhere you need the {icon.replace(/-/g, " ")} logo.
 										</p>
 									</div>
 								</div>
@@ -548,63 +482,31 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 					</Card>
 				</div>
 			</div>
-			{iconData.categories &&
-				iconData.categories.length > 0 &&
-				(() => {
-					const MAX_RELATED_ICONS = 16
-					const currentCategories = iconData.categories || []
-
-					const relatedIconsWithScore = Object.entries(allIcons)
-						.map(([name, data]) => {
-							if (name === icon) return null // Exclude the current icon
-
-							const otherCategories = data.categories || []
-							const commonCategories = currentCategories.filter((cat) => otherCategories.includes(cat))
-							const score = commonCategories.length
-
-							return score > 0 ? { name, data, score } : null
-						})
-						.filter((item): item is { name: string; data: Icon; score: number } => item !== null) // Type guard
-						.sort((a, b) => b.score - a.score) // Sort by score DESC
-
-					const topRelatedIcons = relatedIconsWithScore.slice(0, MAX_RELATED_ICONS)
-
-					const viewMoreUrl = `/icons?${currentCategories.map((cat) => `category=${encodeURIComponent(cat)}`).join("&")}`
-
-					if (topRelatedIcons.length === 0) return null
-
-					return (
-						<section className="container mx-auto mt-12" aria-labelledby="related-icons-title">
-							<Card className="bg-background/50 border shadow-lg">
-								<CardHeader>
-									<CardTitle>
-										<h2 id="related-icons-title">Related Icons</h2>
-									</CardTitle>
-									<CardDescription>
-										Other icons from {currentCategories.map((cat) => cat.replace(/-/g, " ")).join(", ")} categories
-									</CardDescription>
-								</CardHeader>
-								<CardContent>
-									<IconsGrid filteredIcons={topRelatedIcons} matchedAliases={{}} />
-									{relatedIconsWithScore.length > MAX_RELATED_ICONS && (
-										<div className="mt-6 text-center">
-											<Button
-												asChild
-												variant="link"
-												className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:no-underline"
-											>
-												<Link href={viewMoreUrl} className="no-underline">
-													View all related icons
-													<ArrowRight className="ml-2 h-4 w-4" />
-												</Link>
-											</Button>
-										</div>
-									)}
-								</CardContent>
-							</Card>
-						</section>
-					)
-				})()}
+			{iconData.categories && iconData.categories.length > 0 && (
+				<section className="container mx-auto mt-12" aria-labelledby="related-icons-title">
+					<Card className="bg-background/50 border shadow-lg">
+						<CardHeader>
+							<CardTitle>
+								<h2 id="related-icons-title">Related Icons</h2>
+							</CardTitle>
+							<CardDescription>
+								Other icons from {iconData.categories.map((cat) => cat.replace(/-/g, " ")).join(", ")} categories
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<IconsGrid
+								filteredIcons={Object.entries(allIcons)
+									.filter(([name, data]) => {
+										if (name === icon) return false
+										return data.categories?.some((cat) => iconData.categories?.includes(cat))
+									})
+									.map(([name, data]) => ({ name, data }))}
+								matchedAliases={{}}
+							/>
+						</CardContent>
+					</Card>
+				</section>
+			)}
 		</main>
 	)
 }

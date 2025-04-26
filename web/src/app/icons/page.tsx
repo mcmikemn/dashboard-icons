@@ -25,21 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
 			description: `Search and browse through our collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
 			type: "website",
 			url: `${BASE_URL}/icons`,
-			images: [
-				{
-					url: "/og-image.png",
-					width: 1200,
-					height: 630,
-					alt: "Browse Dashboard Icons Collection",
-					type: "image/png",
-				},
-			],
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: "Browse Icons | Free Dashboard Icons",
 			description: `Search and browse through our collection of ${totalIcons} curated icons for services, applications and tools, designed specifically for dashboards and app directories.`,
-			images: ["/og-image-browse.png"],
 		},
 		alternates: {
 			canonical: `${BASE_URL}/icons`,

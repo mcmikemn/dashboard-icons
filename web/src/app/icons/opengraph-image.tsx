@@ -10,28 +10,28 @@ export const size = {
 
 // Define a fixed list of representative icons
 const representativeIcons = [
-	"github",
-	"discord",
-	"slack",
-	"docker",
-	"kubernetes",
-	"grafana",
-	"prometheus",
-	"nextcloud",
-	"homeassistant",
+	"homarr",
+	"sonarr",
+	"radarr",
+	"lidarr",
+	"readarr",
+	"prowlarr",
+	"qbittorrent",
+	"home-assistant",
 	"cloudflare",
-	"nginx",
+	"github",
 	"traefik",
 	"portainer",
 	"plex",
 	"jellyfin",
+	"overseerr",
 ]
 
 export default async function Image() {
 	const iconsData = await getAllIcons()
 	const totalIcons = Object.keys(iconsData).length
 	// Round down to the nearest 100
-	const roundedTotalIcons = Math.floor(totalIcons / 100) * 100
+	const roundedTotalIcons = Math.round(totalIcons / 100) * 100
 
 	const iconImages = representativeIcons.map((icon) => ({
 		name: icon

@@ -45,7 +45,7 @@ export function VirtualizedIconsGrid({ filteredIcons, matchedAliases }: IconsGri
 	const rowVirtualizer = useWindowVirtualizer({
 		count: rowCount,
 		estimateSize: () => 140,
-		overscan: 5,
+		overscan: 2,
 	})
 
 	return (
