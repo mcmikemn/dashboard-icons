@@ -1,13 +1,13 @@
 "use client"
 
+import { Badge } from "@/components/ui/badge"
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { formatIconName, fuzzySearch, filterAndSortIcons } from "@/lib/utils"
-import { useRouter } from "next/navigation"
-import { useCallback, useEffect, useState, useMemo } from "react"
+import { filterAndSortIcons, formatIconName, fuzzySearch } from "@/lib/utils"
 import type { IconWithName } from "@/types/icons"
-import { Tag, Search as SearchIcon, Info } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Info, Search as SearchIcon, Tag } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 interface CommandMenuProps {
 	icons: IconWithName[]
@@ -37,10 +37,7 @@ export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalO
 		[externalOnOpenChange],
 	)
 
-	const filteredIcons = useMemo(() =>
-		filterAndSortIcons({ icons, query, limit: 20 }),
-		[icons, query]
-	)
+	const filteredIcons = useMemo(() => filterAndSortIcons({ icons, query, limit: 20 }), [icons, query])
 
 	const totalIcons = icons.length
 
@@ -70,11 +67,7 @@ export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalO
 	}
 
 	return (
-		<CommandDialog
-			open={isOpen}
-			onOpenChange={setIsOpen}
-			contentClassName="bg-background/90 backdrop-blur-sm border border-border/60"
-		>
+		<CommandDialog open={isOpen} onOpenChange={setIsOpen} contentClassName="bg-background/90 backdrop-blur-sm border border-border/60">
 			<CommandInput
 				placeholder={`Search our collection of ${totalIcons} icons by name or category...`}
 				value={query}
@@ -83,7 +76,7 @@ export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalO
 			<CommandList className="max-h-[300px]">
 				{/* Icon Results */}
 				<CommandGroup heading="Icons">
-					{filteredIcons.length > 0 && (
+					{filteredIcons.length > 0 &&
 						filteredIcons.map(({ name, data }) => {
 							const formatedIconName = formatIconName(name)
 							const hasCategories = data.categories && data.categories.length > 0
@@ -97,7 +90,9 @@ export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalO
 								>
 									<div className="flex-shrink-0 h-5 w-5 relative">
 										<div className="h-full w-full bg-primary/10 dark:bg-primary/20 rounded-md flex items-center justify-center">
-											<span className="text-[9px] font-medium text-primary dark:text-primary-foreground">{name.substring(0, 2).toUpperCase()}</span>
+											<span className="text-[9px] font-medium text-primary dark:text-primary-foreground">
+												{name.substring(0, 2).toUpperCase()}
+											</span>
 										</div>
 									</div>
 									<span className="flex-grow capitalize font-medium text-sm">{formatedIconName}</span>
@@ -110,9 +105,7 @@ export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalO
 												className="text-xs font-normal inline-flex items-center gap-1 whitespace-nowrap max-w-[120px] overflow-hidden"
 											>
 												<Tag size={8} className="mr-1 flex-shrink-0" />
-												<span className="truncate">
-													{data.categories[0].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
-												</span>
+												<span className="truncate">{data.categories[0].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</span>
 											</Badge>
 											{/* "+N" badge if more than one category */}
 											{data.categories.length > 1 && (
@@ -124,8 +117,7 @@ export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalO
 									)}
 								</CommandItem>
 							)
-						})
-					)}
+						})}
 				</CommandGroup>
 				<CommandEmpty>
 					{/* Minimal empty state */}
@@ -138,12 +130,10 @@ export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalO
 
 			{/* Separator and Browse section - Styled div outside CommandList */}
 			<div className="border-t border-border/40 pt-1 mt-1 px-1 pb-1">
-				<div
-					role="button"
-					tabIndex={0}
-					className="flex items-center gap-2 cursor-pointer rounded-sm px-2 py-1 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground"
+				<button
+					type="button"
+					className="flex items-center gap-2 cursor-pointer rounded-sm px-2 py-1 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground w-full"
 					onClick={handleBrowseAll}
-					onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleBrowseAll() }}
 				>
 					<div className="flex-shrink-0 h-5 w-5 relative">
 						<div className="h-full w-full bg-primary/80 dark:bg-primary/40 rounded-md flex items-center justify-center">
@@ -151,7 +141,7 @@ export function CommandMenu({ icons, open: externalOpen, onOpenChange: externalO
 						</div>
 					</div>
 					<span className="flex-grow text-sm">Browse all icons – {totalIcons} available</span>
-				</div>
+				</button>
 			</div>
 		</CommandDialog>
 	)

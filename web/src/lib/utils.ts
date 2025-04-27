@@ -1,6 +1,6 @@
+import type { IconWithName } from "@/types/icons"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import type { IconWithName } from "@/types/icons"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
@@ -173,41 +173,40 @@ export function filterAndSortIcons({
 	// Filter by categories if any are selected
 	if (categories.length > 0) {
 		filtered = filtered.filter(({ data }) =>
-			data.categories.some((cat) =>
-				categories.some((selectedCat) => cat.toLowerCase() === selectedCat.toLowerCase()),
-			),
+			data.categories.some((cat) => categories.some((selectedCat) => cat.toLowerCase() === selectedCat.toLowerCase())),
 		)
 	}
 
 	if (query.trim()) {
 		const queryWords = query.toLowerCase().split(/\s+/)
-		const scored = filtered.map((icon) => {
-			const nameScore = fuzzySearch(icon.name, query) * NAME_WEIGHT
-			const aliasScore =
-				icon.data.aliases && icon.data.aliases.length > 0
-					? Math.max(...icon.data.aliases.map((alias) => fuzzySearch(alias, query))) * ALIAS_WEIGHT
-					: 0
-			const categoryScore =
-				icon.data.categories && icon.data.categories.length > 0
-					? Math.max(...icon.data.categories.map((category) => fuzzySearch(category, query))) * CATEGORY_WEIGHT
-					: 0
+		const scored = filtered
+			.map((icon) => {
+				const nameScore = fuzzySearch(icon.name, query) * NAME_WEIGHT
+				const aliasScore =
+					icon.data.aliases && icon.data.aliases.length > 0
+						? Math.max(...icon.data.aliases.map((alias) => fuzzySearch(alias, query))) * ALIAS_WEIGHT
+						: 0
+				const categoryScore =
+					icon.data.categories && icon.data.categories.length > 0
+						? Math.max(...icon.data.categories.map((category) => fuzzySearch(category, query))) * CATEGORY_WEIGHT
+						: 0
 
-			const maxScore = Math.max(nameScore, aliasScore, categoryScore)
+				const maxScore = Math.max(nameScore, aliasScore, categoryScore)
 
-			// Penalize if only category matches
-			const onlyCategoryMatch =
-				categoryScore > 0.7 && nameScore < 0.5 && aliasScore < 0.5
-			const finalScore = onlyCategoryMatch ? maxScore * CATEGORY_PENALTY : maxScore
+				// Penalize if only category matches
+				const onlyCategoryMatch = categoryScore > 0.7 && nameScore < 0.5 && aliasScore < 0.5
+				const finalScore = onlyCategoryMatch ? maxScore * CATEGORY_PENALTY : maxScore
 
-			// Require all query words to be present in at least one field
-			const allWordsPresent = queryWords.every((word) =>
-				icon.name.toLowerCase().includes(word) ||
-				icon.data.aliases.some((alias) => alias.toLowerCase().includes(word)) ||
-				icon.data.categories.some((cat) => cat.toLowerCase().includes(word))
-			)
+				// Require all query words to be present in at least one field
+				const allWordsPresent = queryWords.every(
+					(word) =>
+						icon.name.toLowerCase().includes(word) ||
+						icon.data.aliases.some((alias) => alias.toLowerCase().includes(word)) ||
+						icon.data.categories.some((cat) => cat.toLowerCase().includes(word)),
+				)
 
-			return { icon, score: allWordsPresent ? finalScore : finalScore * 0.4 }
-		})
+				return { icon, score: allWordsPresent ? finalScore : finalScore * 0.4 }
+			})
 			.filter((item) => item.score > 0.7)
 			.sort((a, b) => {
 				if (b.score !== a.score) return b.score - a.score
