@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
+import { type SortOption, filterAndSortIcons } from "@/lib/utils"
 import type { IconSearchProps } from "@/types/icons"
 import { ArrowDownAZ, ArrowUpZA, Calendar, Filter, Search, SortAsc, X } from "lucide-react"
 import { useTheme } from "next-themes"
@@ -24,7 +25,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { toast } from "sonner"
-import { filterAndSortIcons, SortOption } from "@/lib/utils"
 
 export function IconSearch({ icons }: IconSearchProps) {
 	const searchParams = useSearchParams()

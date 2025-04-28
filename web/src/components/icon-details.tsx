@@ -10,7 +10,7 @@ import { formatIconName } from "@/lib/utils"
 import type { AuthorData, Icon, IconFile } from "@/types/icons"
 import confetti from "canvas-confetti"
 import { motion } from "framer-motion"
-import { Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun } from "lucide-react"
+import { ArrowRight, Check, Copy, Download, FileType, Github, Moon, PaletteIcon, Sun } from "lucide-react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
@@ -479,31 +479,63 @@ export function IconDetails({ icon, iconData, authorData, allIcons }: IconDetail
 					</Card>
 				</div>
 			</div>
-			{iconData.categories && iconData.categories.length > 0 && (
-				<section className="container mx-auto mt-12" aria-labelledby="related-icons-title">
-					<Card className="bg-background/50 border shadow-lg">
-						<CardHeader>
-							<CardTitle>
-								<h2 id="related-icons-title">Related Icons</h2>
-							</CardTitle>
-							<CardDescription>
-								Other icons from {iconData.categories.map((cat) => cat.replace(/-/g, " ")).join(", ")} categories
-							</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<IconsGrid
-								filteredIcons={Object.entries(allIcons)
-									.filter(([name, data]) => {
-										if (name === icon) return false
-										return data.categories?.some((cat) => iconData.categories?.includes(cat))
-									})
-									.map(([name, data]) => ({ name, data }))}
-								matchedAliases={{}}
-							/>
-						</CardContent>
-					</Card>
-				</section>
-			)}
+			{iconData.categories &&
+				iconData.categories.length > 0 &&
+				(() => {
+					const MAX_RELATED_ICONS = 16
+					const currentCategories = iconData.categories || []
+
+					const relatedIconsWithScore = Object.entries(allIcons)
+						.map(([name, data]) => {
+							if (name === icon) return null // Exclude the current icon
+
+							const otherCategories = data.categories || []
+							const commonCategories = currentCategories.filter((cat) => otherCategories.includes(cat))
+							const score = commonCategories.length
+
+							return score > 0 ? { name, data, score } : null
+						})
+						.filter((item): item is { name: string; data: Icon; score: number } => item !== null) // Type guard
+						.sort((a, b) => b.score - a.score) // Sort by score DESC
+
+					const topRelatedIcons = relatedIconsWithScore.slice(0, MAX_RELATED_ICONS)
+
+					const viewMoreUrl = `/icons?${currentCategories.map((cat) => `category=${encodeURIComponent(cat)}`).join("&")}`
+
+					if (topRelatedIcons.length === 0) return null
+
+					return (
+						<section className="container mx-auto mt-12" aria-labelledby="related-icons-title">
+							<Card className="bg-background/50 border shadow-lg">
+								<CardHeader>
+									<CardTitle>
+										<h2 id="related-icons-title">Related Icons</h2>
+									</CardTitle>
+									<CardDescription>
+										Other icons from {currentCategories.map((cat) => cat.replace(/-/g, " ")).join(", ")} categories
+									</CardDescription>
+								</CardHeader>
+								<CardContent>
+									<IconsGrid filteredIcons={topRelatedIcons} matchedAliases={{}} />
+									{relatedIconsWithScore.length > MAX_RELATED_ICONS && (
+										<div className="mt-6 text-center">
+											<Button
+												asChild
+												variant="link"
+												className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:no-underline"
+											>
+												<Link href={viewMoreUrl} className="no-underline">
+													View all related icons
+													<ArrowRight className="ml-2 h-4 w-4" />
+												</Link>
+											</Button>
+										</div>
+									)}
+								</CardContent>
+							</Card>
+						</section>
+					)
+				})()}
 		</main>
 	)
 }
