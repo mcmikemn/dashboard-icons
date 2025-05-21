@@ -1,6 +1,8 @@
 {
   "base": "png",
-  "aliases": [],
+  "aliases": [
+    "runtipi"
+  ],
   "categories": [],
   "update": {
     "timestamp": "2025-01-07T17:54:03Z",
