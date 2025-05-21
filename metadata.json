@@ -379,7 +379,7 @@
             }
         }
     },
-    "asus": {
+    "asus-full": {
         "base": "svg",
         "aliases": [],
         "categories": [],
