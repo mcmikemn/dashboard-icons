@@ -9880,7 +9880,7 @@
     },
     "cleanuperr": {
         "base": "svg",
-        "aliases": [],
+        "aliases": ["cleanuparr"],
         "categories": [],
         "update": {
             "timestamp": "2025-06-17T17:45:50.317780",
