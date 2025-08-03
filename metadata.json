@@ -13289,7 +13289,7 @@
             }
         }
     },
-    "omni-tools": {
+    "omni-tools-full": {
         "base": "png",
         "aliases": [],
         "categories": [],
